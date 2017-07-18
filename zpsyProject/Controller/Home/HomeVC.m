@@ -212,64 +212,9 @@
     @weakify(self);
     [[but rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
         @strongify(self);
-//        Setting *setting=[[Setting alloc] initWithStyle:UITableViewStyleGrouped];
-//        setting.hidesBottomBarWhenPushed=YES;
-//        [self.navigationController pushViewController:setting animated:YES];
-        
-//        ScanDetailViewController * svc = [[ScanDetailViewController alloc ] init];
-//        [self.navigationController pushViewController:svc animated:YES];
-        
-        
-        NSString * codeStr = @"";
-        //codeStr = @"751df0a4b1d84ff69550b9d3b61954b0";  //可疑品
-        //codeStr = @"f55d44162fca47a98af70ac5f521486e"; //正品
-        codeStr = @"28c9e39a4bd74b698f1b22c493997de0";  //伪品
-        
-//        codeStr = @"00030010100100010163";
-//        codeStr = @"00030010100100010190";
-//        
-//        codeStr = @"00030010100100010130";
-//        codeStr = @"00030010100100010132";
-//        
-//        codeStr = @"00030010100100010163";
-//        codeStr = @"00030010100100010190";
-//        
-//        codeStr = @"http://s.izheng.org/?/cn/00030010100100010130";
-        
-        NSDictionary *dict =
-        
-        
-        @{@"codeId":codeStr,
-          @"scanMobile":[UserModel ShareInstance].userInfo.mobile,
-          @"scanLoc":@"北京",
-          @"longitude":@0,
-          @"latitude":@0,
-          @"model":[Utility getCurrentDeviceModel]
-          };
-      
-        [BaseSeverHttp ZpsyPostWithPath:Api_scanRecordFind WithParams:dict WithSuccessBlock:^(NSDictionary* result) {
-            if ([result objectForKey:@"goodsStatus"]) {
-                NSDictionary * dict = [result objectForKey:@"goodsStatus"];
-                if ([[dict objectForKey:@"status"] integerValue] !=1) {
-                    UIAlertView * alert = [[UIAlertView alloc ] initWithTitle:nil message:dict[@"describe"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
-                    [alert show];
-                    return;
-                }
-            }
-            scanFinishModel *model = [[scanFinishModel alloc] init];
-            [model setmodelWithScandict:result];
-            model.codeSnId = codeStr;
-            ScanDetailViewController *vc= [[ScanDetailViewController alloc] init];
-            //vc.view.backgroundColor = JXFfffffColor;
-            vc.hidesBottomBarWhenPushed=YES;
-            vc.scanFinishModel = model;
-            [self.navigationController pushViewController:vc animated:YES];
-            
-        } WithFailurBlock:^(NSError *error) {
-            if (error==nil) {
-                //[self failShowVC];
-            }
-        }];
+        Setting *setting=[[Setting alloc] initWithStyle:UITableViewStyleGrouped];
+        setting.hidesBottomBarWhenPushed=YES;
+        [self.navigationController pushViewController:setting animated:YES];
     }];
     
 }

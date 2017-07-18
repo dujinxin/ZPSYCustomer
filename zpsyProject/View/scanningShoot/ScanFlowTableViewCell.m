@@ -97,6 +97,10 @@
     if (!_firstImageView) {
         _firstImageView = [[UIImageView alloc ] init];
         _firstImageView.backgroundColor = JXDebugColor;
+        _firstImageView.tag = 0;
+        _firstImageView.userInteractionEnabled = YES;
+        UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc ]initWithTarget:self action:@selector(tapClick:)];
+        [_firstImageView addGestureRecognizer:tap];
         
     }
     return _firstImageView;
@@ -106,6 +110,10 @@
     if (!_secondImageView) {
         _secondImageView = [[UIImageView alloc ] init];
         _secondImageView.backgroundColor = JXDebugColor;
+        _secondImageView.tag = 1;
+        _secondImageView.userInteractionEnabled = YES;
+        UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc ]initWithTarget:self action:@selector(tapClick:)];
+        [_secondImageView addGestureRecognizer:tap];
         
     }
     return _secondImageView;
@@ -115,11 +123,19 @@
     if (!_thirdImageView) {
         _thirdImageView = [[UIImageView alloc ] init];
         _thirdImageView.backgroundColor = JXDebugColor;
+        _thirdImageView.tag = 2;
+        _thirdImageView.userInteractionEnabled = YES;
+        UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc ]initWithTarget:self action:@selector(tapClick:)];
+        [_thirdImageView addGestureRecognizer:tap];
         
     }
     return _thirdImageView;
 }
-
+- (void)tapClick:(UITapGestureRecognizer *)tap{
+    if (_block) {
+        self.block(tap.view.tag);
+    }
+}
 - (void)setModel:(GoodsFlowSubModel *)model{
     NSString * dateStr = [model.operationTime substringToIndex:10];
     NSString * contentStr = [NSString stringWithFormat:@"%@      %@",dateStr,model.contents];

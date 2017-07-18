@@ -354,7 +354,7 @@
     if (self) {
         self.backgroundColor = JXFfffffColor;
         
-        [self addSubview:self.productImage];
+//        [self addSubview:self.productImage];
         
 //        [self addSubview:self.infolabel1];
 //        [self addSubview:self.infolabel2];
@@ -374,11 +374,12 @@
     return self;
 }
 - (void)mas_layoutSubviews{
-    [self.productImage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.and.left.and.right.equalTo(self).offset(0);
-        make.height.mas_equalTo(200*kPercent);
-    }];
-    //1
+        
+//    [self.productImage mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.and.left.and.right.equalTo(self).offset(0);
+//        make.height.mas_equalTo(200*kPercent);
+//    }];
+//    //1
 //    [self.infolabel1 mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.top.equalTo(self.productImage.mas_bottom).offset(20);
 //        make.left.equalTo(self.mas_left).offset(25);
@@ -453,6 +454,12 @@
 
 - (void)setEntity:(ScanGoodsEntity *)entity{
     
+}
+- (AdScrollView *)scrollView{
+    if (!_scrollView) {
+        _scrollView = [[AdScrollView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 200*kPercent)];
+    }
+    return _scrollView;
 }
 - (UIImageView *)productImage{
     if (!_productImage) {
@@ -580,49 +587,49 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = JXFfffffColor;
-        CGFloat imageViewWidth = 60;
-        CGFloat space = (kScreenWidth - imageViewWidth* 3) /4;
-        
-        NSArray * titleArray = @[@"企业介绍",@"检测报告",@"认证信息"];
-        NSArray * imageNameArray = @[@"companyProfile",@"examiningReport",@"authentication"];
-        
-        for (int i = 0; i < 3; i ++) {
-            UIImageView * imageView = [[UIImageView alloc ]init ];
-            imageView.image = JXImageNamed(imageNameArray[i]);
-            //imageView.backgroundColor = JXDebugColor;
-            imageView.tag = i;
-            imageView.userInteractionEnabled = YES;
-            
-            UILabel * label = [[UILabel alloc ] init];
-            //label.backgroundColor = JXDebugColor;
-            label.textAlignment = NSTextAlignmentCenter;
-            label.font = JXFontForNormal(13.3);
-            label.text = titleArray[i];
-            label.tag = 10 +i;
-            label.textColor = JX333333Color;
-            label.userInteractionEnabled = YES;
-            
-            [self addSubview:imageView];
-            [self addSubview:label];
-            
-            
-            UITapGestureRecognizer * tap1 = [[UITapGestureRecognizer alloc ]initWithTarget:self action:@selector(tapClick:)];
-            UITapGestureRecognizer * tap2 = [[UITapGestureRecognizer alloc ]initWithTarget:self action:@selector(tapClick:)];
-            [imageView addGestureRecognizer:tap1];
-            [label addGestureRecognizer:tap2];
-            
-            [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.equalTo(self).offset(10);
-                make.left.mas_equalTo(self.mas_left).offset(space + (space +imageViewWidth) *i);
-                make.size.mas_equalTo(CGSizeMake(imageViewWidth, imageViewWidth));
-            }];
-            [label mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.equalTo(imageView.mas_bottom).offset(10);
-                make.centerX.mas_equalTo(imageView);
-                make.height.mas_equalTo(14);
-                make.width.mas_equalTo(80);
-            }];
-        }
+//        CGFloat imageViewWidth = 60;
+//        CGFloat space = (kScreenWidth - imageViewWidth* 3) /4;
+//        
+//        NSArray * titleArray = @[@"企业介绍",@"检测报告",@"认证信息"];
+//        NSArray * imageNameArray = @[@"companyProfile",@"examiningReport",@"authentication"];
+//        
+//        for (int i = 0; i < 3; i ++) {
+//            UIImageView * imageView = [[UIImageView alloc ]init ];
+//            imageView.image = JXImageNamed(imageNameArray[i]);
+//            //imageView.backgroundColor = JXDebugColor;
+//            imageView.tag = i;
+//            imageView.userInteractionEnabled = YES;
+//            
+//            UILabel * label = [[UILabel alloc ] init];
+//            //label.backgroundColor = JXDebugColor;
+//            label.textAlignment = NSTextAlignmentCenter;
+//            label.font = JXFontForNormal(13.3);
+//            label.text = titleArray[i];
+//            label.tag = 10 +i;
+//            label.textColor = JX333333Color;
+//            label.userInteractionEnabled = YES;
+//            
+//            [self addSubview:imageView];
+//            [self addSubview:label];
+//            
+//            
+//            UITapGestureRecognizer * tap1 = [[UITapGestureRecognizer alloc ]initWithTarget:self action:@selector(tapClick:)];
+//            UITapGestureRecognizer * tap2 = [[UITapGestureRecognizer alloc ]initWithTarget:self action:@selector(tapClick:)];
+//            [imageView addGestureRecognizer:tap1];
+//            [label addGestureRecognizer:tap2];
+//            
+//            [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+//                make.top.equalTo(self).offset(10);
+//                make.left.mas_equalTo(self.mas_left).offset(space + (space +imageViewWidth) *i);
+//                make.size.mas_equalTo(CGSizeMake(imageViewWidth, imageViewWidth));
+//            }];
+//            [label mas_makeConstraints:^(MASConstraintMaker *make) {
+//                make.top.equalTo(imageView.mas_bottom).offset(10);
+//                make.centerX.mas_equalTo(imageView);
+//                make.height.mas_equalTo(14);
+//                make.width.mas_equalTo(80);
+//            }];
+//        }
     }
     return self;
 }

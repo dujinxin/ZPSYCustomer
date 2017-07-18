@@ -36,6 +36,9 @@
     JXSelectView       * _deviceSelectView;
     
     NSMutableArray     * _deviceArray;
+    
+    NSMutableArray     * _titleArray;
+    NSMutableArray     * _imageNameArray;
 }
 
 @property (nonatomic, strong) priceCompareView * priceView;
@@ -65,6 +68,8 @@ static NSString * const reuseIdentifierHeader = @"Header";
     
     
     [self.collectionView reloadData];
+    
+    
     // Do any additional setup after loading the view.
 }
 
@@ -445,6 +450,55 @@ static NSString * const reuseIdentifierHeader = @"Header";
 - (void)showDeviceView{
     [self.deviceSelectView show];
 }
+- (void)tapClick:(UITapGestureRecognizer * )tap{
+    NSLog(@"click:%ld",tap.view.tag);
+
+    switch (tap.view.tag) {
+        case 0:
+        case 10:
+        {
+            NSLog(@"111111");
+            [self.companySelectView show];
+        }
+            break;
+        case 1:
+        case 11:
+        {
+            NSLog(@"222222");
+            if ([_titleArray[1] isEqualToString:@"检测报告"]) {
+                NSArray * imageArray = [self.scanFinishModel.proDetailModel.reportFile componentsSeparatedByString:@","];
+                JZAlbumViewController *imgVC = [[JZAlbumViewController alloc] init];
+                imgVC.currentIndex = 0;
+                imgVC.imgArr = imageArray;
+                imgVC.title = @"检测报告";
+                [self.navigationController pushViewController:imgVC animated:YES];
+            }else{
+                NSArray * imageArray = [self.scanFinishModel.proDetailModel.certificateFile componentsSeparatedByString:@","];
+                JZAlbumViewController *imgVC = [[JZAlbumViewController alloc] init];
+                imgVC.currentIndex = 0;
+                imgVC.imgArr = imageArray;
+                imgVC.title = @"认证信息";
+                [self.navigationController pushViewController:imgVC animated:YES];
+            }
+        }
+            break;
+        case 2:
+        case 12:
+        {
+            NSLog(@"333333");
+            NSArray * imageArray = [self.scanFinishModel.proDetailModel.certificateFile componentsSeparatedByString:@","];
+            JZAlbumViewController *imgVC = [[JZAlbumViewController alloc] init];
+            imgVC.currentIndex = 0;
+            imgVC.imgArr = imageArray;
+            imgVC.title = @"认证信息";
+            [self.navigationController pushViewController:imgVC animated:YES];
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return _deviceArray.count + 1;
@@ -597,6 +651,16 @@ static NSString * const reuseIdentifierHeader = @"Header";
         //GoodsFlowSubModel * subModel = [GoodsFlowSubModel mj_objectWithKeyValues: model.list_batchField[indexPath.item]];
         GoodsFlowSubModel * subModel = model.list_batchField[indexPath.item];
         cell.model = subModel;
+        
+        cell.block = ^(NSInteger index) {
+            NSArray * imageArray = [subModel.file componentsSeparatedByString:@","];
+            JZAlbumViewController *imgVC = [[JZAlbumViewController alloc] init];
+            imgVC.currentIndex = index;
+            imgVC.imgArr = imageArray;
+            //imgVC.title = @"检测报告";
+            [self.navigationController presentViewController:imgVC animated:YES completion:nil];
+            //[self.navigationController pushViewController:imgVC animated:YES];
+        };
         return cell;
     }
     // Configure the cell
@@ -694,7 +758,7 @@ static NSString * const reuseIdentifierHeader = @"Header";
     }
     _goodsView.goodsName.text = scanFinishModel.proDetailModel.name;
     _goodsView.productCanpanyName.text = scanFinishModel.proDetailModel.officeName;
-    _goodsView.productCode.text = [NSString stringWithFormat:@"正品溯源码：%@",scanFinishModel.proDetailModel.regNo];
+    _goodsView.productCode.text = [NSString stringWithFormat:@"正品溯源码：%@",scanFinishModel.proDetailModel.code];
     
     //扫描状态
     NSString * detailStr = @"";
@@ -773,7 +837,25 @@ static NSString * const reuseIdentifierHeader = @"Header";
 }
 - (void)updateUIWithData:(scanFinishModel *)scanFinishModel{
     
-    [_infoView.productImage sd_setImageWithURL:[NSURL URLWithString:scanFinishModel.proDetailModel.getfirstGoodImg] placeholderImage:nil];
+    NSArray * imageArray = [scanFinishModel.proDetailModel.goodsImg componentsSeparatedByString:@","];
+    
+    BOOL isHaveBigImage = NO;
+    if (imageArray.count && scanFinishModel.proDetailModel.goodsImg.length) {
+        isHaveBigImage = YES;
+        [_infoView addSubview:_infoView.scrollView];
+        [_infoView.scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.and.left.and.right.equalTo(_infoView).offset(0);
+            make.height.mas_equalTo(200*kPercent);
+        }];
+        
+        _infoView.scrollView.imageNameArray = nil;
+        _infoView.scrollView.imageNameArray = imageArray;
+        _infoView.scrollView.pageStyle = UIPageControlPointStyle;
+        _infoView.scrollView.pageControl.pageIndicatorTintColor = [UIColor whiteColor];
+        _infoView.scrollView.pageControl.currentPageIndicatorTintColor = JXff5252Color;
+    }
+    
+    //[_infoView.productImage sd_setImageWithURL:[NSURL URLWithString:scanFinishModel.proDetailModel.getfirstGoodImg] placeholderImage:nil];
     
     CGFloat height = 15;
     for (int i = 0; i < scanFinishModel.proDetailModel.list_ceccGoodsField.count; i ++) {
@@ -794,6 +876,7 @@ static NSString * const reuseIdentifierHeader = @"Header";
             lab.textColor = JX333333Color;
             lab.backgroundColor = JXDebugColor;
             lab.text = @"优";
+            lab.numberOfLines = 0;
             lab;
         });
         UIImageView * detailImageView = ({
@@ -808,7 +891,12 @@ static NSString * const reuseIdentifierHeader = @"Header";
         [_infoView addSubview:nameLabel];
         
         [nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(_infoView.productImage.mas_bottom).offset(height);
+            if (isHaveBigImage) {
+                make.top.equalTo(_infoView.mas_top).offset(height + 200*kPercent);
+            }else{
+                make.top.equalTo(_infoView.mas_top).offset(height);
+            }
+            
             make.left.equalTo(_infoView).offset(15);
             make.width.mas_equalTo(12 * 5);
             make.height.mas_equalTo(12);
@@ -830,33 +918,88 @@ static NSString * const reuseIdentifierHeader = @"Header";
             
         }else{
             [_infoView addSubview:detailLabel];
+            
+            NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc]init];
+            paragraphStyle.lineSpacing = 5;
+            //paragraphStyle.paragraphSpacing = 6;
+            
+            NSStringDrawingOptions option = NSStringDrawingTruncatesLastVisibleLine |  NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading;
+            NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:11],NSParagraphStyleAttributeName:paragraphStyle};
+            CGRect rect = [dict[@"fieldValue"] boundingRectWithSize:CGSizeMake(kScreenWidth -(60 + 15), CGFLOAT_MAX) options:option attributes:attributes context:nil];
             detailLabel.text = dict[@"fieldValue"];
             [detailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.equalTo(nameLabel.mas_top);
                 make.left.equalTo(nameLabel.mas_right).offset(0);
                 make.right.equalTo(_infoView.mas_right).offset(-15);
-                make.height.mas_equalTo(12);
+                if (rect.size.height < 20) {
+                    make.height.mas_equalTo(12);
+                }else{
+                    make.height.mas_equalTo(rect.size.height);
+                }
+                
             }];
-            height += (15 +12);
+            if (rect.size.height < 20) {
+                height += (15 +12);
+            }else{
+                height += (15 +rect.size.height);
+            }
+            
         }
         
     }
     
-    if (scanFinishModel.proDetailModel.reportFile && scanFinishModel.proDetailModel.certificateFile) {
-        //
-    }else{
-        UIImageView * imageView1 = (UIImageView *)[_extraView viewWithTag:1];
-        UIImageView * imageView2 = (UIImageView *)[_extraView viewWithTag:2];
-        
-        UILabel * label1 = (UILabel *)[_extraView viewWithTag:11];
-        UILabel * label2 = (UILabel *)[_extraView viewWithTag:12];
-        
-        [imageView1 setHidden:YES];
-        [imageView2 setHidden:YES];
-        
-        [label1 setHidden:YES];
-        [label2 setHidden:YES];
+    CGFloat imageViewWidth = 60;
+    CGFloat space = (kScreenWidth - imageViewWidth* 3) /4;
+    _titleArray = [NSMutableArray arrayWithObject:@"企业介绍"];
+    _imageNameArray = [NSMutableArray arrayWithObject:@"companyProfile"];
+    
+    if (scanFinishModel.proDetailModel.reportFile && scanFinishModel.proDetailModel.reportFile.length > 0) {
+        [_titleArray addObject:@"检测报告"];
+        [_imageNameArray addObject:@"examiningReport"];
     }
+    if (scanFinishModel.proDetailModel.certificateFile && scanFinishModel.proDetailModel.certificateFile.length > 0) {
+        [_titleArray addObject:@"认证信息"];
+        [_imageNameArray addObject:@"authentication"];
+    }
+    
+    for (int i = 0; i < _titleArray.count; i ++) {
+        UIImageView * imageView = [[UIImageView alloc ]init ];
+        imageView.image = JXImageNamed(_imageNameArray[i]);
+        //imageView.backgroundColor = JXDebugColor;
+        imageView.tag = i;
+        imageView.userInteractionEnabled = YES;
+        
+        UILabel * label = [[UILabel alloc ] init];
+        //label.backgroundColor = JXDebugColor;
+        label.textAlignment = NSTextAlignmentCenter;
+        label.font = JXFontForNormal(13.3);
+        label.text = _titleArray[i];
+        label.tag = 10 +i;
+        label.textColor = JX333333Color;
+        label.userInteractionEnabled = YES;
+        
+        [_extraView addSubview:imageView];
+        [_extraView addSubview:label];
+        
+        
+        UITapGestureRecognizer * tap1 = [[UITapGestureRecognizer alloc ]initWithTarget:self action:@selector(tapClick:)];
+        UITapGestureRecognizer * tap2 = [[UITapGestureRecognizer alloc ]initWithTarget:self action:@selector(tapClick:)];
+        [imageView addGestureRecognizer:tap1];
+        [label addGestureRecognizer:tap2];
+        
+        [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(_extraView).offset(10);
+            make.left.mas_equalTo(_extraView.mas_left).offset(space + (space +imageViewWidth) *i);
+            make.size.mas_equalTo(CGSizeMake(imageViewWidth, imageViewWidth));
+        }];
+        [label mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(imageView.mas_bottom).offset(10);
+            make.centerX.mas_equalTo(imageView);
+            make.height.mas_equalTo(14);
+            make.width.mas_equalTo(80);
+        }];
+    }
+
     
     _varHeight = height;
     _infoViewHeight = 200*kPercent + _varHeight;
@@ -897,32 +1040,29 @@ static NSString * const reuseIdentifierHeader = @"Header";
     
     [_goodsView.comparePriseButton addTarget:self action:@selector(comparePrice) forControlEvents:UIControlEventTouchUpInside];
     
+    //功能暂停
+    _authTitleView.arrow.hidden = YES;
     
-    _authTitleView.block = ^(BOOL isOpen,NSInteger index) {
-        
-        if (isOpen) {
-            headViewHeight -= infoViewHeight;
-            infoViewHeight = 0;
-            [infoView setHidden:YES];
-            //point.y -= infoViewHeight;
-        }else{
-            infoViewHeight = 200 *kPercent + _varHeight;
-            headViewHeight += infoViewHeight;
-            [infoView setHidden:NO];
-            //point.y += infoViewHeight;
-        }
-        //headViewHeight =  130*kPercent + 10*3 + 150*kPercent +40*2 + infoViewHeight;
-        weakSelf.collectionView.contentInset = UIEdgeInsetsMake(headViewHeight, 0, 0, 0);
-        headView.frame = CGRectMake(0, -headViewHeight, kScreenWidth, headViewHeight);
-        
-        [infoView mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(authTitleView.mas_bottom);
-            make.left.right.equalTo(headView);
-            make.height.mas_equalTo(infoViewHeight);
-        }];
-        
-        NSLog(@"headViewHeight = %f",headViewHeight);
-    };
+//    _authTitleView.block = ^(BOOL isOpen,NSInteger index) {
+//        
+//        if (isOpen) {
+//            headViewHeight -= infoViewHeight;
+//            infoViewHeight = 0;
+//            [infoView setHidden:YES];
+//        }else{
+//            infoViewHeight = 200 *kPercent + _varHeight;
+//            headViewHeight += infoViewHeight;
+//            [infoView setHidden:NO];
+//        }
+//        weakSelf.collectionView.contentInset = UIEdgeInsetsMake(headViewHeight, 0, 0, 0);
+//        headView.frame = CGRectMake(0, -headViewHeight, kScreenWidth, headViewHeight);
+//        
+//        [infoView mas_remakeConstraints:^(MASConstraintMaker *make) {
+//            make.top.equalTo(authTitleView.mas_bottom);
+//            make.left.right.equalTo(headView);
+//            make.height.mas_equalTo(infoViewHeight);
+//        }];
+//    };
     
     _extraView.block = ^(BOOL isOpen, NSInteger index) {
         switch (index) {
@@ -973,6 +1113,13 @@ static NSString * const reuseIdentifierHeader = @"Header";
             [weakSelf.collectionView reloadData];
         };
     }
+    
+//    if (_infoView.scrollView) {
+//        CGPoint center = _infoView.scrollView.pageControl.center;
+//        center.x = kScreenWidth /2;
+//        _infoView.scrollView.pageControl.center = center;
+//        _infoView.scrollView.pageControl.size = CGSizeMake(_infoView.scrollView.pageControl.numberOfPages * 20, 20);
+//    }
 }
 
 @end

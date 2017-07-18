@@ -453,10 +453,10 @@ class DeviceCell: UITableViewCell {
     
     public var deviceModel:ScanrecordForSuspectProductModel? {
         didSet{
-            if let str = deviceModel?.scanTime {
-                self.timeLabel.text = str.substring(to: str.index(str.startIndex, offsetBy: 10))
-            }
-            
+//            if let str = deviceModel?.scanTime {
+//                self.timeLabel.text = str.substring(to: str.index(str.startIndex, offsetBy: 10))
+//            }
+            self.timeLabel.text = deviceModel?.scanTime
             self.deviceLabel.text = deviceModel?.model
             self.addressLabel.text = deviceModel?.city
         }
@@ -469,6 +469,7 @@ class DeviceCell: UITableViewCell {
         titleLabel.backgroundColor = UIColor.white
         titleLabel.textAlignment = NSTextAlignment.center
         titleLabel.font = UIFont.systemFont(ofSize: 13)
+        titleLabel.numberOfLines = 2
         return titleLabel
     }()
     

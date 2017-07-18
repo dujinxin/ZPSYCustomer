@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "ZPSY-Swift.h"
 
+typedef void(^ImageViewClickBlock)(NSInteger index);
+
 @interface ScanFlowCollectionViewCell : UICollectionViewCell
 
 @property (nonatomic, strong) UIView * line;
@@ -17,6 +19,8 @@
 @property (nonatomic, strong) UIImageView * firstImageView;
 @property (nonatomic, strong) UIImageView * secondImageView;
 @property (nonatomic, strong) UIImageView * thirdImageView;
+
+@property (nonatomic, copy) ImageViewClickBlock   block;
 
 @property (nonatomic, strong) GoodsFlowSubModel * model;
 

@@ -33,6 +33,8 @@ class productDetailModel: NSObject {
     public var remarks:String?
     public var isFavorites:String?
     
+    public var code:String?
+    
     //new
     public var regNo:String?
     public var reportFile:String? //检测报告

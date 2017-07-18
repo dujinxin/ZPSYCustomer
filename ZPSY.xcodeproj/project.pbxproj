@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		354503111EFB585B00D9EDA7 /* AdScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 354503101EFB585B00D9EDA7 /* AdScrollView.m */; };
 		356173431EE025110086C73F /* ZPselectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356173421EE025110086C73F /* ZPselectView.swift */; };
 		3597506C1EF37EE900419474 /* JZAlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3597506B1EF37EE900419474 /* JZAlbumViewController.m */; };
 		3597506F1EF37F5D00419474 /* PhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3597506E1EF37F5D00419474 /* PhotoView.m */; };
@@ -234,6 +235,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3545030F1EFB585B00D9EDA7 /* AdScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdScrollView.h; sourceTree = "<group>"; };
+		354503101EFB585B00D9EDA7 /* AdScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdScrollView.m; sourceTree = "<group>"; };
 		356173421EE025110086C73F /* ZPselectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZPselectView.swift; sourceTree = "<group>"; };
 		3597506A1EF37EE900419474 /* JZAlbumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JZAlbumViewController.h; sourceTree = "<group>"; };
 		3597506B1EF37EE900419474 /* JZAlbumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JZAlbumViewController.m; sourceTree = "<group>"; };
@@ -1519,6 +1522,8 @@
 				384DD9801E4822720032AB37 /* ScanningShootVC.m */,
 				35E74BFA1ED91031003EA223 /* ScanDetailViewController.h */,
 				35E74BFB1ED91031003EA223 /* ScanDetailViewController.m */,
+				3545030F1EFB585B00D9EDA7 /* AdScrollView.h */,
+				354503101EFB585B00D9EDA7 /* AdScrollView.m */,
 				3597506A1EF37EE900419474 /* JZAlbumViewController.h */,
 				3597506B1EF37EE900419474 /* JZAlbumViewController.m */,
 				3597506D1EF37F5D00419474 /* PhotoView.h */,
@@ -1953,6 +1958,7 @@
 				386452491E5D849100FC2CD9 /* CollectionVC.swift in Sources */,
 				380B31131E5062D90037D918 /* PBBlurImageView.m in Sources */,
 				380B31341E5062D90037D918 /* UIImageView+SD.m in Sources */,
+				354503111EFB585B00D9EDA7 /* AdScrollView.m in Sources */,
 				3817AC321E6FFF5E00266A04 /* productModel.swift in Sources */,
 				3809F33C1E878BF6001ABE0C /* feedbackModel.swift in Sources */,
 				380B31C51E5462DE0037D918 /* SwiftHeader.swift in Sources */,

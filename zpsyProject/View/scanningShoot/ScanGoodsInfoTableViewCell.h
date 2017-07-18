@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ScanGoodsEntity.h"
+#import "AdScrollView.h"
 
 #define DEGREES_TO_RADIANS(angle) ((angle) / 180.0 * M_PI)
 
@@ -63,6 +64,8 @@ typedef void(^ClickBlock)(BOOL isOpen,NSInteger index);
 
 
 @interface ScanGoodsInfoView : UIView
+
+@property (nonatomic, strong)AdScrollView * scrollView;
 
 @property (nonatomic, strong) UIImageView * productImage;
 
