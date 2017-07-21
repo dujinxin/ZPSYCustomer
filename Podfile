@@ -1,6 +1,6 @@
 platform :ios, '8.0'
 
-target “ZPSY” do
+target "ZPSY" do
 #上拉下拉刷新
 pod 'MJRefresh', '~> 3.1.12'
 #代码约束布局
@@ -37,16 +37,16 @@ pod 'FMDB', '~> 2.6.2'
 pod 'Qiniu', '~> 7.1'
 
 # U-Share SDK UI模块（分享面板，建议添加）
-pod ‘UMengUShare/UI’
+pod 'UMengUShare/UI'
 
 # 集成新浪微博
-pod ‘UMengUShare/Social/Sina'
+pod 'UMengUShare/Social/Sina'
 
 # 集成微信
-pod ‘UMengUShare/Social/WeChat'
+pod 'UMengUShare/Social/WeChat'
 
 # 集成QQ
-pod ‘UMengUShare/Social/QQ'
+pod 'UMengUShare/Social/QQ'
 
 pod 'MBProgressHUD'
 
