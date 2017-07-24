@@ -207,21 +207,21 @@ class homeHotCell: UITableViewCell {
     @objc private func clickevent(gesture:UIGestureRecognizer){
         let view:UIImageView = gesture.view as! UIImageView;
 
-        let model:bannerModel = modelArr![view.tag]
-        let urlStr = model.jumpUrl
+        let model:ExposureEntity = modelArr![view.tag]
+        let urlStr = model.sourceUrl
         
         let detailVc = ExposureDetailVC()
         detailVc.urlStr = urlStr
-        detailVc.thatID = model.field4 ?? model.id
+        detailVc.thatID =  model.id
         detailVc.webtype = "2"
-        detailVc.imgStr = model.image
+        detailVc.imgStr = model.img
         detailVc.detilStr = model.detail
         detailVc.hidesBottomBarWhenPushed = true
         CTUtility.findViewController(self).navigationController?.pushViewController(detailVc, animated: true)
     
     }
     
-    public var modelArr:[bannerModel]? {
+    public var modelArr:[ExposureEntity]? {
         didSet{
         
             self.Imgfirst.isHidden = true
@@ -232,22 +232,22 @@ class homeHotCell: UITableViewCell {
             }
             if((modelArr?.count)!>=1){
                 self.Imgfirst.isHidden = false
-                let model:bannerModel = modelArr![0]
-                self.Imgfirst.locoaSdImageCache(withURL: model.image, placeholderImageName: PlaceHoldeImageStr)
+                let model:ExposureEntity = modelArr![0]
+                self.Imgfirst.locoaSdImageCache(withURL: model.img, placeholderImageName: PlaceHoldeImageStr)
                 self.firstLab.text = model.title
                 self.firstLab.isHidden = true
             }
             if((modelArr?.count)!>=2){
                 self.Imgsecond.isHidden = false
-                let model:bannerModel = modelArr![1]
-                self.Imgsecond.locoaSdImageCache(withURL: model.image, placeholderImageName: PlaceHoldeImageStr)
+                let model:ExposureEntity = modelArr![1]
+                self.Imgsecond.locoaSdImageCache(withURL: model.img, placeholderImageName: PlaceHoldeImageStr)
                 self.secondLab.text = model.title
                 self.secondLab.isHidden = true
             }
             if((modelArr?.count)!>=3){
                 self.Imgthird.isHidden = false
-                let model:bannerModel = modelArr![2]
-                self.Imgthird.locoaSdImageCache(withURL: model.image, placeholderImageName: PlaceHoldeImageStr)
+                let model:ExposureEntity = modelArr![2]
+                self.Imgthird.locoaSdImageCache(withURL: model.img, placeholderImageName: PlaceHoldeImageStr)
                 self.thirdLab.text = model.title
                 self.thirdLab.isHidden = true
             }

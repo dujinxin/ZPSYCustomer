@@ -11,8 +11,8 @@
 #import "bannerModel.h"
 @interface homeModel : NSObject<NSCoding>
 
-@property(nonatomic,strong)NSMutableArray<bannerModel*> *banerListArr;
-@property(nonatomic,strong)NSMutableArray<bannerModel*> *preferenceListArr;
-@property(nonatomic,strong)NSMutableArray<bannerModel*> *adverListArr;
+@property(nonatomic,strong)NSMutableArray<bannerEntity*> *banerListArr;
+@property(nonatomic,strong)NSMutableArray<ExposureEntity*> *preferenceListArr;
+@property(nonatomic,strong)NSMutableArray<ExposureEntity*> *adverListArr;
 
 @end

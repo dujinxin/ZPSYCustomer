@@ -2270,7 +2270,7 @@
 					"$(PROJECT_DIR)/zpsyProject/Tools/thirdCommen/GM",
 				);
 				OTHER_LDFLAGS = (
-					"$(inherited)",
+					"-ObjC",
 					"-l\"AFNetworking\"",
 					"-l\"AMScrollingNavbar\"",
 					"-l\"FMDB\"",

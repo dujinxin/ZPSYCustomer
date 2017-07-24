@@ -59,9 +59,9 @@
         [self.tableview.mj_header endRefreshing];
 //        [MBProgressHUD hideHUDForView:self.view];
         homeModel *model = [[homeModel alloc] init];
-        model.banerListArr = [bannerModel mj_objectArrayWithKeyValuesArray:[result objectForKey:@"list_banner"]];
-        model.preferenceListArr = [bannerModel mj_objectArrayWithKeyValuesArray:[result objectForKey:@"list_preference"]];
-        model.adverListArr = [bannerModel mj_objectArrayWithKeyValuesArray:[result objectForKey:@"list_frontpage"]];
+        model.banerListArr = [bannerEntity mj_objectArrayWithKeyValuesArray:[result objectForKey:@"list_banner"]];
+        model.preferenceListArr = [ExposureEntity mj_objectArrayWithKeyValuesArray:[result objectForKey:@"list_preference"]];
+        model.adverListArr = [ExposureEntity mj_objectArrayWithKeyValuesArray:[result objectForKey:@"list_exposurebar"]];
         self.homemodel = model;
         [self.tableview reloadData];
     } WithFailurBlock:^(NSError *error) {
@@ -112,8 +112,8 @@
     }else if (indexPath.section==1){
         return;
     }else{
-        bannerModel *model = self.homemodel.adverListArr[indexPath.section-2];
-        [self exposureDetail:model.jumpUrl webType:model.field3 ID:model.field4 detailStr:model.detail imgStr:model.image];
+        ExposureEntity *model = self.homemodel.adverListArr[indexPath.section-2];
+        [self exposureDetail:model.sourceUrl webType:model.type ID:model.ID detailStr:model.detail imgStr:model.img];
     }
 }
 
@@ -154,8 +154,8 @@
 
 -(void)reloadBanner{
     NSMutableArray *arr = [NSMutableArray array];
-    [self.homemodel.banerListArr enumerateObjectsUsingBlock:^(bannerModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [arr addObject:obj.image];
+    [self.homemodel.banerListArr enumerateObjectsUsingBlock:^(bannerEntity * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [arr addObject:obj.img];
     }];
     self.sdCycleScrollView.imageURLStringsGroup=arr;
 }
@@ -165,11 +165,10 @@
         _sdCycleScrollView=[SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, kScreenWidth, kWidth_fit(174)) delegate:nil placeholderImage:[UIImage imageNamed:PlaceHoldeImageStr]];
         _sdCycleScrollView.imageURLStringsGroup=@[];
         _sdCycleScrollView.autoScrollTimeInterval=5;
-        @weakify(self);
+        JXWeakSelf(self)
         [_sdCycleScrollView setClickItemOperationBlock:^(NSInteger index) {
-            @strongify(self);
-            bannerModel *model = self.homemodel.banerListArr[index];
-            [self exposureDetail:model.jumpUrl webType:model.field3   ID:model.field4 detailStr:model.detail imgStr:model.image];
+            bannerEntity *model = weakSelf.homemodel.banerListArr[index];
+            [weakSelf exposureDetail:model.jumpUrl webType:model.type ID:model.ID detailStr:nil imgStr:model.img];
         }];
     }
     return _sdCycleScrollView;
@@ -178,11 +177,12 @@
 -(homeModel *)homemodel{
 
     if (_homemodel == nil) {
-        NSString * newPath = [[self documentPath] stringByAppendingPathComponent:@"homeModel.plist"];
-        NSData *data = [NSData dataWithContentsOfFile:newPath];
-        NSKeyedUnarchiver *unArchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-        _homemodel = [unArchiver decodeObjectForKey:@"homeModel"];
-        [unArchiver finishDecoding];
+        _homemodel = [[homeModel alloc ] init];
+//        NSString * newPath = [[self documentPath] stringByAppendingPathComponent:@"homeModel.plist"];
+//        NSData *data = [NSData dataWithContentsOfFile:newPath];
+//        NSKeyedUnarchiver *unArchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
+//        _homemodel = [unArchiver decodeObjectForKey:@"homeModel"];
+//        [unArchiver finishDecoding];
         
     }
     return _homemodel;
@@ -192,12 +192,12 @@
     _homemodel = homemodel;
     [self reloadBanner];
     [self.tableview reloadData];
-    NSMutableData *mData = [[NSMutableData alloc] init];
-    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:mData];
-    [archiver encodeObject:_homemodel forKey:@"homeModel"];
-    [archiver finishEncoding];
-    NSString *newPath = [[self documentPath] stringByAppendingPathComponent:@"homeModel.plist"];
-    [mData writeToFile:newPath atomically:YES];
+//    NSMutableData *mData = [[NSMutableData alloc] init];
+//    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:mData];
+//    [archiver encodeObject:_homemodel forKey:@"homeModel"];
+//    [archiver finishEncoding];
+//    NSString *newPath = [[self documentPath] stringByAppendingPathComponent:@"homeModel.plist"];
+//    [mData writeToFile:newPath atomically:YES];
 }
 - (NSString *)documentPath {
     return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];

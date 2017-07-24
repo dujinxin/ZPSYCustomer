@@ -115,14 +115,14 @@ class homeNewCell: UITableViewCell {
     }
     
     
-    public var model: bannerModel? {
+    public var model: ExposureEntity? {
     
         didSet{
             
-            self.ImgView.locoaSdImageCache(withURL: model?.image, placeholderImageName: PlaceHoldeImageStr)
+            self.ImgView.locoaSdImageCache(withURL: model?.img, placeholderImageName: PlaceHoldeImageStr)
             self.Tiltelab.text = model?.title
-            self.fromImgView.locoaSdImageCache(withURL: model?.field1, placeholderImageName: PlaceHoldeImageStr)
-            self.fromlab.text = model?.field2
+            self.fromImgView.locoaSdImageCache(withURL: model?.thumbnail, placeholderImageName: PlaceHoldeImageStr)
+            self.fromlab.text = model?.source
             self.detaillab.text = model?.detail
         }
     
