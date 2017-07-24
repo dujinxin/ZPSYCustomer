@@ -95,3 +95,8 @@
 #define Api_userScoreChange @"user/score"//修改积分
 
 #endif /* Apimacro_h */
+
+/*
+
+-force_load $(TARGET_BUILD_DIR)/libPods-ZPSY.a -l"AFNetworking" -l"AMScrollingNavbar" -l"FMDB" -l"HappyDNS" -l"IQKeyboardManager" -l"MBProgressHUD" -l"MJExtension" -l"MJRefresh" -l"Masonry" -l"Qiniu" -l"ReactiveCocoa" -l"SAMKeychain" -l"SDCycleScrollView" -l"SDWebImage" -l"SocialQQ" -l"SocialSina" -l"SocialWeChat" -l"TZImagePickerController" -l"UITableView+FDTemplateLayoutCell" -l"UMSocialLog" -l"WeChatSDK" -l"WeiboSDK" -l"c++" -l"resolv" -l"sqlite3" -l"z" -framework "CoreGraphics" -framework "CoreTelephony" -framework "Foundation" -framework "ImageIO" -framework "MobileCoreServices" -framework "QuartzCore" -framework "Security" -framework "SystemConfiguration" -framework "TencentOpenAPI" -framework "UIKit" -framework "UMSocialCore" -framework "UMSocialNetwork" -framework "UShareUI"
+*/
