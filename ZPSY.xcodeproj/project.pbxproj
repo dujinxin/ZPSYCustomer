@@ -129,11 +129,6 @@
 		380B31991E51D5170037D918 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 380B31981E51D5170037D918 /* CFNetwork.framework */; };
 		380B319B1E51D5280037D918 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 380B319A1E51D5280037D918 /* CoreFoundation.framework */; };
 		380B319D1E51D5350037D918 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 380B319C1E51D5350037D918 /* CoreTelephony.framework */; };
-		380B319F1E51D53F0037D918 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 380B319E1E51D53F0037D918 /* SystemConfiguration.framework */; };
-		380B31A11E51D5470037D918 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 380B31A01E51D5470037D918 /* CoreGraphics.framework */; };
-		380B31A31E51D5540037D918 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 380B31A21E51D5540037D918 /* Foundation.framework */; };
-		380B31A51E51D5600037D918 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 380B31A41E51D5600037D918 /* UIKit.framework */; };
-		380B31A71E51D56E0037D918 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 380B31A61E51D56E0037D918 /* Security.framework */; };
 		380B31A91E51D5780037D918 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 380B31A81E51D5780037D918 /* libz.tbd */; };
 		380B31AB1E51D5880037D918 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 380B31AA1E51D5880037D918 /* AdSupport.framework */; };
 		380B31AD1E51D5930037D918 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 380B31AC1E51D5930037D918 /* UserNotifications.framework */; };
@@ -470,11 +465,6 @@
 		380B31981E51D5170037D918 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		380B319A1E51D5280037D918 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		380B319C1E51D5350037D918 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
-		380B319E1E51D53F0037D918 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		380B31A01E51D5470037D918 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		380B31A21E51D5540037D918 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		380B31A41E51D5600037D918 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		380B31A61E51D56E0037D918 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		380B31A81E51D5780037D918 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		380B31AA1E51D5880037D918 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		380B31AC1E51D5930037D918 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
@@ -588,11 +578,6 @@
 				380B31AD1E51D5930037D918 /* UserNotifications.framework in Frameworks */,
 				380B31AB1E51D5880037D918 /* AdSupport.framework in Frameworks */,
 				380B31A91E51D5780037D918 /* libz.tbd in Frameworks */,
-				380B31A71E51D56E0037D918 /* Security.framework in Frameworks */,
-				380B31A51E51D5600037D918 /* UIKit.framework in Frameworks */,
-				380B31A31E51D5540037D918 /* Foundation.framework in Frameworks */,
-				380B31A11E51D5470037D918 /* CoreGraphics.framework in Frameworks */,
-				380B319F1E51D53F0037D918 /* SystemConfiguration.framework in Frameworks */,
 				380B319D1E51D5350037D918 /* CoreTelephony.framework in Frameworks */,
 				380B319B1E51D5280037D918 /* CoreFoundation.framework in Frameworks */,
 				380B31991E51D5170037D918 /* CFNetwork.framework in Frameworks */,
@@ -1705,11 +1690,6 @@
 				380B31AC1E51D5930037D918 /* UserNotifications.framework */,
 				380B31AA1E51D5880037D918 /* AdSupport.framework */,
 				380B31A81E51D5780037D918 /* libz.tbd */,
-				380B31A61E51D56E0037D918 /* Security.framework */,
-				380B31A41E51D5600037D918 /* UIKit.framework */,
-				380B31A21E51D5540037D918 /* Foundation.framework */,
-				380B31A01E51D5470037D918 /* CoreGraphics.framework */,
-				380B319E1E51D53F0037D918 /* SystemConfiguration.framework */,
 				380B319C1E51D5350037D918 /* CoreTelephony.framework */,
 				380B319A1E51D5280037D918 /* CoreFoundation.framework */,
 				380B31981E51D5170037D918 /* CFNetwork.framework */,
