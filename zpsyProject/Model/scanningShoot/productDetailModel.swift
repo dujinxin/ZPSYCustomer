@@ -15,6 +15,7 @@ class productDetailModel: NSObject {
     public var attention:String?
     public var category:String?
     public var certificateFile:String?//认证证书
+    
     public var createDateStr:String?
     public var favoritesNum:String?
     public var goodsImg:String?
@@ -38,6 +39,7 @@ class productDetailModel: NSObject {
     //new
     public var regNo:String?
     public var reportFile:String? //检测报告
+    
     public var list_batch:NSArray? = []
     
     public var list_ceccGoodsField:NSArray?=[]

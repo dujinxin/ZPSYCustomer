@@ -14,6 +14,7 @@
 @property(nonatomic,strong)NSString *img;
 @property(nonatomic,strong)NSString *type;//0：商品，1: 曝光栏，2：正品优选
 @property(nonatomic,strong)NSString *status;//0表示无过期时间  1表示有过期时间
+@property(nonatomic,strong)NSString *jumpUrl;
 
 @property(nonatomic,strong)NSString *expirationDate;
 @property(nonatomic,strong)NSString *createDate;
@@ -26,7 +27,7 @@
 @interface bannerEntity : HomeEntity
 
 @property(nonatomic,strong)NSString *resourcesId;
-@property(nonatomic,strong)NSString *jumpUrl;
+
 @end
 
 @interface ExposureEntity : HomeEntity
@@ -37,6 +38,7 @@
 @property(nonatomic,strong)NSString *thumbnail;
 @property(nonatomic,strong)NSString *source;
 @property(nonatomic,strong)NSString *sourceUrl;
+@property(nonatomic,strong)NSString *sourceImg;
 
 @property(nonatomic,strong)NSString *shortTitle;
 @property(nonatomic,strong)NSString *summary;

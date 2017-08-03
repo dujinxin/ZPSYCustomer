@@ -11,12 +11,12 @@
 
 //=====================Api IP=======================
 
-//#define BASEURL @"https://app.izheng.org/genuine/"
-////html5 域名
-//#define HtmlBasUrl @"http://app.izheng.org/#/"
+#define BASEURL @"https://app.izheng.org/genuine/"
+//html5 域名
+#define HtmlBasUrl @"http://app.izheng.org/#/"
 
-#define BASEURL @"http://192.168.10.12:8082/genuine/"
-#define HtmlBasUrl @"http://192.168.10.12:8082/#/"
+//#define BASEURL @"http://192.168.10.12:8082/genuine/"
+//#define HtmlBasUrl @"http://192.168.10.12:8082/#/"
 
 //================================
 
@@ -26,6 +26,8 @@
 #define Api_LoginThird @"login/loginByTencentAndSina"//第三方登录
 #define Api_mobileIsExist @"user/mobileIsExist"//验证手机号
 #define Api_bindMobile @"user/bindMobile" //绑定手机号
+
+#define Api_eid @"user/encodeDesede"
 
 //首页
 #define Api_homePage @"advertisement/getFrontPageList"//首页
@@ -100,3 +102,11 @@
 
 -force_load $(TARGET_BUILD_DIR)/libPods-ZPSY.a -l"AFNetworking" -l"AMScrollingNavbar" -l"FMDB" -l"HappyDNS" -l"IQKeyboardManager" -l"MBProgressHUD" -l"MJExtension" -l"MJRefresh" -l"Masonry" -l"Qiniu" -l"ReactiveCocoa" -l"SAMKeychain" -l"SDCycleScrollView" -l"SDWebImage" -l"SocialQQ" -l"SocialSina" -l"SocialWeChat" -l"TZImagePickerController" -l"UITableView+FDTemplateLayoutCell" -l"UMSocialLog" -l"WeChatSDK" -l"WeiboSDK" -l"c++" -l"resolv" -l"sqlite3" -l"z" -framework "CoreGraphics" -framework "CoreTelephony" -framework "Foundation" -framework "ImageIO" -framework "MobileCoreServices" -framework "QuartzCore" -framework "Security" -framework "SystemConfiguration" -framework "TencentOpenAPI" -framework "UIKit" -framework "UMSocialCore" -framework "UMSocialNetwork" -framework "UShareUI"
 */
+
+/*
+ -force_load $(BUILT_PRODUCTS_DIR)/ReactiveCocoa/libReactiveCocoa.a -force_load $(BUILT_PRODUCTS_DIR)/MJRefresh/libMJRefresh.a -force_load $(BUILT_PRODUCTS_DIR)/SDCycleScrollView/libSDCycleScrollView.a -force_load $(BUILT_PRODUCTS_DIR)/Masonry/libMasonry.a -force_load $(BUILT_PRODUCTS_DIR)/MJExtension/libMJExtension.a -force_load $(BUILT_PRODUCTS_DIR)/SDWebImage/libSDWebImage.a
+ */
+
+/*
+ -force_load $(TARGET_BUILD_DIR)/ReactiveCocoa/libReactiveCocoa.a -force_load $(TARGET_BUILD_DIR)/MJRefresh/libMJRefresh.a -force_load $(TARGET_BUILD_DIR)/SDCycleScrollView/libSDCycleScrollView.a -force_load $(TARGET_BUILD_DIR)/Masonry/libMasonry.a -force_load $(TARGET_BUILD_DIR)/MJExtension/libMJExtension.a -force_load $(TARGET_BUILD_DIR)/SDWebImage/libSDWebImage.a
+ */

@@ -113,7 +113,7 @@
         return;
     }else{
         ExposureEntity *model = self.homemodel.adverListArr[indexPath.section-2];
-        [self exposureDetail:model.sourceUrl webType:model.type ID:model.ID detailStr:model.detail imgStr:model.img];
+        [self exposureDetail:model.jumpUrl webType:model.type ID:model.ID detailStr:model.detail imgStr:model.img];
     }
 }
 

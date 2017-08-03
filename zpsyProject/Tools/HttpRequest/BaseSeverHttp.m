@@ -8,6 +8,9 @@
 
 #import "BaseSeverHttp.h"
 #import "AFHTTPClient.h"
+#import "ZPSYTabbarVc.h"
+#import "ZPSYNav.h"
+#import "LoginVC.h"
 
 @implementation BaseSeverHttp
 
@@ -62,7 +65,7 @@
 
     NSDictionary *response = responseObject;
     NSString* errorCode = [response objectForKey:@"errorCode"];
-    NSLog(@"result = %@",response[@"result"]);
+    NSLog(@"responseObject = %@",responseObject);
     
 //    [MBProgressHUD hideHUD];
 //    NSDictionary * result = @{
@@ -287,8 +290,16 @@
         [MBProgressHUD hideHUD];
         BLOCK_SAFE(success)([responseObject objectForKey:@"result"]);
     }else if ([errorCode isEqualToString:@"-2"]){
-        BLOCK_SAFE(failure)(nil);
+        //BLOCK_SAFE(failure)(nil);
         
+        [[UserModel ShareInstance] setIsLogin:NO];
+        
+        ZPSYTabbarVc * rootVc = (ZPSYTabbarVc *)[UIApplication sharedApplication].keyWindow.rootViewController;
+        ZPSYNav * nvc = (ZPSYNav *)rootVc.selectedViewController;
+        UIViewController * vc = nvc.topViewController;
+        LoginVC * lvc = [[LoginVC alloc] init];
+        lvc.hidesBottomBarWhenPushed = YES;
+        [vc.navigationController pushViewController:lvc animated:NO];
         
     }else{
         BLOCK_SAFE(failure)(nil);

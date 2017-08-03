@@ -65,7 +65,6 @@
     }
     return YES;
 }
-
 -(void)pushToScanVC{
     if (TARGET_IPHONE_SIMULATOR) {
         UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"温馨提示" message:@"模拟器暂时不支持扫描" preferredStyle:UIAlertControllerStyleAlert];

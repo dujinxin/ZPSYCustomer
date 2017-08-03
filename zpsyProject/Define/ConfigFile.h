@@ -28,6 +28,10 @@
 #define SinaAppKey @"1137827924"
 #define SinaAppSecret @"ea8017aac1f52ae38a030d31778183ca"
 
+//eID
+#define eIdAppId  @"47606c795c362c1a"
+#define eIdAppKey @"10beaf689feee1ab95b485acb0727305"
+
 //=======================颜色==========================
 #define kColor_1 kColor(20,148,255)        //用于重点突出文字、数字、按钮和点击后的icon
 #define kColor_2 kColor(255,255,255)       //用于分隔模块的底色，以及部分按钮的文字

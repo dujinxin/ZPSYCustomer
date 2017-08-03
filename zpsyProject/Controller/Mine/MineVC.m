@@ -8,7 +8,6 @@
 //
 
 #import "MineVC.h"
-#import "LoginVC.h"
 #import "mineloginStatusView.h"
 #import "ZPSY-Swift.h"
 
@@ -44,7 +43,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
+    [self.navigationController setNavigationBarHidden:NO animated:false];
     if ([UserModel ShareInstance].IsLogin) {
         [self userinfoGetRequest];
     }

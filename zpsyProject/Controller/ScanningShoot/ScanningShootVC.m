@@ -112,7 +112,14 @@
         }
         scanFinishModel *model = [[scanFinishModel alloc] init];
         [model setmodelWithScandict:result];
-        model.codeSnId = codeStr;
+        
+        NSArray *arr = [codeStr componentsSeparatedByString:@"/"];
+        if (arr && arr.count>0) {
+            model.codeSnId = arr.lastObject;
+        }else{
+            model.codeSnId = codeStr;
+        }
+        
         ScanDetailViewController *vc= [[ScanDetailViewController alloc] init];
         //vc.view.backgroundColor = JXFfffffColor;
         vc.hidesBottomBarWhenPushed=YES;

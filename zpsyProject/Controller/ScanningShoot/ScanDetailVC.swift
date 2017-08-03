@@ -126,7 +126,8 @@ class ScanDetailVC: UIViewController{
         
         if !UserModel.shareInstance().isLogin {
             let login = LoginVC.init()
-            self.present(login, animated: true, completion: nil)
+            login.hidesBottomBarWhenPushed =  true
+            self.navigationController?.pushViewController(login, animated: false)
             return
         }
         
@@ -146,7 +147,8 @@ class ScanDetailVC: UIViewController{
         
         if !UserModel.shareInstance().isLogin {
             let login = LoginVC.init()
-            self.present(login, animated: true, completion: nil)
+            login.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(login, animated: false)
             return
         }
         
@@ -172,6 +174,7 @@ class ScanDetailVC: UIViewController{
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
         self.resetfram(20)
     }
     

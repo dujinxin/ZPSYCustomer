@@ -38,7 +38,7 @@
         PageNo=1;
         [self dataRequest];
     }];
-    self.tableview.mj_footer = [MJRefreshAutoFooter footerWithRefreshingBlock:^{
+    self.tableview.mj_footer = [MJRefreshBackFooter footerWithRefreshingBlock:^{
         PageNo+=1;
         [self dataRequest];
     }];
