@@ -12,6 +12,8 @@
 #import "UShareView.h"
 #import "ZPSY-Swift.h"
 #import "LoginVC.h"
+#import "ZPSYNav.h"
+
 @interface ExposureDetailVC ()
 
 @property(nonatomic, strong)ExposureDetailView *detailView;
@@ -31,6 +33,7 @@
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:false];
     if ([UserModel ShareInstance].IsLogin) {
         self.detailView.UrlStr = [NSString stringWithFormat:@"%@&token=%@",self.urlStr,[UserModel ShareInstance].TOKEN];
     }else{
@@ -210,13 +213,14 @@
 
 -(void)loginPush{
     LoginVC *login = [[LoginVC alloc] init];
+    login.hidesBottomBarWhenPushed = YES;
     @weakify(self)
     [login setLoginSuccessBlock:^{
         @strongify(self)
         self.detailView.UrlStr = [NSString stringWithFormat:@"%@&token=%@",self.urlStr,[UserModel ShareInstance].TOKEN];
         [self isfaverite];
     }];
-    [self presentViewController:login animated:YES completion:nil];
+    [self.navigationController pushViewController:login animated:NO];
 }
 
 - (void)didReceiveMemoryWarning {

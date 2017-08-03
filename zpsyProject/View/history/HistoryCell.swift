@@ -15,6 +15,7 @@ class HistoryCell: UITableViewCell {
     
         let img=UIImageView.init(image: UIImage.init(named:PlaceHoldeImageStr))
         img.contentMode=UIViewContentMode.scaleAspectFill
+        img.clipsToBounds = true
         return img
     }()
     private lazy var TitleLab:UILabel={

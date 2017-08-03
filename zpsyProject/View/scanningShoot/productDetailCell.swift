@@ -27,7 +27,7 @@ class productDetailCell: UITableViewCell {
         lab.font = UIFont.systemFont(ofSize: 13)
         lab.textColor = Utility.color(withHex: 0x333333)
         lab.backgroundColor = Utility.jxDebugColor()
-        lab.text = "优"
+        lab.text = ""
         return lab
     }()
     public var detailImageView:UIImageView = {
@@ -105,19 +105,13 @@ class productDetailCell: UITableViewCell {
             self.detailImageView.mas_remakeConstraints { (make:MASConstraintMaker?) in
                 let _ = make?.top.equalTo()(self.nameLabel.mas_top)
                 let _ = make?.left.equalTo()(self.nameLabel.mas_right)
-                let _ = make?.width.and().height().mas_equalTo()(75);
+                let _ = make?.width.and().height().mas_equalTo()(50*kPercent);
                 let _ = make?.bottom.equalTo()(self.contentView.mas_bottom)?.offset()(-15)
             }
         }else{
             
         }
     }
-    
-    
-    
-    
-    
-    
     
     
     required init?(coder aDecoder: NSCoder) {

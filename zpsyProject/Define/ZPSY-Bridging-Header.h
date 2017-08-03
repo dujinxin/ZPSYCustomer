@@ -16,6 +16,7 @@
 #import "bannerModel.h"
 #import "ExposureDetailVC.h"
 #import "LoginVC.h"
+#import "ZPSYNav.h"
 
 #import <SDImageCache.h>
 #import <UIImageView+WebCache.h>

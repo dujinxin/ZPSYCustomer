@@ -8,6 +8,8 @@
 
 #import "mineloginStatusView.h"
 #import "LoginVC.h"
+#import "ZPSYNav.h"
+#import "ZPSYTabbarVc.h"
 #import "ZPSY-Swift.h"
 
 @interface mineloginStatusView ()
@@ -103,7 +105,13 @@
     }];
  
     [[self.loginBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
-        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:[LoginVC new] animated:YES completion:nil];
+        ZPSYTabbarVc * vc = (ZPSYTabbarVc *)[UIApplication sharedApplication].keyWindow.rootViewController;
+        ZPSYNav * nvc = (ZPSYNav *)vc.selectedViewController;
+        LoginVC * lvc = [[LoginVC alloc] init];
+        lvc.hidesBottomBarWhenPushed = YES;
+        ZPSYNav * loginNv = [[ZPSYNav alloc ]initWithRootViewController:lvc];
+        //[vc.selectedViewController presentViewController:loginNv animated:YES completion:nil];
+        [nvc pushViewController:lvc animated:NO];
     }];
     
 }

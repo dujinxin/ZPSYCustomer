@@ -56,6 +56,10 @@ class ProductDetailVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
         datarequest()
         viewinit()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+    }
 
     func viewinit(){
         self.view.addSubview(self.tableView)
@@ -103,6 +107,27 @@ class ProductDetailVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
         
     }
 
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == 1 {
+            let dict:NSDictionary = self.productdetailModel?.list_ceccGoodsField![indexPath.row] as! NSDictionary
+            
+            let type = dict.object(forKey: "fieldType") as! String
+            let titleStr:String = dict.object(forKey: "fieldValue")as! String
+            
+            if Int(type) == 6 {
+                return 15 + 50*kPercent
+            }else{
+                let size = titleStr.calculate(width: kScreenWidth - 120, fontSize: 12, lineSpace: 5)
+                if size.height < 20 {
+                   return 15 + 13
+                }else{
+                   return 15 + size.height
+                }
+            }
+        }else{
+            return UITableViewAutomaticDimension
+        }
+    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
        
@@ -131,8 +156,17 @@ class ProductDetailVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
             let cell:productDetailCell = tableView.dequeueReusableCell(withIdentifier: "productDetailCellId") as! productDetailCell
             let dict:NSDictionary = self.productdetailModel?.list_ceccGoodsField![indexPath.row] as! NSDictionary
             let titleStr:String = dict.object(forKey: "fieldName")as! String
-            let keyStr:String = dict.object(forKey: "fieldValue")as! String
-            cell.nameLabel.text = titleStr + " : " + keyStr
+            
+            cell.nameLabel.text = titleStr + " : "
+            
+            let type = dict.object(forKey: "fieldType") as! String
+            if Int(type) == 6 {
+                cell.detailImageView.sd_setImage(with: URL.init(string: dict.object(forKey: "fieldValue")as! String), placeholderImage: nil)
+            }else{
+                let keyStr:String = dict.object(forKey: "fieldValue")as! String
+                cell.detailLabel.text = keyStr
+            }
+            cell.resetProductPackageType(type: Int(type)!)
            return cell
         }
     }
@@ -155,7 +189,9 @@ class ProductDetailVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
         
         if !UserModel.shareInstance().isLogin {
             let login = LoginVC()
-            self.present(login, animated: true, completion: nil)
+            login.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(login, animated: false)
+            
             return
         }
         

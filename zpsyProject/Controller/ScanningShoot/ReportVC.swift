@@ -34,7 +34,10 @@ class ReportVC: UITableViewController {
         self.tableView.estimatedRowHeight = 80.0
         viewinit()
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+    }
     private func viewinit() {
         
         self.tableView.register(ReportCell.self, forCellReuseIdentifier: "ReportCell")
@@ -71,12 +74,27 @@ class ReportVC: UITableViewController {
     
     @objc private func commitbtnclickevent(){
 //        successShow()
-        if self.suggestStr=="" {
-            MBProgressHUD.showError("请写点什么吧")
+        if !UserModel.shareInstance().isLogin {
+            let login = LoginVC.init()
+            login.hidesBottomBarWhenPushed =  true
+            self.navigationController?.pushViewController(login, animated: false)
             return
         }
-        if self.phoneNumStr=="" && !UserModel.shareInstance().isLogin{
-            MBProgressHUD.showError("请留下您的手机号吧")
+        guard
+            let suggestString = self.suggestStr,
+            suggestString.isEmpty == false else {
+                MBProgressHUD.showError("请写点什么吧")
+                return
+        }
+        guard
+            let phoneNumString = self.phoneNumStr,
+            phoneNumString.isEmpty == false
+            else {
+                MBProgressHUD.showError("请留下您的手机号吧")
+                return
+        }
+        if String.validateTelephone(tel: phoneNumString) == false {
+            MBProgressHUD.showError("手机号格式不正确")
             return
         }
         
@@ -84,7 +102,7 @@ class ReportVC: UITableViewController {
         
         if self.PicSelect.localImageArray.count == 0 {
             
-            self.datarequest(["sn":self.SNString ?? "","report_contents":self.suggestStr!,"mobile":self.phoneNumStr!,"image1":"","productid":self.PruductId ?? ""])
+            self.datarequest(["sn":self.SNString ?? "","report_contents":suggestString,"mobile":phoneNumString,"image1":"","productid":self.PruductId ?? ""])
             
         }else{
             UploadImageTool.uploadImages(self.PicSelect.localImageArray, progress: nil, success: { (result:[Any]?) in
@@ -98,7 +116,7 @@ class ReportVC: UITableViewController {
                 let length:NSInteger = imgStr.characters.count - 1
                 let imgUrlStr = (imgStr as NSString).substring(to: length)
                 
-                self.datarequest(["sn":self.SNString ?? "","report_contents":self.suggestStr!,"mobile":self.phoneNumStr!,"image1":imgUrlStr,"productid":self.PruductId ?? ""])
+                self.datarequest(["sn":self.SNString ?? "","report_contents":suggestString,"mobile":phoneNumString,"image1":imgUrlStr,"productid":self.PruductId ?? ""])
             }, failure: {
                 MBProgressHUD.hide(for: self.view)
             })

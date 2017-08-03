@@ -11,11 +11,15 @@
 #import "UshareGetinfo.h"
 #import "WKwebVC.h"
 #import "ZPSYNav.h"
+#import "ZPSYTabbarVc.h"
+#import "findeIDViewController.h"
+#import "NetWorkTools.h"
 
 @interface LoginVC ()
-@property(nonatomic,strong)UITextField *nameText;
-@property(nonatomic,strong)UITextField *checkCodeText;
-@property(nonatomic,strong)UILabel *codelab;
+@property(nonatomic, strong)NSDateFormatter *formatter;
+@property(nonatomic, strong)UITextField *nameText;
+@property(nonatomic, strong)UITextField *checkCodeText;
+@property(nonatomic, strong)UILabel *codelab;
 @end
 
 @implementation LoginVC
@@ -34,11 +38,58 @@
     [self BackBut];
     [self LoginViewinit];
     
-
+    [self userinfo];
+}
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:false];
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    //[self.navigationController setNavigationBarHidden:NO animated:false];
+}
+-(void)userinfo{
     
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(signok) name:@"signok" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(timeFireMethod) name:@"timeFireMethod" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(resultstr:) name:@"resultstr" object:nil];
+}
+//验证成功
+-(void)signok{
+    NSLog(@"验证成功了");
+}
+//连接超时
+-(void)timeFireMethod{
+    NSLog(@"连接超时");
+}
+//成功返回的字符串数据
+-(void)resultstr:(NSNotification *)info{
+    NSLog(@"成功了%@",info.userInfo);
+    //[MBProgressHUD showSuccess:@"成功了"];
+    
+    NSDictionary *dict =@{
+                          @"authId":info.userInfo[@"idhash"],
+                          @"nickName":@"",
+                          @"regType":@(6),
+                          @"avatar":@""
+                          };
+    __block MBProgressHUD *hud= [MBProgressHUD showAnimationtoView:self.view];
+    [BaseSeverHttp ZpsyPostWithPath:Api_LoginThird WithParams:dict WithSuccessBlock:^(NSDictionary* result) {
+        hud.hidden=YES;
+        userInfoModel *model = [userInfoModel mj_objectWithKeyValues:result];
+        [UserModel ShareInstance].userInfo = model;
+        [UserModel ShareInstance].TOKEN = [result objectForKey:@"token"];
+        [UserModel ShareInstance].IsLogin = YES;
+        //[self dismissViewControllerAnimated:NO completion:nil];
+        [self.navigationController popViewControllerAnimated:NO];
+        [self.navigationController setNavigationBarHidden:NO animated:NO];
+        BLOCK_SAFE(self.loginSuccessBlock)();
+    } WithFailurBlock:^(NSError *error) {
+        hud.hidden=YES;
+    }];
 }
 -(void)LoginClickEvent{
-
+    
     if (![CTUtility isValidateMobile:self.nameText.text]) {
         [MBProgressHUD showError:ErrorMessagePhoneNum];
         return;
@@ -59,7 +110,9 @@
         [UserModel ShareInstance].userInfo = model;
         [UserModel ShareInstance].TOKEN = [result objectForKey:@"token"];
         [UserModel ShareInstance].IsLogin = YES;
-        [self dismissViewControllerAnimated:NO completion:nil];
+        //[self dismissViewControllerAnimated:NO completion:nil];
+        [self.navigationController popViewControllerAnimated:NO];
+        [self.navigationController setNavigationBarHidden:NO animated:NO];
         BLOCK_SAFE(self.loginSuccessBlock)();
     } WithFailurBlock:^(NSError *error) {
         hud.hidden=YES;
@@ -70,7 +123,7 @@
 
 #pragma View 初始化
 -(void)LoginViewinit{
-
+    
     [self.view addSubview:self.nameText];
     [self.view addSubview:self.checkCodeText];
     
@@ -107,34 +160,86 @@
 }
 
 -(void)thirdLoginlInit{
-
+    
     loginsortcut *shortcut=[[loginsortcut alloc] initWithFrame:CGRectMake(0, kWidth_fit(480), kScreenWidth, 16)];
     shortcut.backgroundColor=[UIColor clearColor];
     [self.view addSubview:shortcut];
-
+    
     CGFloat Y=CGRectGetMaxY(shortcut.frame)+kWidth_fit(15);
     CGFloat wid=kWidth_fit(80);
-    CGFloat space=(kScreenWidth-wid*3)/4;
+    CGFloat space=(kScreenWidth-wid*4)/5;
     NSArray *arr=@[
                    @{@"type":@(UMSocialPlatformType_Sina),
-                     @"image":@"thirdewb"
+                     @"image":@"loginSina"
                      },
-                   @{@"type":@(UMSocialPlatformType_WechatSession),@"image":@"thirdewx"},
+                   @{@"type":@(UMSocialPlatformType_WechatSession),@"image":@"loginWx"},
                    @{@"type":@(UMSocialPlatformType_QQ),
-                     @"image":@"thirdeqq"
+                     @"image":@"loginQQ"
                      },
+                   @{@"type":@(1001),
+                     @"image":@"loginEID"
+                     }
                    ];
     
     [arr enumerateObjectsUsingBlock:^(NSDictionary* obj, NSUInteger idx, BOOL * _Nonnull stop) {
         UIButton *btn=[[UIButton alloc] initWithFrame:CGRectMake(((idx+1)*space+idx*wid), Y, wid, wid)];
         [btn setImage:[UIImage imageNamed:obj[@"image"]] forState:UIControlStateNormal];
-        [[btn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
-            @weakify(self);
-            [UshareGetinfo shareGetInfoWithController:self PlatformType:[arr[idx][@"type"] integerValue] resultBlock:^(UMSocialUserInfoResponse *resp) {
-                @strongify(self);
-                [self thirdClickEventWithType:[arr[idx][@"type"] integerValue] result:resp];
+        if (idx != 3) {
+            [[btn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
+                @weakify(self);
+                [UshareGetinfo shareGetInfoWithController:self PlatformType:[arr[idx][@"type"] integerValue] resultBlock:^(UMSocialUserInfoResponse *resp) {
+                    @strongify(self);
+                    [self thirdClickEventWithType:[arr[idx][@"type"] integerValue] result:resp];
+                }];
             }];
-        }];
+        }else{
+            [[btn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
+                @weakify(self);
+                dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                    
+                    NSDate *date = [NSDate date];
+                    self.formatter.dateFormat = @"yyyyMMddHHmmss";
+                    NSString *biz_time =[self.formatter stringFromDate:date];
+                    NSDictionary *dict = @{@"app_id":eIdAppId,@"biz_time":biz_time};
+                    
+                    NSError * error = nil;
+                    NSData * data = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:&error];
+                    if (error) {
+                        NSLog(@"error:%@",error.localizedDescription);
+                        return;
+                    }
+                    NSString * jsonStr = [[NSString alloc ]initWithData:data encoding:NSUTF8StringEncoding];
+                    NSMutableString * mutableStr = [NSMutableString stringWithString:jsonStr];
+                    [mutableStr replaceOccurrencesOfString:@" " withString:@"" options:NSLiteralSearch range:NSMakeRange(0, mutableStr.length)];
+                    [mutableStr replaceOccurrencesOfString:@"\n" withString:@"" options:NSLiteralSearch range:NSMakeRange(0, mutableStr.length)];
+                    NSLog(@"mutableStr:%@",mutableStr);
+                    [BaseSeverHttp ZpsyPostWithPath:Api_eid WithParams:@{@"plainText":mutableStr} WithSuccessBlock:^(NSDictionary* result) {
+
+                        
+                        NSString *app_sign = [[result objectForKey:@"encode"] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                        NSLog(@"app_sign:%@",app_sign);
+                       
+                        NSUserDefaults *UserDefaults = [NSUserDefaults standardUserDefaults];
+                        [UserDefaults setValue:@"IDH" forKey:@"style"];
+                        [UserDefaults setBool:YES forKey:@"PKI"];
+                        [UserDefaults setObject:app_sign forKey:@"app_sign"];
+                        
+                        findeIDViewController *find = [[findeIDViewController alloc] init ];
+                        find.APP_id = eIdAppId;
+                
+                        [self.navigationController pushViewController:find animated:YES];
+                        
+                    } WithFailurBlock:^(NSError *error) {
+                        
+                    }];
+                    
+                });
+
+                
+
+                
+            }];
+        }
         [self.view addSubview:btn];
     }];
     
@@ -153,6 +258,7 @@
     label.userInteractionEnabled=YES;
     [label addGestureRecognizer:tap];
 }
+
 //Api_LoginThird
 -(void)thirdClickEventWithType:(UMSocialPlatformType)type result:(UMSocialUserInfoResponse*)resp{
     
@@ -164,22 +270,27 @@
         regType = 2;
     }else if (type==UMSocialPlatformType_QQ){
         regType = 3;
+    }else{
+        //...
+        NSLog(@"eID");
     }
     
-     NSDictionary *dict =@{
-        @"authId":resp.uid,
-        @"nickName":resp.name,
-        @"regType":@(regType),
-        @"avatar":resp.iconurl
-        };
-     __block MBProgressHUD *hud= [MBProgressHUD showAnimationtoView:self.view];
+    NSDictionary *dict =@{
+                          @"authId":resp.uid,
+                          @"nickName":resp.name,
+                          @"regType":@(regType),
+                          @"avatar":resp.iconurl
+                          };
+    __block MBProgressHUD *hud= [MBProgressHUD showAnimationtoView:self.view];
     [BaseSeverHttp ZpsyPostWithPath:Api_LoginThird WithParams:dict WithSuccessBlock:^(NSDictionary* result) {
         hud.hidden=YES;
         userInfoModel *model = [userInfoModel mj_objectWithKeyValues:result];
         [UserModel ShareInstance].userInfo = model;
         [UserModel ShareInstance].TOKEN = [result objectForKey:@"token"];
         [UserModel ShareInstance].IsLogin = YES;
-        [self dismissViewControllerAnimated:NO completion:nil];
+        //[self dismissViewControllerAnimated:NO completion:nil];
+        [self.navigationController popViewControllerAnimated:NO];
+        [self.navigationController setNavigationBarHidden:NO animated:NO];
         BLOCK_SAFE(self.loginSuccessBlock)();
     } WithFailurBlock:^(NSError *error) {
         hud.hidden=YES;
@@ -194,8 +305,15 @@
     [self presentViewController:nav animated:YES completion:nil];
 }
 #pragma get
+- (NSDateFormatter *)formatter {
+    if(! _formatter) {
+        _formatter = [[NSDateFormatter alloc] init];
+        _formatter.dateFormat = @"EEE MMM dd HH:mm:ss Z yyyy";// twitter date format
+    }
+    return _formatter;
+}
 -(UITextField *)nameText{
-
+    
     if (!_nameText) {
         _nameText=[[UITextField alloc] init];
         _nameText.placeholder=@"请输入手机号";
@@ -217,7 +335,7 @@
 
 
 -(UITextField *)checkCodeText{
-
+    
     if (!_checkCodeText) {
         _checkCodeText=[[UITextField alloc] init];
         _checkCodeText.placeholder=@"验证码";
@@ -271,7 +389,13 @@
     @weakify(self);
     [[but rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
         @strongify(self);
-        [self dismissViewControllerAnimated:YES completion:nil];
+        
+        if (self.navigationController && [self.navigationController respondsToSelector:@selector(popViewControllerAnimated:)]) {
+            [self.navigationController popViewControllerAnimated:NO];
+            [self.navigationController setNavigationBarHidden:NO animated:NO];
+        }else{
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
     }];
 }
 
@@ -279,7 +403,7 @@
     if (![CTUtility isValidateMobile:self.nameText.text]) {
         [MBProgressHUD showError:ErrorMessagePhoneNum];
         return;
-     }
+    }
     [self startTime];
     [BaseSeverHttp ZpsyGetWithPath:Api_getAuthorizationCode WithParams:@{@"mobile":self.nameText.text,@"type":@"1"} WithSuccessBlock:^(id result) {
         [MBProgressHUD showSuccess:SuccessCheckCode];
@@ -293,29 +417,29 @@
     //倒计时时间
     __block int timeout = 60;
     //设置全局队列
-    @weakify(self);
+    JXWeakSelf(self)
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_source_t timer = dispatch_source_create( DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
     dispatch_source_set_timer(timer, dispatch_walltime(NULL, 0), 1.0*NSEC_PER_SEC, 0);
     dispatch_source_set_event_handler(timer, ^{
-        @strongify(self);
-        self.codelab.userInteractionEnabled = NO;
-        if(!self)
+        
+        weakSelf.codelab.userInteractionEnabled = NO;
+        if(!weakSelf)
         {
             dispatch_source_cancel(timer);
         }
         if (timeout<=0) {
             dispatch_source_cancel(timer);
             dispatch_async(dispatch_get_main_queue(), ^{
-                self.codelab.text=@"重新获取";
-                self.codelab.userInteractionEnabled = YES;
+                weakSelf.codelab.text=@"重新获取";
+                weakSelf.codelab.userInteractionEnabled = YES;
             });
         }
         else{
             int seconds = timeout;
             NSString *strTime = [NSString stringWithFormat:@"%.2d",seconds];
             dispatch_async(dispatch_get_main_queue(), ^{
-                self.codelab.text=strTime;
+                weakSelf.codelab.text=strTime;
             });
             timeout--;
             
@@ -329,14 +453,10 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"signok" object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"timeFireMethod" object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"resultstr" object:nil];
 }
-*/
-
 @end
+

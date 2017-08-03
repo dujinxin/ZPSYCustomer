@@ -69,6 +69,8 @@ class scanFinishModel: NSObject {
     
     public var codeSnId:String?
     
+    public var qualificate:String?
+    
     
     public func setmodel(scandict:NSDictionary){
         
@@ -78,6 +80,12 @@ class scanFinishModel: NSObject {
         self.goodsLotBatchArr = GoodsLotBatchModel.mj_objectArray(withKeyValuesArray: scandict["list_ceccGoodsLotBatch"])
         //self.goodsFlowArr = GoodsFlowModel.mj_objectArray(withKeyValuesArray: scandict["list_batch"])
         self.scanrecordForSuspectProductArr = ScanrecordForSuspectProductModel.mj_objectArray(withKeyValuesArray: scandict["list_ceccScanrecordForSuspectProduct"])
+        
+        if let station = scandict["station"] as? Dictionary<String,String>,
+            let qualificate1 = station["qualificate"],
+            qualificate1.isEmpty == false{
+            qualificate = qualificate1
+        }
         
         let arr = scandict["list_batch"] as? NSArray  ?? []
         

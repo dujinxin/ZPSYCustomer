@@ -451,20 +451,16 @@ static NSString * const reuseIdentifierHeader = @"Header";
     [self.deviceSelectView show];
 }
 - (void)tapClick:(UITapGestureRecognizer * )tap{
-    NSLog(@"click:%ld",tap.view.tag);
 
     switch (tap.view.tag) {
         case 0:
         case 10:
         {
-            NSLog(@"111111");
             [self.companySelectView show];
         }
             break;
-        case 1:
-        case 11:
-        {
-            NSLog(@"222222");
+            
+        default:
             if ([_titleArray[1] isEqualToString:@"检测报告"]) {
                 NSArray * imageArray = [self.scanFinishModel.proDetailModel.reportFile componentsSeparatedByString:@","];
                 JZAlbumViewController *imgVC = [[JZAlbumViewController alloc] init];
@@ -472,30 +468,21 @@ static NSString * const reuseIdentifierHeader = @"Header";
                 imgVC.imgArr = imageArray;
                 imgVC.title = @"检测报告";
                 [self.navigationController pushViewController:imgVC animated:YES];
-            }else{
+            }else if ([_titleArray[1] isEqualToString:@"认证信息"]){
                 NSArray * imageArray = [self.scanFinishModel.proDetailModel.certificateFile componentsSeparatedByString:@","];
                 JZAlbumViewController *imgVC = [[JZAlbumViewController alloc] init];
                 imgVC.currentIndex = 0;
                 imgVC.imgArr = imageArray;
                 imgVC.title = @"认证信息";
                 [self.navigationController pushViewController:imgVC animated:YES];
+            }else{
+                NSArray * imageArray = [self.scanFinishModel.qualificate componentsSeparatedByString:@","];
+                JZAlbumViewController *imgVC = [[JZAlbumViewController alloc] init];
+                imgVC.currentIndex = 0;
+                imgVC.imgArr = imageArray;
+                imgVC.title = @"资质证书";
+                [self.navigationController pushViewController:imgVC animated:YES];
             }
-        }
-            break;
-        case 2:
-        case 12:
-        {
-            NSLog(@"333333");
-            NSArray * imageArray = [self.scanFinishModel.proDetailModel.certificateFile componentsSeparatedByString:@","];
-            JZAlbumViewController *imgVC = [[JZAlbumViewController alloc] init];
-            imgVC.currentIndex = 0;
-            imgVC.imgArr = imageArray;
-            imgVC.title = @"认证信息";
-            [self.navigationController pushViewController:imgVC animated:YES];
-        }
-            break;
-            
-        default:
             break;
     }
 }
@@ -696,7 +683,7 @@ static NSString * const reuseIdentifierHeader = @"Header";
 
         headView.backgroundColor = JXDebugColor;
         headView.hidden = YES;
-        headView.frame = CGRectMake(headView.origin.x, headView.origin.y, kScreenWidth, 0.1);
+        headView.frame = CGRectMake(headView.frame.origin.x, headView.frame.origin.y, kScreenWidth, 0.1);
         return headView;
     }
     
@@ -949,7 +936,7 @@ static NSString * const reuseIdentifierHeader = @"Header";
     }
     
     CGFloat imageViewWidth = 60;
-    CGFloat space = (kScreenWidth - imageViewWidth* 3) /4;
+    CGFloat space = (kScreenWidth - imageViewWidth* 4) /5;
     _titleArray = [NSMutableArray arrayWithObject:@"企业介绍"];
     _imageNameArray = [NSMutableArray arrayWithObject:@"companyProfile"];
     
@@ -961,7 +948,10 @@ static NSString * const reuseIdentifierHeader = @"Header";
         [_titleArray addObject:@"认证信息"];
         [_imageNameArray addObject:@"authentication"];
     }
-    
+    if (scanFinishModel.qualificate && scanFinishModel.qualificate.length > 0) {
+        [_titleArray addObject:@"资质证书"];
+        [_imageNameArray addObject:@"qualificationCertificate"];
+    }
     for (int i = 0; i < _titleArray.count; i ++) {
         UIImageView * imageView = [[UIImageView alloc ]init ];
         imageView.image = JXImageNamed(_imageNameArray[i]);

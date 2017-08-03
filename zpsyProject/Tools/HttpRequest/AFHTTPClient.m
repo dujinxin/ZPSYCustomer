@@ -22,7 +22,7 @@
         [manager.requestSerializer setValue:[CTUtility getAppVersion] forHTTPHeaderField:@"version"];
         [manager.requestSerializer setValue:[KeyChainMethod getUniqueDeviceIdentifierAsString] forHTTPHeaderField:@"uuid"];
         [manager.requestSerializer setValue:[self getUaString] forHTTPHeaderField:@"ua"];
-        
+        [manager.requestSerializer setValue:@"ios" forHTTPHeaderField:@"source"];
     });
     
     [manager.requestSerializer setValue:[UserModel ShareInstance].TOKEN forHTTPHeaderField:@"token"];

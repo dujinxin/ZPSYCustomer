@@ -208,7 +208,7 @@ class homeHotCell: UITableViewCell {
         let view:UIImageView = gesture.view as! UIImageView;
 
         let model:ExposureEntity = modelArr![view.tag]
-        let urlStr = model.sourceUrl
+        let urlStr = model.jumpUrl
         
         let detailVc = ExposureDetailVC()
         detailVc.urlStr = urlStr
@@ -230,24 +230,28 @@ class homeHotCell: UITableViewCell {
             if modelArr == nil {
                 return
             }
+            
             if((modelArr?.count)!>=1){
                 self.Imgfirst.isHidden = false
                 let model:ExposureEntity = modelArr![0]
-                self.Imgfirst.locoaSdImageCache(withURL: model.img, placeholderImageName: PlaceHoldeImageStr)
+                let array = model.img.components(separatedBy: ",")
+                self.Imgfirst.locoaSdImageCache(withURL: array[0], placeholderImageName: PlaceHoldeImageStr)
                 self.firstLab.text = model.title
                 self.firstLab.isHidden = true
             }
             if((modelArr?.count)!>=2){
                 self.Imgsecond.isHidden = false
                 let model:ExposureEntity = modelArr![1]
-                self.Imgsecond.locoaSdImageCache(withURL: model.img, placeholderImageName: PlaceHoldeImageStr)
+                let array = model.img.components(separatedBy: ",")
+                self.Imgsecond.locoaSdImageCache(withURL: array[0], placeholderImageName: PlaceHoldeImageStr)
                 self.secondLab.text = model.title
                 self.secondLab.isHidden = true
             }
             if((modelArr?.count)!>=3){
                 self.Imgthird.isHidden = false
                 let model:ExposureEntity = modelArr![2]
-                self.Imgthird.locoaSdImageCache(withURL: model.img, placeholderImageName: PlaceHoldeImageStr)
+                let array = model.img.components(separatedBy: ",")
+                self.Imgthird.locoaSdImageCache(withURL: array[0], placeholderImageName: PlaceHoldeImageStr)
                 self.thirdLab.text = model.title
                 self.thirdLab.isHidden = true
             }

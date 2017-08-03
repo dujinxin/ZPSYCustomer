@@ -46,11 +46,15 @@ class HotRemarkVC: UIViewController ,UITableViewDelegate,UITableViewDataSource{
         })
         self.datarequest()
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+    }
     private func datarequest(){
         
         let dict = ["pageNo":pageNo,"id":self.resourcesId ?? "","type":self.mycommenttype?.rawValue ?? 0,"isforHotFive":false] as [String : Any]
         MBProgressHUD.showAnimationtoView(self.view)
+        
         BaseSeverHttp.zpsyGet(withPath: Api_commentGetComment, withParams: dict, withSuccessBlock: { (result:Any?) in
             MBProgressHUD.hide(for: self.view)
             let resultDict:NSDictionary = result as! NSDictionary

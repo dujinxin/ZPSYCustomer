@@ -118,8 +118,9 @@ class homeNewCell: UITableViewCell {
     public var model: ExposureEntity? {
     
         didSet{
-            
-            self.ImgView.locoaSdImageCache(withURL: model?.img, placeholderImageName: PlaceHoldeImageStr)
+            if let array = model?.img.components(separatedBy: ","){
+                self.ImgView.locoaSdImageCache(withURL: array[0], placeholderImageName: PlaceHoldeImageStr)
+            }
             self.Tiltelab.text = model?.title
             self.fromImgView.locoaSdImageCache(withURL: model?.thumbnail, placeholderImageName: PlaceHoldeImageStr)
             self.fromlab.text = model?.source
