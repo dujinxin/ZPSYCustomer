@@ -108,35 +108,35 @@
     if (view == nil) view = [UIApplication sharedApplication].keyWindow;
     // 快速显示一个提示信息
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
-    
-    hud.mode = MBProgressHUDModeCustomView;
-    
-    //背景方块颜色
-    hud.bezelView.style = MBProgressHUDBackgroundStyleSolidColor; //隐藏方框
-    hud.bezelView.color = [UIColor clearColor];
-    
-    //当前hudview
-    hud.customView = [self MBanimationView];
-    
-   
-    
-    //展示文字为空
-    hud.label.text = nil;
-    
-    //隐藏时候从父控件中移除
-    hud.removeFromSuperViewOnHide = YES;
-    
-    //蒙板背景色
-    hud.backgroundView.style = MBProgressHUDBackgroundStyleSolidColor;
-    
-    hud.userInteractionEnabled = YES;
-//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hudClick:)];
-//    [hud.backgroundView addGestureRecognizer:tap];
-    hud.backgroundView.color = [UIColor clearColor];
-    
-    //60秒之后再消失
-    [hud hideAnimated:YES afterDelay:60];
-    
+//
+//    hud.mode = MBProgressHUDModeCustomView;
+//    
+//    //背景方块颜色
+//    hud.bezelView.style = MBProgressHUDBackgroundStyleSolidColor; //隐藏方框
+//    hud.bezelView.color = [UIColor clearColor];
+//    
+//    //当前hudview
+//    hud.customView = [self MBanimationView];
+//    
+//   
+//    
+//    //展示文字为空
+//    hud.label.text = nil;
+//    
+//    //隐藏时候从父控件中移除
+//    hud.removeFromSuperViewOnHide = YES;
+//    
+//    //蒙板背景色
+//    hud.backgroundView.style = MBProgressHUDBackgroundStyleSolidColor;
+//    
+//    hud.userInteractionEnabled = YES;
+////    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hudClick:)];
+////    [hud.backgroundView addGestureRecognizer:tap];
+//    hud.backgroundView.color = [UIColor clearColor];
+//    
+//    //60秒之后再消失
+//    [hud hideAnimated:YES afterDelay:60];
+//    
     return hud;
 }
 

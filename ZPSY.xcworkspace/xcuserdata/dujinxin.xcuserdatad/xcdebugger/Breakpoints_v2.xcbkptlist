@@ -138,7 +138,7 @@
                   moduleName = "ZPSY"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/dujinxin/github/ZPSYCustomer/zpsyProject/View/scanningShoot/ZPselectView.swift"
-                  timestampString = "523439295.253371"
+                  timestampString = "523766009.894146"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "171"
@@ -153,7 +153,7 @@
                   moduleName = "ZPSY"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/dujinxin/github/ZPSYCustomer/zpsyProject/View/scanningShoot/ZPselectView.swift"
-                  timestampString = "523439295.255696"
+                  timestampString = "523766009.895572"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "171"
@@ -564,7 +564,7 @@
                   moduleName = "ZPSY"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/dujinxin/github/ZPSYCustomer/zpsyProject/Controller/ScanningShoot/ScanDetailViewController.m"
-                  timestampString = "523439296.334921"
+                  timestampString = "523766009.965521"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "642"
@@ -579,7 +579,7 @@
                   moduleName = "ZPSY"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/dujinxin/github/ZPSYCustomer/zpsyProject/Controller/ScanningShoot/ScanDetailViewController.m"
-                  timestampString = "523439296.338492"
+                  timestampString = "523766009.966847"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "643"
@@ -900,7 +900,7 @@
                   moduleName = "ZPSY"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/dujinxin/github/ZPSYCustomer/zpsyProject/Common/VC/LoginVC.m"
-                  timestampString = "523439296.423781"
+                  timestampString = "523766010.038304"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "216"
@@ -915,7 +915,7 @@
                   moduleName = "ZPSY"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/dujinxin/github/ZPSYCustomer/zpsyProject/Common/VC/LoginVC.m"
-                  timestampString = "523439296.425127"
+                  timestampString = "523766010.039766"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "219"
@@ -1060,7 +1060,7 @@
                   moduleName = "ZPSY"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/dujinxin/github/ZPSYCustomer/zpsyProject/Controller/ScanningShoot/ReportVC.swift"
-                  timestampString = "523439296.451097"
+                  timestampString = "523766010.063267"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "93"
@@ -1075,7 +1075,7 @@
                   moduleName = "ZPSY"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/dujinxin/github/ZPSYCustomer/zpsyProject/Controller/ScanningShoot/ReportVC.swift"
-                  timestampString = "523439296.452686"
+                  timestampString = "523766010.064634"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "93"
@@ -1204,7 +1204,7 @@
                   moduleName = "ZPSY"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/dujinxin/github/ZPSYCustomer/zpsyProject/Common/View/CommentInputView.swift"
-                  timestampString = "523439296.472915"
+                  timestampString = "523766010.084797"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "71"
@@ -1219,7 +1219,7 @@
                   moduleName = "ZPSY"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/dujinxin/github/ZPSYCustomer/zpsyProject/Common/View/CommentInputView.swift"
-                  timestampString = "523439296.47424"
+                  timestampString = "523766010.086108"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "71"
@@ -1290,6 +1290,230 @@
             startingLineNumber = "46"
             endingLineNumber = "46"
             landmarkName = "-datarequest"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "zpsyProject/Common/VC/LoginVC.m"
+            timestampString = "523449475.42759"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
+            landmarkName = "-viewDidLoad"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "zpsyProject/Common/VC/LoginVC.m"
+            timestampString = "523449493.262749"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "135"
+            endingLineNumber = "135"
+            landmarkName = "-LoginViewinit"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "zpsyProject/Controller/Mine/InfoEditVC.swift"
+            timestampString = "523451318.212492"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "141"
+            endingLineNumber = "141"
+            landmarkName = "dataUpdateRequest(dict:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "zpsyProject/Controller/Mine/InfoEditVC.swift"
+            timestampString = "523451334.2065"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "117"
+            endingLineNumber = "117"
+            landmarkName = "saveUserInfo()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "zpsyProject/Controller/Mine/InfoEditVC.swift"
+            timestampString = "523451336.650888"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "94"
+            endingLineNumber = "94"
+            landmarkName = "rightBtnClcikEvent()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "zpsyProject/Controller/Mine/InfoEditVC.swift"
+            timestampString = "523451621.005964"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "145"
+            endingLineNumber = "145"
+            landmarkName = "dataUpdateRequest(dict:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "zpsyProject/Controller/Exposure/ExposureDetailVC.m"
+            timestampString = "523765713.32494"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "203"
+            endingLineNumber = "203"
+            landmarkName = "-shareFun"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[ExposureDetailVC shareFun]"
+                  moduleName = "ZPSY"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dujinxin/github/ZPSYCustomer/zpsyProject/Controller/Exposure/ExposureDetailVC.m"
+                  timestampString = "523766010.117527"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "203"
+                  endingLineNumber = "203"
+                  offsetFromSymbolStart = "400">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__28-[ExposureDetailVC shareFun]_block_invoke"
+                  moduleName = "ZPSY"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dujinxin/github/ZPSYCustomer/zpsyProject/Controller/Exposure/ExposureDetailVC.m"
+                  timestampString = "523766010.118875"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "204"
+                  endingLineNumber = "204"
+                  offsetFromSymbolStart = "36">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "zpsyProject/Controller/Exposure/ExposureDetailVC.m"
+            timestampString = "523765714.166211"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "205"
+            endingLineNumber = "205"
+            landmarkName = "-shareFun"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "zpsyProject/Tools/thirdCommen/Umeng/UShareView.m"
+            timestampString = "523765851.313715"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "126"
+            endingLineNumber = "126"
+            landmarkName = "-btuSelectEvent:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[UShareView btuSelectEvent:]"
+                  moduleName = "ZPSY"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dujinxin/github/ZPSYCustomer/zpsyProject/Tools/thirdCommen/Umeng/UShareView.m"
+                  timestampString = "523766010.124733"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "126"
+                  endingLineNumber = "126"
+                  offsetFromSymbolStart = "420">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__29-[UShareView btuSelectEvent:]_block_invoke"
+                  moduleName = "ZPSY"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dujinxin/github/ZPSYCustomer/zpsyProject/Tools/thirdCommen/Umeng/UShareView.m"
+                  timestampString = "523766010.126155"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "127"
+                  endingLineNumber = "127"
+                  offsetFromSymbolStart = "60">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "zpsyProject/Tools/thirdCommen/Umeng/UShareView.m"
+            timestampString = "523765852.750349"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "127"
+            endingLineNumber = "127"
+            landmarkName = "-btuSelectEvent:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

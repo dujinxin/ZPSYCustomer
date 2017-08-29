@@ -89,7 +89,7 @@
 
 -(void)launchuserScore{
     if ([UserModel ShareInstance].IsLogin){
-    [BaseSeverHttp afnetForZpsyGetWithPath:Api_userScoreChange WithParams:@{@"type":@"1"} WithSuccessBlock:nil WithFailurBlock:nil];
+        [BaseSeverHttp afnetForZpsyGetWithPath:Api_userScoreChange WithParams:@{@"type":@"1"} WithSuccessBlock:nil WithFailurBlock:nil];
     }
 }
 
