@@ -12,7 +12,7 @@ class ReportCell: UITableViewCell {
 
     public lazy var ImageView:UIImageView = {
         let image = UIImageView()
-        image.image=UIImage.init(named: PlaceHoldeImageStr)
+        image.image = UIImage.init(named: PlaceHoldeImageStr)
         image.contentMode = UIViewContentMode.scaleAspectFill
         image.clipsToBounds = true
         return image
@@ -30,19 +30,19 @@ class ReportCell: UITableViewCell {
     
     public lazy var textlab:UILabel = {
         let lab = UILabel()
-        lab.numberOfLines=2
+        lab.numberOfLines = 2
         lab.textColor = UIColor.black
         lab.font = UIFont.systemFont(ofSize: 14)
-        lab.text="奥胡二娃回复IE回复安慰奥"
+        lab.text = "奥胡二娃回复IE回复安慰奥"
         return lab
     }()
     
     public lazy var timerlab:UILabel = {
         let lab = UILabel()
-        lab.numberOfLines=1
+        lab.numberOfLines = 1
         lab.textColor = UIColor.gray
         lab.font = UIFont.systemFont(ofSize: 12)
-        lab.text="2017-3-16"
+        lab.text = "2017-3-16"
         return lab
     }()
     

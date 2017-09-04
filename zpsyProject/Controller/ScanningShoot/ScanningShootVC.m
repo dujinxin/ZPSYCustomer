@@ -86,14 +86,7 @@
 
 -(void)snRequestWithCode:(NSString*)codeStr{
 
-    //codeStr = @"751df0a4b1d84ff69550b9d3b61954b0";  //可疑品
-    //codeStr = @"f55d44162fca47a98af70ac5f521486e"; //正品
-    //codeStr = @"28c9e39a4bd74b698f1b22c493997de0";  //伪品
-    
-    NSDictionary *dict =
-    
-  
-  @{@"codeId":codeStr,
+    NSDictionary *dict = @{@"codeId":codeStr,
                            @"scanMobile":[UserModel ShareInstance].userInfo.mobile,
                            @"scanLoc":@"北京",
                            @"longitude":self.LocManager.longitute,
@@ -113,54 +106,19 @@
         scanFinishModel *model = [[scanFinishModel alloc] init];
         [model setmodelWithScandict:result];
         
-//        NSArray *arr = [codeStr componentsSeparatedByString:@"/"];
-//        if (arr && arr.count>0) {
-//            model.codeSnId = arr.lastObject;
-//        }else{
-//            model.codeSnId = codeStr;
-//        }
+        if ([model.quality isEqualToString: @"-1"]) {
+            [self failShowVC];
+            return;
+        }
         
         ScanDetailViewController *vc= [[ScanDetailViewController alloc] init];
         //vc.view.backgroundColor = JXFfffffColor;
-        vc.hidesBottomBarWhenPushed=YES;
+        vc.hidesBottomBarWhenPushed = YES;
         vc.scanFinishModel = model;
         [self.navigationController pushViewController:vc animated:YES];
-        
-        
-//        scanFinishModel *model = [[scanFinishModel alloc] init];
-//        [model setmodelWithScandict:result];
-//        model.codeSnId = codeStr;
-//        NewScanDetailVc *vc=[[NewScanDetailVc alloc] init];
-//        vc.hidesBottomBarWhenPushed=YES;
-//        vc.scanfinishmodel = model;
-//        [self.navigationController pushViewController:vc animated:YES];
-        
     } WithFailurBlock:^(NSError *error) {
-        if (error==nil) {
-            [self failShowVC];
-        }
+        
     }];
-
-    
-//    NSDictionary *dict = @{@"codeId":@"123",
-//                           @"scanMobile":[UserModel ShareInstance].userInfo.mobile,
-//                           @"scanLoc":@"0",
-//                           @"longitude":@"0",
-//                           @"latitude":@"0",
-//                           @"model":[Utility getCurrentDeviceModel]
-//                           };
-//    [BaseSeverHttp ZpsyPostWithPath:Api_scanRecordFind WithParams:dict WithSuccessBlock:^(NSDictionary* result) {
-//        scanFinishModel *model = [[scanFinishModel alloc] init];
-//        [model setmodelWithScandict:result];
-//        model.codeSnId = @"123";
-//        ScanDetailVC *vc=[[ScanDetailVC alloc] init];
-//        vc.hidesBottomBarWhenPushed=YES;
-//        vc.scanfinishmodel = model;
-//        [self.navigationController pushViewController:vc animated:YES];
-//    } WithFailurBlock:^(NSError *error) {
-//        
-//    }];
-
     
 }
 

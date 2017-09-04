@@ -315,6 +315,7 @@
 
 #pragma mark -   获取网络错误信息  基于 afnetwork的error
 +(NSString *)getErrorMsssage:(NSError *)error{
+    NSLog(@"error: %@",error.localizedDescription);
     // NSURLErrorCancelled
     if(error.code==kCFURLErrorBadServerResponse){
         NSString *string= [error.userInfo objectForKey:@"NSLocalizedDescription"];

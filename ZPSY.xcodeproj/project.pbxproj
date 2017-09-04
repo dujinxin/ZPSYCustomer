@@ -26,6 +26,9 @@
 		3597506C1EF37EE900419474 /* JZAlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3597506B1EF37EE900419474 /* JZAlbumViewController.m */; };
 		3597506F1EF37F5D00419474 /* PhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3597506E1EF37F5D00419474 /* PhotoView.m */; };
 		359750721EF3E96C00419474 /* GuiderViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 359750711EF3E96C00419474 /* GuiderViewFlowLayout.m */; };
+		35A123C51F554C240070D7F7 /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A123C41F554C240070D7F7 /* ReportViewController.swift */; };
+		35A123C71F5696210070D7F7 /* ReportViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A123C61F5696210070D7F7 /* ReportViewCell.swift */; };
+		35A123C91F56A4200070D7F7 /* FeedBackViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A123C81F56A4200070D7F7 /* FeedBackViewCell.swift */; };
 		35BF18131F25DDD200980117 /* GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 35BF17CB1F25DDD200980117 /* GTMBase64.m */; };
 		35BF18141F25DDD200980117 /* MBProgressHUD+NJ.m in Sources */ = {isa = PBXBuildFile; fileRef = 35BF17D31F25DDD200980117 /* MBProgressHUD+NJ.m */; };
 		35BF18151F25DDD200980117 /* NSArray+NSDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 35BF17D71F25DDD200980117 /* NSArray+NSDictionary.m */; };
@@ -294,6 +297,9 @@
 		3597506E1EF37F5D00419474 /* PhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoView.m; sourceTree = "<group>"; };
 		359750701EF3E96C00419474 /* GuiderViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuiderViewFlowLayout.h; sourceTree = "<group>"; };
 		359750711EF3E96C00419474 /* GuiderViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuiderViewFlowLayout.m; sourceTree = "<group>"; };
+		35A123C41F554C240070D7F7 /* ReportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
+		35A123C61F5696210070D7F7 /* ReportViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportViewCell.swift; sourceTree = "<group>"; };
+		35A123C81F56A4200070D7F7 /* FeedBackViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedBackViewCell.swift; sourceTree = "<group>"; };
 		35BF17A01F25DDD200980117 /* AFAutoPurgingImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFAutoPurgingImageCache.h; sourceTree = "<group>"; };
 		35BF17A11F25DDD200980117 /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
 		35BF17A21F25DDD200980117 /* AFImageDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFImageDownloader.h; sourceTree = "<group>"; };
@@ -1881,6 +1887,7 @@
 				3819036D1E98634600FC3D13 /* NewScanDetailVc.swift */,
 				388DD72C1E659C670069C4CE /* ScanDetailVC.swift */,
 				380B31D11E5695A30037D918 /* ReportVC.swift */,
+				35A123C41F554C240070D7F7 /* ReportViewController.swift */,
 				386452581E5FE01700FC2CD9 /* ProductDetailVC.swift */,
 				385AB97C1E8BA98700603B17 /* LocationManager.h */,
 				385AB97D1E8BA98700603B17 /* LocationManager.m */,
@@ -1974,6 +1981,7 @@
 				3803494C1E650B230073D4CA /* ExposureDetailView.h */,
 				3803494D1E650B230073D4CA /* ExposureDetailView.m */,
 				380B31D51E569CF70037D918 /* ReportCell.swift */,
+				35A123C61F5696210070D7F7 /* ReportViewCell.swift */,
 			);
 			path = exposure;
 			sourceTree = "<group>";
@@ -1992,6 +2000,7 @@
 				380B31C21E5454470037D918 /* feedbackselectCell.swift */,
 				3809F3331E8537D4001ABE0C /* hotProductCell.swift */,
 				380B31CA1E55824F0037D918 /* feedbackinfoCell.swift */,
+				35A123C81F56A4200070D7F7 /* FeedBackViewCell.swift */,
 				3803494F1E6564060073D4CA /* HomeCell.swift */,
 				38AA40A01E76BDF800E30B6A /* homeHotCell.swift */,
 				38AA40A21E76E74000E30B6A /* homeNewCell.swift */,
@@ -2386,6 +2395,7 @@
 				385AB9791E8AAE9300603B17 /* hotremarkModel.swift in Sources */,
 				380B31BA1E52ECCE0037D918 /* mineloginStatusView.m in Sources */,
 				35BF181C1F25DDD200980117 /* NSString+MD5.m in Sources */,
+				35A123C51F554C240070D7F7 /* ReportViewController.swift in Sources */,
 				380B318D1E51B4390037D918 /* AppDelegate+ADD.m in Sources */,
 				380B31171E5062D90037D918 /* PhotoImageView.m in Sources */,
 				380B308B1E5061F10037D918 /* ClipImageView.m in Sources */,
@@ -2432,6 +2442,7 @@
 				385AB9821E8BF2E200603B17 /* scanFinishModel.swift in Sources */,
 				380B32141E570B610037D918 /* FdbackAndReportCell.swift in Sources */,
 				380424FF1E45B35C00CB477E /* ZPSYNav.m in Sources */,
+				35A123C91F56A4200070D7F7 /* FeedBackViewCell.swift in Sources */,
 				3597506F1EF37F5D00419474 /* PhotoView.m in Sources */,
 				385AB9841E8CD99600603B17 /* priceModel.swift in Sources */,
 				380B31281E5062D90037D918 /* UIFont+Extend.m in Sources */,
@@ -2487,6 +2498,7 @@
 				35E74C451EDE6020003EA223 /* JXNoticeView.m in Sources */,
 				35BF18161F25DDD200980117 /* NSData+Hex.m in Sources */,
 				3819036E1E98634600FC3D13 /* NewScanDetailVc.swift in Sources */,
+				35A123C71F5696210070D7F7 /* ReportViewCell.swift in Sources */,
 				380B313A1E5062D90037D918 /* LFRoundProgressView.m in Sources */,
 				35BF181D1F25DDD200980117 /* NSString+NSDictionary.m in Sources */,
 				3817AC2C1E6F07B900266A04 /* scoreModel.swift in Sources */,

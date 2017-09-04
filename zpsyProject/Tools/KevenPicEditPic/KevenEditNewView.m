@@ -100,7 +100,7 @@
 }
 
 -(void)setAddImageStr:(NSString *)AddImageStr{
-    _AddImageStr=AddImageStr;
+    _AddImageStr = AddImageStr;
     UIButton *btn=[self.contentView viewWithTag:10];
     if (_AddImageStr) {
         [btn setBackgroundImage:[UIImage imageNamed:_AddImageStr] forState:UIControlStateNormal];

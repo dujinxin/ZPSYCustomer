@@ -102,7 +102,7 @@ class JXPhotoBrowserController: UICollectionViewController {
         
         let urlStr = images[indexPath.item]
         if let url = URL.init(string: urlStr),urlStr.hasPrefix("http"){
-            cell.imageView.setImageWith(url, placeholderImage: nil)
+            cell.imageView.sd_setImage(with: url, placeholderImage: nil)
         }else{
             cell.imageView.image = UIImage(named: urlStr)
         }

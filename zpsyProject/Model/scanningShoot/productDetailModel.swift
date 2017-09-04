@@ -22,7 +22,7 @@ class productDetailModel: NSObject {
     public var ingredients:String?
     public var manufacturer:String?
     public var name:String?
-    public var ownershipFile:String?
+    public var ownershipFile:String? //商标权证书
     public var packingType:String?
     public var provenance:String?
     public var packingSpec:String?
@@ -35,6 +35,8 @@ class productDetailModel: NSObject {
     public var isFavorites:String?
     
     public var code:String?
+    
+    public var countryType:String? //2017.8.30 国家简写
     
     //new
     public var regNo:String?

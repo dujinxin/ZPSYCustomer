@@ -29,7 +29,7 @@ class ReportVC: UITableViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title="举报"
+        self.title = "举报"
         self.tableView.separatorStyle=UITableViewCellSeparatorStyle.none
         self.tableView.estimatedRowHeight = 80.0
         viewinit()
@@ -189,10 +189,10 @@ class ReportVC: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section==0 {
             let cell:ReportCell = tableView.dequeueReusableCell(withIdentifier: "ReportCell") as! ReportCell
-            cell.ImageView.sd_setImage(with: URL.init(string: (self.porductModel?.getfirstGoodImg())!), placeholderImage: UIImage.init(named: PlaceHoldeImageStr))
-            cell.LogoImg.sd_setImage(with: URL.init(string: (self.porductModel?.thumbnail)!), placeholderImage: UIImage.init(named: PlaceHoldeImageStr))
-            cell.textlab.text = self.porductModel?.name
-            cell.timerlab.text = CTUtility.string(from: self.porductModel?.createDateStr, sourceformat: "yyyy-MM-dd HH:mm:ss", toFormat: "yyyy-MM-dd")
+//            cell.ImageView.sd_setImage(with: URL.init(string: (self.porductModel?.getfirstGoodImg())!), placeholderImage: UIImage.init(named: PlaceHoldeImageStr))
+//            cell.LogoImg.sd_setImage(with: URL.init(string: (self.porductModel?.thumbnail)!), placeholderImage: UIImage.init(named: PlaceHoldeImageStr))
+//            cell.textlab.text = self.porductModel?.name
+//            cell.timerlab.text = CTUtility.string(from: self.porductModel?.createDateStr, sourceformat: "yyyy-MM-dd HH:mm:ss", toFormat: "yyyy-MM-dd")
             return cell
         }else{
             

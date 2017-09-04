@@ -225,7 +225,7 @@ class companyDetailCell:UITableViewCell{
     }
     func tapClick(tap:UITapGestureRecognizer) -> Void {
         //
-        print("click:\(tap.view?.tag)")
+        print("click:\(String(describing: tap.view?.tag))")
         self.clickBlock!((tap.view?.tag)!)
     }
     

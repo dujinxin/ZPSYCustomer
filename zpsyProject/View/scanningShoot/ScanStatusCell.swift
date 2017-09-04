@@ -143,7 +143,7 @@ class ScanStatusCell: UITableViewCell {
         var bgImgStr:String = "qualityBg"
         var statusImgStr:String = "quality"
         var resultTitleStr:String = "正品"
-        var detailStr:String = "您扫描的商品为中日韩官方政府认可\n第三方正品溯源平台认可正品"
+        var _:String = "您扫描的商品为中日韩官方政府认可\n第三方正品溯源平台认可正品"
         
         if statusType==scanProductType.ScanTypeQuality {
             
