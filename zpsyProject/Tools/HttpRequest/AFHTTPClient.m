@@ -8,6 +8,8 @@
 
 #import "AFHTTPClient.h"
 #import "KeyChainMethod.h"
+#import "ZPSY-Swift.h"
+
 @implementation AFHTTPClient
 + (instancetype)sharedManager {
     static AFHTTPClient *manager = nil;
@@ -24,9 +26,10 @@
         [manager.requestSerializer setValue:[self getUaString] forHTTPHeaderField:@"ua"];
         [manager.requestSerializer setValue:@"ios" forHTTPHeaderField:@"source"];
     });
-    
-    [manager.requestSerializer setValue:[UserModel ShareInstance].TOKEN forHTTPHeaderField:@"token"];
+    [manager.requestSerializer setValue:[UserManager manager].userEntity.token forHTTPHeaderField:@"token"];
+    //[manager.requestSerializer setValue:[UserModel ShareInstance].TOKEN forHTTPHeaderField:@"token"];
     [manager.requestSerializer setValue:[CTUtility GetTimeStamp] forHTTPHeaderField:@"timestamp"];
+    
     return manager;
 }
 

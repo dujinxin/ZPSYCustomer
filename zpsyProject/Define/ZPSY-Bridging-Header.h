@@ -27,6 +27,7 @@
 #import <MJExtension.h>
 #import <AMScrollingNavbar.h>
 #import <MJRefresh/MJRefresh.h>
+#import <AFNetworking/AFNetworking.h>
 
 #import "UIView+Extension.h"
 #import "UShareView.h"
@@ -37,5 +38,8 @@
 
 #import "FdbackAndReportShowPicCell.h"
 #import "Apimacro.h"
+
+#import <AMapFoundationKit/AMapFoundationKit.h>
+#import <AMapLocationKit/AMapLocationKit.h>
 
 #import "JXSelectView.h"

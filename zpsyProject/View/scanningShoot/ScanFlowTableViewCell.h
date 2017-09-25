@@ -15,6 +15,7 @@ typedef void(^ImageViewClickBlock)(NSInteger index);
 
 @property (nonatomic, strong) UIView * line;
 @property (nonatomic, strong) UILabel * infoLabel;
+@property (nonatomic, strong) UILabel * contentLabel;
 
 @property (nonatomic, strong) UIImageView * firstImageView;
 @property (nonatomic, strong) UIImageView * secondImageView;
@@ -30,7 +31,7 @@ typedef void(^ImageViewClickBlock)(NSInteger index);
 @interface ScanFlowOldCollectionViewCell : UICollectionViewCell
 
 @property (nonatomic, strong) UIView * line;
-@property (nonatomic, strong) UIView * point;
+@property (nonatomic, strong) UIImageView * point;
 @property (nonatomic, strong) UILabel * titleLabel;
 @property (nonatomic, strong) UILabel * infoLabel;
 
@@ -43,7 +44,7 @@ typedef void(^ImageViewClickBlock)(NSInteger index);
 @interface ScanFlowCollectionReusableView : UICollectionReusableView
 
 @property (nonatomic, strong) UIView * line;
-@property (nonatomic, strong) UIView * point;
+@property (nonatomic, strong) UIImageView * point;
 @property (nonatomic, strong) UILabel * titleLabel;
 
 @end

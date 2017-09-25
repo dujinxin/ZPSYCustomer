@@ -49,7 +49,7 @@ class newScanProductCell: UITableViewCell {
         button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
         button.layer.cornerRadius = 2;
         button.layer.masksToBounds = true
-        button.backgroundColor = kColor_red
+        button.backgroundColor = JXMainColor
         
         button.rac_signal(for: UIControlEvents.touchUpInside).subscribeNext { (x:Any?) in
             if (self.comparePriceBlock != nil){

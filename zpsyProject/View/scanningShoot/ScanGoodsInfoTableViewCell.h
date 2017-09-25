@@ -12,6 +12,8 @@
 
 #define DEGREES_TO_RADIANS(angle) ((angle) / 180.0 * M_PI)
 
+typedef void(^ClickBlock)(BOOL isOpen,NSInteger index);
+
 typedef NS_ENUM(NSInteger,ScanResultType){
     Quality,//正品
     Forge,  //伪品
@@ -30,15 +32,20 @@ typedef NS_ENUM(NSInteger,ScanResultType){
 @property (nonatomic, assign) ScanResultType  type;
 
 
+
+
 @end
 
 
 @interface AuthResultView : UIView
 
 @property (nonatomic, strong) UIImageView * bgImage;
+@property (nonatomic, strong) UIImageView * resultImageView;
+@property (nonatomic, strong) UIButton * codeButton;
+@property (nonatomic, strong) UILabel * infoLabel;
+@property (nonatomic, strong) UILabel * detailLabel;
 @property (nonatomic, strong) UILabel * titleLabel;
 @property (nonatomic, strong) UIButton * resultButton;
-@property (nonatomic, strong) UILabel * infoLabel;
 
 @property (nonatomic, strong) UIButton * reportButton;
 @property (nonatomic, strong) UIButton * detailButton;
@@ -47,10 +54,7 @@ typedef NS_ENUM(NSInteger,ScanResultType){
 
 @property (nonatomic, strong) ScanGoodsEntity * entity;
 
-
 @end
-
-typedef void(^ClickBlock)(BOOL isOpen,NSInteger index);
 
 @interface TitleView : UIView
 
@@ -65,25 +69,16 @@ typedef void(^ClickBlock)(BOOL isOpen,NSInteger index);
 
 @interface ScanGoodsInfoView : UIView
 
-@property (nonatomic, strong)AdScrollView * scrollView;
+@property (nonatomic, strong) AdScrollView * scrollView;
 
-@property (nonatomic, strong) UIImageView * productImage;
+@property (nonatomic, strong) UIImageView * leftImage;
+@property (nonatomic, strong) UIImageView * centerImage;
+@property (nonatomic, strong) UIImageView * rightImage;
 
-@property (nonatomic, strong) UILabel * infolabel1;
-@property (nonatomic, strong) UILabel * infolabel2;
-@property (nonatomic, strong) UILabel * infolabel3;
-@property (nonatomic, strong) UILabel * infolabel4;
-@property (nonatomic, strong) UILabel * infolabel5;
+@property (nonatomic, strong) NSArray * imageArray;
+@property (nonatomic, assign) CGFloat   imageHeight;
 
-@property (nonatomic, strong) UILabel * productAddress;
-@property (nonatomic, strong) UIImageView * packageType;
-@property (nonatomic, strong) UILabel * packageStandard;
-@property (nonatomic, strong) UILabel * weight;
-@property (nonatomic, strong) UILabel * ingredient;
-
-@property (nonatomic, strong) ScanGoodsEntity * entity;
-
-
+@property (nonatomic, copy) ClickBlock block;
 @end
 
 @interface ExtraView : UIView

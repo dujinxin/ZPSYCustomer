@@ -106,7 +106,7 @@ class CommentInputView: UIView,UITextFieldDelegate {
             return false;
         }
         
-        if UserModel.shareInstance().isLogin == false {
+        if UserManager.manager.isLogin == false{
             let login = LoginVC()
             login.hidesBottomBarWhenPushed = true
             let loginNv = CTUtility.findViewController(self)

@@ -64,10 +64,12 @@ class scanFinishModel: NSObject {
     public var goodsFlowShortArr :NSMutableArray? = NSMutableArray.init()
     //扫码地点、时间、手机型号
     public var scanrecordForSuspectProductArr:NSMutableArray? = NSMutableArray.init()
+    public var firstScanEntity = ScanrecordForSuspectProductModel()
     
     public var quality:String?
     
     public var codeSnId:String?
+    public var codeId:String?
     
     public var qualificate:String?
     
@@ -86,6 +88,10 @@ class scanFinishModel: NSObject {
             qualificate1.isEmpty == false{
             qualificate = qualificate1
         }
+        if let firstRecord = scandict["firstRecord"] as? Dictionary<String,Any> {
+            self.firstScanEntity.setValuesForKeys(firstRecord)
+        }
+        self.codeId = scandict["codeId"] as? String
         
         let arr = scandict["list_batch"] as? NSArray  ?? []
         

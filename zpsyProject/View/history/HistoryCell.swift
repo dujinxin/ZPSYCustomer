@@ -21,6 +21,7 @@ class HistoryCell: UITableViewCell {
     private lazy var TitleLab:UILabel={
         let lab=UILabel()
         lab.text="鸡娃儿foe我境外福军"
+        lab.lineBreakMode = .byWordWrapping
         return lab
     }()
     private lazy var detailLab:UILabel={
@@ -57,22 +58,22 @@ class HistoryCell: UITableViewCell {
         self.contentView.addSubview(self.detailLab)
         
         ImgView.mas_makeConstraints { (make:MASConstraintMaker?) in
-            let _ = make?.left.mas_equalTo()(self.contentView.mas_left)?.with().offset()(15)
-            let _ = make?.top.mas_equalTo()(self.contentView.mas_top)?.with().offset()(10)
-            let _ = make?.bottom.mas_equalTo()(self.contentView.mas_bottom)?.with().offset()(-10)
-            let _ = make?.size.equalTo()(CGSize.init(width: 60, height: 60))
+            let _ = make?.left.equalTo()(self.contentView.mas_left)?.with().offset()(15)
+            let _ = make?.top.equalTo()(self.contentView.mas_top)?.with().offset()(10)
+            let _ = make?.bottom.equalTo()(self.contentView.mas_bottom)?.with().offset()(-10)
+            let _ = make?.size.mas_equalTo()(CGSize.init(width: 60, height: 60))?.priorityHigh()
         }
         
         TitleLab.mas_makeConstraints { (make:MASConstraintMaker?) in
-            let _ = make?.top.mas_equalTo()(self.contentView.mas_top)?.with().offset()(15)
-            let _ = make?.left.mas_equalTo()(self.ImgView.mas_right)?.with().offset()(10)
-            let _ = make?.right.mas_equalTo()(self.contentView.mas_right)?.with().offset()(-15)
+            let _ = make?.top.equalTo()(self.contentView.mas_top)?.with().offset()(15)
+            let _ = make?.left.equalTo()(self.ImgView.mas_right)?.with().offset()(10)
+            let _ = make?.right.equalTo()(self.contentView.mas_right)?.with().offset()(-15)
         }
         
         detailLab.mas_makeConstraints { (make:MASConstraintMaker?) in
-            let _ = make?.top.mas_equalTo()(self.TitleLab.mas_bottom)?.with().offset()(10)
-            let _ = make?.left.mas_equalTo()(self.ImgView.mas_right)?.with().offset()(10)
-            let _ = make?.right.mas_equalTo()(self.contentView.mas_right)?.with().offset()(-15)
+            let _ = make?.top.equalTo()(self.TitleLab.mas_bottom)?.with().offset()(10)
+            let _ = make?.left.equalTo()(self.ImgView.mas_right)?.with().offset()(10)
+            let _ = make?.right.equalTo()(self.contentView.mas_right)?.with().offset()(-15)
         }
         
         

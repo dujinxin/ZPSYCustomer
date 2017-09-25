@@ -51,16 +51,18 @@ class InfoEditVC: UIViewController {
             self.headPortrait.mas_makeConstraints({ (make:MASConstraintMaker?) in
                 let _ = make?.edges.mas_equalTo()(UIEdgeInsetsMake(0, 0, 0, 0))
             })
+            if let avatar = UserManager.manager.userEntity.avatar {
+                self.headPortrait.sd_setImage(with: URL(string: avatar))
+            }
             
-            self.headPortrait.sd_setImage(with: URL.init(string: UserModel.shareInstance().userInfo.avatar))
             headPortrait.contentMode=UIViewContentMode.scaleAspectFit
         }else {
             self.rightBtn.setTitle("保存", for: UIControlState.normal)
             if editType==1 {
-                self.editText.text=UserModel.shareInstance().userInfo.nickName
+                self.editText.text = UserManager.manager.userEntity.nickName
             }
             else if editType==2 {
-                self.editText.text=UserModel.shareInstance().userInfo.genuid
+                self.editText.text =  UserManager.manager.userEntity.genuid
             }
             
             let view=UIView()
@@ -118,7 +120,7 @@ class InfoEditVC: UIViewController {
         
         let dict = NSMutableDictionary.init()
         
-        if editType==0 {//头像
+        if editType == 0 {//头像
             MBProgressHUD.showAnimationtoView(self.view)
             UploadImageTool.uploadImage(self.headPortrait.image, progress: nil, success: {[weak self] (imgStr:String?) in
                 MBProgressHUD.hide(for: self?.view)
@@ -128,11 +130,11 @@ class InfoEditVC: UIViewController {
             }, failure: { 
                 MBProgressHUD.hide(for: self.view)
             })
-        }else if editType==1 {//昵称
+        }else if editType == 1 {//昵称
             dict.setValue(self.editText.text, forKey: "nickname")
-            dict.setValue(UserModel.shareInstance().userInfo.avatar, forKey: "avater")
+            dict.setValue(UserManager.manager.userEntity.avatar, forKey: "avater")
             self.dataUpdateRequest(dict: dict)
-        }else if editType==2 {//正品号
+        }else if editType == 2 {//正品号
             
         }
         
@@ -142,9 +144,9 @@ class InfoEditVC: UIViewController {
         MBProgressHUD.showAnimationtoView(self.view)
         BaseSeverHttp.zpsyPost(withPath: Api_userUpdate, withParams: dict, withSuccessBlock: { (result:Any?) in
             MBProgressHUD.hide(for: self.view)
-            UserModel.shareInstance().userInfo.avatar = dict.object(forKey: "avater") as! String!
-            UserModel.shareInstance().userInfo.nickName = dict.object(forKey: "nickname") as! String!
-           let _ = self.navigationController?.popViewController(animated: true)
+            UserManager.manager.userEntity.avatar = dict.object(forKey: "avater") as! String!
+            UserManager.manager.userEntity.nickName = dict.object(forKey: "nickname") as! String!
+            let _ = self.navigationController?.popViewController(animated: true)
         }) { (err:Error?) in
             MBProgressHUD.hide(for: self.view)
         }

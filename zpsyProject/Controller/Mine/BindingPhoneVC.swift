@@ -50,7 +50,7 @@ class BindingPhoneVC: UIViewController {
         btn.setTitleColor(UIColor.white, for: UIControlState.normal)
         btn.layer.cornerRadius = 3
         btn.layer.masksToBounds = true
-        btn.backgroundColor = kColor_red
+        btn.backgroundColor = JXMainColor
         btn.addTarget(self, action: #selector(self.submitBtnClickEvent), for: UIControlEvents.touchUpInside)
         return btn
     }()
@@ -149,6 +149,7 @@ class BindingPhoneVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "账号"
+        self.view.backgroundColor = UIColor.white
         viewinit()
 //        elementListen()
         

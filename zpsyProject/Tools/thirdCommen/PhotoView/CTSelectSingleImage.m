@@ -59,8 +59,8 @@
     if (self.navColor) {
         pickView.navigationBar.barStyle = UIBarStyleBlackTranslucent;
         pickView.navigationBar.barTintColor = self.navColor;
-        pickView.navigationBar.tintColor = kColor_red;
-        pickView.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:kColor_red};
+        pickView.navigationBar.tintColor = JXMainColor;
+        pickView.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:JXMainColor};
         UIBarButtonItem*backItem=[[UIBarButtonItem alloc]init];
         backItem.title=@"back";
         [backItem setBackButtonBackgroundImage:[UIImage imageNamed:@"nav_return_white"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];//更改背景图片

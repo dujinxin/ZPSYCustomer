@@ -13,7 +13,7 @@ class CollectionExposureCell: UITableViewCell {
     
     private lazy var ImageView:UIImageView = {
         var image = UIImageView()
-        image.image=UIImage.init(named:PlaceHoldeImageStr)
+        image.image = UIImage.init(named:PlaceHoldeImageStr)
         image.contentMode = UIViewContentMode.scaleAspectFill
         image.clipsToBounds = true
         return image
@@ -23,44 +23,42 @@ class CollectionExposureCell: UITableViewCell {
         var lab = UILabel()
         lab.font = UIFont.systemFont(ofSize: 14)
         lab.numberOfLines=2
-        lab.text=""
+        lab.text = ""
         return lab
     }()
     
     private lazy var detaillab:UILabel = {
         var lab = UILabel()
-        lab.numberOfLines=1
-        lab.textColor=UIColor.gray
+        lab.numberOfLines = 1
+        lab.textColor = UIColor.gray
         lab.font = UIFont.systemFont(ofSize: 11)
-        lab.text=""
+        lab.text = ""
         return lab
     }()
     
     private lazy var levelImageView:UIImageView = {
         var image = UIImageView()
-        image.image=UIImage.init(named: PlaceHoldeImageStr)
+        image.image = UIImage.init(named: PlaceHoldeImageStr)
         image.contentMode = UIViewContentMode.scaleAspectFit
         return image
     }()
     
     private lazy var leveltextlab:UILabel = {
         var lab = UILabel()
-        lab.numberOfLines=1
-        lab.font=UIFont.systemFont(ofSize: 11)
-        lab.textColor=UIColor.gray
-        lab.text="危害等级"
+        lab.numberOfLines = 1
+        lab.font = UIFont.systemFont(ofSize: 11)
+        lab.textColor = UIColor.gray
+        lab.text = "危害等级"
         return lab
     }()
-    
-    
     
     private lazy var salerLab : UILabel = {
     
         let lab = UILabel()
-        lab.numberOfLines=1
-        lab.font=UIFont.systemFont(ofSize: 11)
-        lab.textColor=UIColor.gray
-        lab.text=""
+        lab.numberOfLines = 1
+        lab.font = UIFont.systemFont(ofSize: 11)
+        lab.textColor = UIColor.gray
+        lab.text = ""
         return lab
         
     }()
@@ -68,9 +66,6 @@ class CollectionExposureCell: UITableViewCell {
     public var model:exposureModel?{
     
         didSet{
-            if model==nil {
-                return
-            }
             self.ImageView.sd_setImage(with: URL.init(string: (model?.thumbnail)! as String), placeholderImage: UIImage.init(named: PlaceHoldeImageStr))
             self.textlab.text = model?.title as String?
             self.detaillab.text = model?.summary as String?
@@ -138,20 +133,6 @@ class CollectionExposureCell: UITableViewCell {
             let _ = make?.left.mas_equalTo()(saLab.mas_right)?.offset()(0)
             let _ = make?.centerY.mas_equalTo()(saLab)
         }
-        
-        
-//        let shapeimage=UIImageView.init(image: UIImage.init(named: "shapegreen"))
-//        shapeimage.contentMode = UIViewContentMode.scaleAspectFit
-//        shapeimage.clipsToBounds = true
-//        self.contentView.addSubview(shapeimage)
-//        shapeimage.mas_makeConstraints { (make:MASConstraintMaker?) in
-//            let _ = make?.right.mas_equalTo()(self.contentView.mas_right)?.with().offset()(-15)
-//            let _ = make?.centerY.mas_equalTo()(saLab)
-//        }
-//        
-//        shapeimage.isUserInteractionEnabled=true
-//        let tap=UITapGestureRecognizer.init(target: self, action: #selector(self.hotRemark))
-//        shapeimage.addGestureRecognizer(tap)
         
         
         let shapeBtn = UIButton()

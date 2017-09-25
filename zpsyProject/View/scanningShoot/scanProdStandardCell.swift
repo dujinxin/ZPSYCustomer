@@ -27,8 +27,8 @@ class scanProdStandardCell: UITableViewCell {
     
     public lazy var standerLab:UILabel = {
         let lab = UILabel()
-        lab.numberOfLines=1
-        lab.textColor = kColor_red
+        lab.numberOfLines = 1
+        lab.textColor = JXMainColor
         lab.font = UIFont.systemFont(ofSize: 14)
         lab.text="瓶"
         return lab

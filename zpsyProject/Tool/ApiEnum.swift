@@ -13,4 +13,7 @@ enum ApiString : String {
     case getTokenByKey = "/UserLogin/GetTokenByKey" //获取token
     case refreshToken  = "/UserLogin/RefreshToken"  //刷新token
     case userLogin     = "/UserLogin/Login"
+    
+    
+    case exposureList  = "exposureBar/getList"        //发现列表
 }

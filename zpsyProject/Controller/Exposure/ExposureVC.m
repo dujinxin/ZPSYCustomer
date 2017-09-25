@@ -9,12 +9,15 @@
 #import "ExposureVC.h"
 #import "ZPSY-Swift.h"
 #import "ExposureDetailVC.h"
+#import "HistoryVC.h"
 
-@interface ExposureVC ()<UITableViewDelegate,UITableViewDataSource>{
+@interface ExposureVC ()<UITableViewDelegate,UITableViewDataSource,JXTopBarViewDelegate,JXHorizontalViewDelegate>{
     NSInteger pageno;
     NSMutableArray *dataList;
 }
 @property(nonatomic,strong)UITableView *MyTableView;
+@property(nonatomic, strong)JXTopBarView * topBar;
+@property(nonatomic, strong)JXHorizontalView * horizontalView;
 @end
 
 @implementation ExposureVC
@@ -22,21 +25,57 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title=exposureTile;
-    [self.view addSubview:self.MyTableView];
-    [self.MyTableView registerClass:[CollectionExposureCell class] forCellReuseIdentifier:@"CollectionExposureCellID"];
-    pageno=1;
-    dataList=[NSMutableArray array];
+    self.title = exposureTile;
     
-    JXWeakSelf(self)
-    self.MyTableView.mj_header=[MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        pageno = 1;
-        [weakSelf datarequest];
-    }];
-    [self.MyTableView.mj_header beginRefreshing];
-    self.MyTableView.mj_footer = [MJRefreshBackFooter footerWithRefreshingBlock:^{
-        pageno += 1;
-        [weakSelf datarequest];
+    self.topBar = [[JXTopBarView alloc ] initWithFrame:CGRectMake(0, kNavStatusHeight, self.view.bounds.size.width, 44) titles:@[@"曝光",@"行业资讯",@"正品动态"]];
+    self.topBar.delegate = self;
+    self.topBar.isBottomLineEnabled = YES;
+    self.topBar.layer.shadowColor = JXColorFromRGB(0xc3c3c3).CGColor;//阴影颜色
+    self.topBar.layer.shadowOffset = CGSizeMake(0, 1);//阴影偏移量
+    self.topBar.layer.shadowOpacity = 0.3;//阴影透明度
+    self.topBar.layer.shadowRadius = 3;//阴影半径
+    [self.view addSubview:self.topBar];
+    
+    ExposureViewController * vc1 = [[ExposureViewController alloc ] init ];
+    ExposureViewController * vc2 = [[ExposureViewController alloc ] init ];
+    ExposureViewController * vc3 = [[ExposureViewController alloc ] init ];
+    vc1.newsType = 1;
+    vc2.newsType = 2;
+    vc3.newsType = 3;
+    
+    self.horizontalView = [[JXHorizontalView alloc ] initWithFrame:CGRectMake(0, kNavStatusHeight + 45, self.view.bounds.size.width, kScreenHeight - kNavStatusHeight -kTabBarHeight - 45) containers:@[vc1,vc2,vc3] parentViewController:self];
+    [self.view addSubview:self.horizontalView];
+//    
+//    deliveringVC.deliveringBlock = {(deliveringModel,deliveringOperatorModel)->() in
+//        self.performSegue(withIdentifier: "deliveringManager", sender: ["deliveringModel":deliveringModel,"deliveringOperatorModel":deliveringOperatorModel])
+//    }
+//    
+//    deliveredVC.deliveredBlock = { (deliveringModel,deliveringOperatorModel)->() in
+//        self.performSegue(withIdentifier: "deliveredManager", sender: ["deliveringModel":deliveringModel,"deliveringOperatorModel":deliveringOperatorModel])
+//    }
+}
+- (void)jxTopBarViewWithTopBarView:(JXTopBarView *)topBarView didSelectTabAt:(NSInteger)index{
+    NSIndexPath * indexPath = [NSIndexPath indexPathForItem:index inSection:0];
+    //开启动画会影响topBar的点击移动动画
+    [self.horizontalView.containerView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
+}
+- (void)horizontalViewDidScrollWithScrollView:(UIScrollView *)scrollView{
+    CGRect rect = self.topBar.bottomLineView.frame;
+    CGFloat offset = scrollView.contentOffset.x;
+    rect.origin.x = (offset / kScreenWidth ) * (kScreenWidth / 3);
+    self.topBar.bottomLineView.frame = rect;
+}
+- (void)horizontalView:(JXHorizontalView *)_ to:(NSIndexPath *)indexPath{
+    self.topBar.selectedIndex = indexPath.item;
+    [self.topBar.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isKindOfClass:[UIButton class]]) {
+            UIButton * button = (UIButton *)obj;
+            if (button.tag != self.topBar.selectedIndex) {
+                button.selected = NO;
+            }else{
+                button.selected = YES;
+            }
+        }
     }];
 }
 -(void)datarequest{

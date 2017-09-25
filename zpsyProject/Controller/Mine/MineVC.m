@@ -26,8 +26,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title=mineTile;
-    [RACObserve([UserModel ShareInstance], IsLogin) subscribeNext:^(id x) {
-        self.hasLogin=[x boolValue];
+    [RACObserve([UserManager manager], isLogin) subscribeNext:^(id x) {
+        self.hasLogin = [x boolValue];
     }];
     
     listArr=@[@[@{@"title":@"积分",@"image":@"minescroe"},
@@ -44,7 +44,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:false];
-    if ([UserModel ShareInstance].IsLogin) {
+    if ([UserManager manager].isLogin) {
         [self userinfoGetRequest];
     }
 }
@@ -53,9 +53,8 @@
 -(void)userinfoGetRequest{
 
     [BaseSeverHttp ZpsyGetWithPath:Api_GetuserByToken WithParams:nil WithSuccessBlock:^(NSDictionary* dic) {
-        userInfoModel *model = [userInfoModel mj_objectWithKeyValues:dic];
-        [UserModel ShareInstance].userInfo =model;
-        [UserModel ShareInstance].TOKEN = [dic objectForKey:@"token"];
+        BOOL isSuccess = [[UserManager manager] saveAccoundWithDict:dic];
+        NSLog(@"%d",isSuccess);
         self.hasLogin=YES;
     } WithFailurBlock:nil];
 }
@@ -101,7 +100,7 @@
             make.edges.equalTo(view).with.insets(UIEdgeInsetsMake(15, 0, 10, 0));
         }];
         [[_LoginOutBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
-            [[UserModel ShareInstance] setIsLogin:NO];
+            [[UserManager manager] removeAccound];
         }];
     }
     return _LoginOutBtn;
@@ -121,8 +120,8 @@
     NSDictionary *dict=listArr[indexPath.section][indexPath.row];
     cell.textLabel.text=dict[@"title"];
     cell.imageView.image=[UIImage imageNamed:dict[@"image"]];
-    if (_hasLogin&&indexPath.row==0&&indexPath.section==0) {
-        cell.detailTextLabel.text=[UserModel ShareInstance].userInfo.score ? [UserModel ShareInstance].userInfo.score : @"0";
+    if (_hasLogin && indexPath.row == 0 && indexPath.section == 0) {
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%ld",(long)[UserManager manager].userEntity.score];
     }
     return cell;
 }

@@ -60,7 +60,10 @@ class UserInfoEditVC: UITableViewController {
             imageView.layer.cornerRadius=35
             imageView.layer.masksToBounds=true
             imageView.contentMode=UIViewContentMode.scaleAspectFill
-            imageView.sd_setImage(with: URL.init(string: UserModel.shareInstance().userInfo.avatar ?? ""), placeholderImage: UIImage.init(named: PlaceHoldeImageStr))
+            if let avatar = UserManager.manager.userEntity.avatar {
+                imageView.sd_setImage(with: URL(string: avatar), placeholderImage: UIImage(named: PlaceHoldeImageStr))
+            }
+            
             cell.contentView.addSubview(imageView)
             let  lab = getlable(nameStr: "上传头像")
             lab.textColor=UIColor.black
@@ -70,10 +73,10 @@ class UserInfoEditVC: UITableViewController {
         }else{
             var cell:UITableViewCell?
             if indexPath.row==0 {
-                cell=getCell(titleStr: "昵称：", detailStr: UserModel.shareInstance().userInfo.nickName ?? "")
+                cell = getCell(titleStr: "昵称：", detailStr: UserManager.manager.userEntity.nickName)
             }
             else{
-                cell=getCell(titleStr: "账号：", detailStr: UserModel.shareInstance().userInfo.mobile  ?? "")
+                cell = getCell(titleStr: "账号：", detailStr: UserManager.manager.userEntity.mobile)
             }
             return cell!
         }
@@ -82,47 +85,45 @@ class UserInfoEditVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        var editType=0
-        var editTitle:String=""
-        if indexPath.section==0 {
-            editType=0       //头像
-            editTitle="头像"
+        var editType = 0
+        var editTitle:String = ""
+        if indexPath.section == 0 {
+            editType = 0       //头像
+            editTitle = "头像"
         }else{
-            if indexPath.row==0 {
-                editType=1   //昵称
-                editTitle="昵称"
+            if indexPath.row == 0 {
+                editType = 1   //昵称
+                editTitle = "昵称"
             }else{
-                
-                if UserModel.shareInstance().userInfo.mobile == nil || UserModel.shareInstance().userInfo.mobile == "" {
-                    
+                if UserManager.manager.userEntity.mobile.isEmpty == true {
                     let bindingVc = BindingPhoneVC()
                     self.navigationController?.pushViewController(bindingVc, animated: true)
+                    return
                 }
-                return
             }
         }
         
         let editvc = InfoEditVC()
-        editvc.editType=editType
-        editvc.title=editTitle
+        editvc.editType = editType
+        editvc.title = editTitle
         self.navigationController?.pushViewController(editvc, animated: true)
     }
     
     
-    func getCell(titleStr:String,detailStr:String) ->UITableViewCell  {
+    func getCell(titleStr:String,detailStr:String) -> UITableViewCell  {
         let cell = UITableViewCell.init(style: UITableViewCellStyle.default, reuseIdentifier: "nameAndNumreuseIdentifier")
         cell.selectionStyle=UITableViewCellSelectionStyle.none
-        let TitleLab=getlable(nameStr: titleStr)
-        TitleLab.tag=10
-        TitleLab.textColor=UIColor.black
+        let TitleLab = getlable(nameStr: titleStr)
+        TitleLab.tag = 10
+        TitleLab.textColor = UIColor.black
         cell.contentView.addSubview(TitleLab)
         TitleLab.mas_makeConstraints({ (make:MASConstraintMaker?) in
             let _ = make?.left.mas_equalTo()(cell.contentView.mas_left)?.with().offset()(15)
             let _ = make?.centerY.equalTo()(cell.contentView)
         })
         
-        let detaiLab=getlable(nameStr: detailStr)
-        detaiLab.tag=11
+        let detaiLab = getlable(nameStr: detailStr)
+        detaiLab.tag = 11
         cell.contentView.addSubview(detaiLab)
         detaiLab.mas_makeConstraints({ (make:MASConstraintMaker?) in
             let _ = make?.left.mas_equalTo()(TitleLab.mas_right)?.with().offset()(0)

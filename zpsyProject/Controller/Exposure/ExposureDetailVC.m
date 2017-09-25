@@ -34,8 +34,8 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:false];
-    if ([UserModel ShareInstance].IsLogin) {
-        self.detailView.UrlStr = [NSString stringWithFormat:@"%@&token=%@",self.urlStr,[UserModel ShareInstance].TOKEN];
+    if ([UserManager manager].isLogin) {
+        self.detailView.UrlStr = [NSString stringWithFormat:@"%@&token=%@",self.urlStr,[UserManager manager].userEntity.token];
     }else{
         self.detailView.UrlStr = self.urlStr;
     }
@@ -125,7 +125,7 @@
 
 -(void)isfaverite{
 
-    if ([UserModel ShareInstance].IsLogin) {
+    if ([UserManager manager].isLogin) {
         [BaseSeverHttp ZpsyGetWithPath:Api_isFavorites WithParams:@{@"resourceId":self.ThatID} WithSuccessBlock:^(NSString* result) {
             if ([result isEqualToString:@"-1"]){
                 [self.collectionBtn setImage:[UIImage imageNamed:@"whitFullcollect"] forState:UIControlStateNormal];
@@ -143,7 +143,7 @@
 
 -(void)collectionsBtnClickEvent{
 
-    if (![UserModel ShareInstance].IsLogin) {
+    if (![UserManager manager].isLogin) {
         [self loginPush];
         return;
     }
@@ -188,7 +188,7 @@
 // 分享
 -(void)shareFun{
     
-    if (![UserModel ShareInstance].IsLogin) {
+    if (![UserManager manager].isLogin) {
         [self loginPush];
         return;
     }
@@ -217,7 +217,7 @@
     @weakify(self)
     [login setLoginSuccessBlock:^{
         @strongify(self)
-        self.detailView.UrlStr = [NSString stringWithFormat:@"%@&token=%@",self.urlStr,[UserModel ShareInstance].TOKEN];
+        self.detailView.UrlStr = [NSString stringWithFormat:@"%@&token=%@",self.urlStr,[UserManager manager].userEntity.token];
         [self isfaverite];
     }];
     [self.navigationController pushViewController:login animated:NO];

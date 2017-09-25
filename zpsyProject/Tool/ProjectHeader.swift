@@ -8,11 +8,17 @@
 
 import Foundation
 
-//let kBaseUrl = "http://192.168.10.12:8086"
-//let getTokenUrl     = "http://192.168.10.12:8082/genuine/user/getUploadToken"
+let kVersion = "v1.1.0.1"
 
-let kBaseUrl = "https://operator.izheng.org"
-let getTokenUrl  = "https://app.izheng.org/genuine/user/getUploadToken"
+//高德
+let GDAppKey = "79dc6f237a5d5d92bb5b613cf1dafc67"
+
+
+//let kBaseUrl = "http://192.168.10.12:8082/genuine/"
+
+let kBaseUrl = "https://app.izheng.org/genuine/"
+
+let HtmlBasUrl = "http://app.izheng.org/#/"
 
 
 let isShowLog : Bool = true

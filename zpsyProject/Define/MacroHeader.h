@@ -55,7 +55,7 @@
 
 
 //#define JXMainColor   JXColorFromR_G_B(250,229,88) //app 主色调，
-#define JXMainColor   JXColorFromRGB(0xfee330)//app 主色调，
+#define JXMainColor   JXColorFromRGB(0xc3222c)//app 主色调，
 
 #define JXTextColor      JX333333Color //主要文本颜色
 #define JXSeparatorColor JXDededeColor //分割线颜色
@@ -88,9 +88,9 @@
 #define kNavStatusHeight      (kStatusBarHeight+kNavigationBarHeight)
 #define kTabBarHeight         49.f
 #define kHWPercent            (kScreenHeight/kScreenWidth) //高宽比
-#define kPercent              (kScreenWidth /375.0f) //目前是以6的尺寸所做的图，为了其他尺寸屏幕能够更好的显示，相应的比例应该做些调整
-#define kWPercent             (kScreenWidth /375.0f)
-#define kHPercent             (kScreenHeight /667.0f)
+#define kPercent              (kScreenWidth /414.0f) //目前是以6p的尺寸所做的图，为了其他尺寸屏幕能够更好的显示，相应的比例应该做些调整
+#define kWPercent             (kScreenWidth /414.0f)
+#define kHPercent             (kScreenHeight /736.0f)
 
 #define iPhone4               ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 960), [[UIScreen mainScreen] currentMode].size) :NO)
 #define iPhone5               ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
@@ -115,7 +115,7 @@
 #define JXWeakSelf(self)          __weak __typeof(&*self)weakSelf = self;
 
 
-////#define kDebug
+//#define kDebug
 //#define kShowLog
 
 #ifdef kDebug

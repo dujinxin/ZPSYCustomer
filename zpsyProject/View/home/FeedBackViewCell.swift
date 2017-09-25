@@ -93,7 +93,7 @@ class FeedBackViewCell: UITableViewCell {
             textField.layer.borderWidth = 0.5
             textField.placeholder = "请输入您的姓名"
             textField.font = UIFont.systemFont(ofSize: 15)
-            textField.keyboardType = UIKeyboardType.namePhonePad
+            textField.keyboardType = UIKeyboardType.default
             textField.leftViewMode = UITextFieldViewMode.always
             textField.leftView = {
                 let contentView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: 80, height: 42*kScaleOfScreen))

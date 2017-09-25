@@ -30,6 +30,8 @@
 #import <AVFoundation/AVFoundation.h>
 #import <Photos/Photos.h>
 
+
+
 // iOS8判断
 #define iOS8 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
 
@@ -846,6 +848,16 @@
     if ([platform isEqualToString:@"x86_64"])    return @"iPhone Simulator";
     
     return platform;
+}
++ (NSString*)getUaString{
+    
+    NSString *version = [CTUtility getAppVersion];
+    NSString *udid = [KeyChainMethod getUniqueDeviceIdentifierAsString];
+    NSString *systemnameversion = [Utility systemVersionString];
+    NSString *DevicePlatform = [Utility getCurrentDeviceModel];
+    
+    NSString * uaStr = [NSString stringWithFormat:@"zpsy@%@_AppStore_%@(%@;%@)",version,udid,systemnameversion,DevicePlatform];
+    return uaStr;
 }
 + (BOOL)checkAVDeniedStatus{
     AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];

@@ -64,10 +64,7 @@
  *   弱1(用于分隔模块或者背景的底色)
  */
 #define kColor_9 kColor(245,245,245)
-/**
- *   红色
- */
-#define kColor_red kColor_hex(0xc3222c)
+
 //========================fontSize=====================
 
 #define kFontWithF(f) [UIFont systemFontOfSize:f]

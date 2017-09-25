@@ -17,13 +17,16 @@ class ScoreHistoryVC: UITableViewController {
         let lab=UILabel()
         lab.font=UIFont.systemFont(ofSize: 19)
         lab.textColor=UIColor.white
-        lab.textAlignment=NSTextAlignment.left
-        lab.text=UserModel.shareInstance().userInfo.score ?? "0"
+        lab.textAlignment = NSTextAlignment.left
+        lab.text = "\(UserManager.manager.userEntity.score)"
         return lab
     }()
     private lazy var headerImg : UIImageView = {
         let img = UIImageView()
-        img.sd_setImage(with: URL.init(string: UserModel.shareInstance().userInfo.avatar), placeholderImage: UIImage.init(named: PlaceHoldeImageStr))
+        if let avatar = UserManager.manager.userEntity.avatar {
+            img.sd_setImage(with: URL(string: avatar), placeholderImage: UIImage(named: PlaceHoldeImageStr))
+        }
+        
         img.layer.cornerRadius = 27*kScaleOfScreen
         img.layer.masksToBounds = true
         return img
@@ -32,7 +35,7 @@ class ScoreHistoryVC: UITableViewController {
         let lab = UILabel()
         lab.font=UIFont.systemFont(ofSize: 19)
         lab.textColor = UIColor.white
-        lab.text = UserModel.shareInstance().userInfo.nickName
+        lab.text = UserManager.manager.userEntity.nickName
         return lab
     }()
     private var pageno = 1

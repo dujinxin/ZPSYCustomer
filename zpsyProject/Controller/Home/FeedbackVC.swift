@@ -48,7 +48,7 @@ class FeedbackVC: UITableViewController {
         
         let commitBtn = UIButton.init()
         commitBtn.setTitle("提交", for: UIControlState.normal)
-        commitBtn.backgroundColor=kColor_red
+        commitBtn.backgroundColor = JXMainColor
         commitBtn.setTitleColor(UIColor.white, for: UIControlState.normal)
         commitBtn.addTarget(self, action: #selector(self.commitbtnclickevent), for: UIControlEvents.touchUpInside)
         footerveiw.addSubview(commitBtn)

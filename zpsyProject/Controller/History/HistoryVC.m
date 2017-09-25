@@ -82,7 +82,7 @@
     [MBProgressHUD showAnimationtoView:self.view];
     [BaseSeverHttp ZpsyGetWithPath:Api_scanRecordDeleteAll WithParams:nil WithSuccessBlock:^(id result) {
         [MBProgressHUD hideHUDForView:self.view];
-        listArr=[NSMutableArray array];
+        listArr = [NSMutableArray array];
         [self.tableview reloadData];
     } WithFailurBlock:^(NSError *error) {
         [MBProgressHUD hideHUDForView:self.view];
@@ -141,8 +141,8 @@
 
     if (!_tableview) {
         _tableview=[[UITableView alloc] initWithFrame:kScreenBounds style:UITableViewStyleGrouped];
-        _tableview.estimatedRowHeight=10;
-        _tableview.rowHeight=UITableViewAutomaticDimension;
+        _tableview.estimatedRowHeight = 10;
+        _tableview.rowHeight = UITableViewAutomaticDimension;
         _tableview.tableHeaderView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 0.1)];
         _tableview.delegate=self;
         _tableview.dataSource=self;

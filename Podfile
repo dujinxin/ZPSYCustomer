@@ -44,9 +44,10 @@ pod 'UMengUShare/Social/Sina'
 
 # 集成微信
 pod 'UMengUShare/Social/WeChat'
-
 # 集成QQ
 pod 'UMengUShare/Social/QQ'
+# 高德
+pod 'AMapLocation'
 
 pod 'MBProgressHUD'
 

@@ -11,7 +11,7 @@
 
 #define homeTile @"首页"
 #define histotyTile @"历史"
-#define exposureTile @"曝光"
+#define exposureTile @"发现"
 #define mineTile @"我的"
 
 

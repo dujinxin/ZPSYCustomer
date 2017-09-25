@@ -14,6 +14,7 @@
 #import "ZPSYTabbarVc.h"
 #import "findeIDViewController.h"
 #import "NetWorkTools.h"
+#import "ZPSY-Swift.h"
 
 @interface LoginVC ()
 @property(nonatomic, strong)NSDateFormatter *formatter;
@@ -76,11 +77,9 @@
     __block MBProgressHUD *hud= [MBProgressHUD showAnimationtoView:self.view];
     [BaseSeverHttp ZpsyPostWithPath:Api_LoginThird WithParams:dict WithSuccessBlock:^(NSDictionary* result) {
         hud.hidden=YES;
-        userInfoModel *model = [userInfoModel mj_objectWithKeyValues:result];
-        [UserModel ShareInstance].userInfo = model;
-        [UserModel ShareInstance].TOKEN = [result objectForKey:@"token"];
-        [UserModel ShareInstance].IsLogin = YES;
-        //[self dismissViewControllerAnimated:NO completion:nil];
+        BOOL isSuccess = [[UserManager manager] saveAccoundWithDict:result];
+        
+        NSLog(@"%d",isSuccess);
         [self.navigationController popViewControllerAnimated:NO];
         [self.navigationController setNavigationBarHidden:NO animated:NO];
         BLOCK_SAFE(self.loginSuccessBlock)();
@@ -106,11 +105,11 @@
     [params setObject:self.checkCodeText.text forKey:@"password"];
     [BaseSeverHttp ZpsyPostWithPath:Api_Login WithParams:params WithSuccessBlock:^(NSDictionary* result) {
         hud.hidden=YES;
-        userInfoModel *model = [userInfoModel mj_objectWithKeyValues:result];
-        [UserModel ShareInstance].userInfo = model;
-        [UserModel ShareInstance].TOKEN = [result objectForKey:@"token"];
-        [UserModel ShareInstance].IsLogin = YES;
-        //[self dismissViewControllerAnimated:NO completion:nil];
+        
+        BOOL isSuccess = [[UserManager manager] saveAccoundWithDict:result];
+        
+        NSLog(@"%d",isSuccess);
+        
         [self.navigationController popViewControllerAnimated:NO];
         [self.navigationController setNavigationBarHidden:NO animated:NO];
         BLOCK_SAFE(self.loginSuccessBlock)();
@@ -284,10 +283,10 @@
     __block MBProgressHUD *hud= [MBProgressHUD showAnimationtoView:self.view];
     [BaseSeverHttp ZpsyPostWithPath:Api_LoginThird WithParams:dict WithSuccessBlock:^(NSDictionary* result) {
         hud.hidden=YES;
-        userInfoModel *model = [userInfoModel mj_objectWithKeyValues:result];
-        [UserModel ShareInstance].userInfo = model;
-        [UserModel ShareInstance].TOKEN = [result objectForKey:@"token"];
-        [UserModel ShareInstance].IsLogin = YES;
+        
+        BOOL isSuccess = [[UserManager manager] saveAccoundWithDict:result];
+        
+        NSLog(@"%d",isSuccess);
         //[self dismissViewControllerAnimated:NO completion:nil];
         [self.navigationController popViewControllerAnimated:NO];
         [self.navigationController setNavigationBarHidden:NO animated:NO];
@@ -414,6 +413,7 @@
 #pragma 倒计时时间
 -(void)startTime
 {
+    self.codelab.userInteractionEnabled = NO;
     //倒计时时间
     __block int timeout = 60;
     //设置全局队列
@@ -423,27 +423,30 @@
     dispatch_source_set_timer(timer, dispatch_walltime(NULL, 0), 1.0*NSEC_PER_SEC, 0);
     dispatch_source_set_event_handler(timer, ^{
         
-        weakSelf.codelab.userInteractionEnabled = NO;
-        if(!weakSelf)
-        {
-            dispatch_source_cancel(timer);
-        }
-        if (timeout<=0) {
+//        if(!weakSelf)
+//        {
+//            dispatch_source_cancel(timer);
+//        }
+        if (timeout <= 0) {
             dispatch_source_cancel(timer);
             dispatch_async(dispatch_get_main_queue(), ^{
-                weakSelf.codelab.text=@"重新获取";
+                weakSelf.codelab.text = @"重新获取";
                 weakSelf.codelab.userInteractionEnabled = YES;
+                
             });
-        }
-        else{
+        }else{
             int seconds = timeout;
             NSString *strTime = [NSString stringWithFormat:@"%.2d",seconds];
             dispatch_async(dispatch_get_main_queue(), ^{
-                weakSelf.codelab.text=strTime;
+                
+                [UIView beginAnimations:nil context:nil];
+                [UIView setAnimationDuration:1];
+                weakSelf.codelab.text = strTime;
+                [UIView commitAnimations];
             });
             timeout--;
-            
         }
+        //NSLog(@"%d",timeout);
     });
     dispatch_resume(timer);
 }

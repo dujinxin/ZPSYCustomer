@@ -187,7 +187,7 @@ class ProductDetailVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
             return;
         }
         
-        if !UserModel.shareInstance().isLogin {
+        if !UserManager.manager.isLogin {
             let login = LoginVC()
             login.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(login, animated: false)

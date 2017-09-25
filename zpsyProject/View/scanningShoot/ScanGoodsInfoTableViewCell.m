@@ -115,7 +115,7 @@
 - (UIButton *)comparePriseButton{
     if (!_comparePriseButton) {
         _comparePriseButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _comparePriseButton.backgroundColor = JXColorFromRGB(0xc3222c);
+        _comparePriseButton.backgroundColor = JXMainColor;
         [_comparePriseButton setTitle:@"比价" forState:UIControlStateNormal];
         [_comparePriseButton setTitleColor:JXFfffffColor forState:UIControlStateNormal];
         
@@ -138,12 +138,12 @@
     if (self) {
         self.type = Quality;
         [self addSubview:self.bgImage];
-        
-        [self addSubview:self.titleLabel];
+        [self addSubview:self.resultImageView];
         [self addSubview:self.resultButton];
         [self addSubview:self.infoLabel];
+        [self addSubview:self.detailLabel];
         [self addSubview:self.reportButton];
-        
+        [self addSubview:self.detailButton];
         [self setNeedsUpdateConstraints];
         
     }
@@ -151,48 +151,64 @@
 }
 
 - (void)updateConstraints{
-    CGFloat space = 30;
+    CGFloat height = 30;
+    //(25+132+15+25+8+16)+15+26+15 正品
+    //(25+132+15+25+8+16)+10+13+15+44 可疑
+    //(25+132+15+25+8+16)+10+13+15+44 伪品
     [self.bgImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.right.bottom.equalTo(self).offset(0);
     }];
-    
-    [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.mas_top).offset(space);
+    [self.resultImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.mas_top).offset(25*kPercent);
+        make.centerX.equalTo(self.mas_centerX);
+        make.size.mas_equalTo(CGSizeMake(117*kPercent, 132*kPercent));
+    }];
+    [self.resultButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.resultImageView.mas_bottom).offset(15*kPercent);
         make.left.equalTo(self.mas_left).offset(20);
         make.right.equalTo(self.mas_right).offset(-20);
-        make.height.mas_equalTo(20);
+        make.height.mas_equalTo(25*kPercent);
     }];
-    
-    [self.resultButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.titleLabel.mas_bottom).offset(space);
+    [self.infoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.resultButton.mas_bottom).offset(8*kPercent);
         make.centerX.mas_equalTo(self.centerX);
-        make.height.mas_equalTo(30);
-        make.width.mas_equalTo(120);
+        make.height.mas_equalTo(16*kPercent);
     }];
     
-    [self.infoLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+    [self.detailLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.mas_left).offset(50);
         make.right.equalTo(self.mas_right).offset(-50);
-        make.top.equalTo(self.resultButton.mas_bottom).offset(5);
-        
-        if (_type == Quality) {
+        make.top.equalTo(self.infoLabel.mas_bottom).offset(10*kPercent);
+        if (_type == Quality){
             make.height.mas_equalTo(0.1);
-        }else if (_type == Doubt){
-            make.height.mas_equalTo(50);
         } else{
-            make.height.mas_equalTo(75);
+            make.height.mas_equalTo(13*kPercent);
         }
     }];
     
     [self.reportButton mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeMake(100, 26));
-        make.top.equalTo(self.infoLabel.mas_bottom).offset(10);
+        
         if (_type == Quality) {
-            make.width.mas_equalTo(0.1);
-        }else if (_type == Doubt){
-            make.left.equalTo(self.titleLabel.mas_centerX).offset(30);
-        }else{
+            make.top.equalTo(self.infoLabel.mas_bottom).offset(15*kPercent);
+            make.size.mas_equalTo(CGSizeMake(100*kPercent, 27*kPercent));
             make.centerX.equalTo(self.mas_centerX);
+        }else{
+            make.top.equalTo(self.detailLabel.mas_bottom).offset(15*kPercent);
+            make.left.equalTo(self.mas_centerX);
+            make.right.equalTo(self.mas_right);
+            make.height.mas_equalTo(44*kPercent);
+        }
+    }];
+    [self.detailButton mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.mas_centerX).offset(-0.5);
+        if (_type == Quality) {
+            make.top.equalTo(self.infoLabel.mas_bottom).offset(15*kPercent);
+            make.width.mas_equalTo(0.1);
+            make.height.mas_equalTo(0.1);
+        }else{
+            make.left.equalTo(self.mas_left);
+            make.top.equalTo(self.reportButton.mas_top);
+            make.height.mas_equalTo(44*kPercent);
         }
     }];
     
@@ -207,47 +223,54 @@
     }
     return _bgImage;
 }
-
-- (UILabel *)titleLabel{
-    if (!_titleLabel) {
-        _titleLabel = [[UILabel alloc ]init ];
-        _titleLabel.textColor = JXFfffffColor;
-        _titleLabel.textAlignment = NSTextAlignmentCenter;
-        _titleLabel.backgroundColor = JXDebugColor;
-        _titleLabel.font = JXFontForNormal(20);
-        _titleLabel.text = @"正品溯源权威认证";
+- (UIImageView *)resultImageView{
+    if (!_resultImageView) {
+        _resultImageView = [[UIImageView alloc ] init];
+        _resultImageView.backgroundColor = JXDebugColor;
+        
     }
-    return _titleLabel;
+    return _resultImageView;
 }
 
 - (UILabel *)infoLabel{
     if (!_infoLabel) {
         _infoLabel = [[UILabel alloc ]init ];
         _infoLabel.textColor = JXFfffffColor;
-        _infoLabel.textAlignment = NSTextAlignmentLeft;
+        _infoLabel.textAlignment = NSTextAlignmentCenter;
         _infoLabel.backgroundColor = JXDebugColor;
-        _infoLabel.font = JXFontForNormal(13);
+        _infoLabel.font = JXFontForNormal(16);
         _infoLabel.text = @"正品溯源码：111122223333444";
         _infoLabel.numberOfLines = 0;
     }
     return _infoLabel;
 }
-
+- (UILabel *)detailLabel{
+    if (!_detailLabel) {
+        _detailLabel = [[UILabel alloc ]init ];
+        _detailLabel.textColor = JXFfffffColor;
+        _detailLabel.textAlignment = NSTextAlignmentCenter;
+        _detailLabel.backgroundColor = JXDebugColor;
+        _detailLabel.font = JXFontForNormal(13*kPercent);
+        _detailLabel.text = @"";
+        _detailLabel.numberOfLines = 0;
+    }
+    return _detailLabel;
+}
 - (UIButton *)resultButton{
     if (!_resultButton) {
         _resultButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _resultButton.backgroundColor = JXColorFromR_G_B(135, 130, 120);
+        _resultButton.backgroundColor = JXDebugColor;
         [_resultButton setImage:JXImageNamed(@"") forState:UIControlStateNormal];
         [_resultButton setTitle:@"正品" forState:UIControlStateNormal];
         [_resultButton setTitleColor:JXFfffffColor forState:UIControlStateNormal];
-        [_resultButton.titleLabel setFont:JXFontForNormal(20)];
+        [_resultButton.titleLabel setFont:JXFontForNormal(15*kPercent)];
         
         _resultButton.imageEdgeInsets = UIEdgeInsetsMake(0, -5, 0, 5);
         _resultButton.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, -5);
         
         _resultButton.layer.cornerRadius = 3;
         
-        _reportButton.enabled = NO;
+        _resultButton.enabled = NO;
     }
     return _resultButton;
 }
@@ -255,11 +278,11 @@
 - (UIButton *)detailButton{
     if (!_detailButton) {
         _detailButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _detailButton.backgroundColor = JXColorFromRGB(0xc3222c);
+        _detailButton.backgroundColor = JXColorFromRGB(0x2d8edd);
         [_detailButton setTitle:@"查看详情" forState:UIControlStateNormal];
         [_detailButton setTitleColor:JXFfffffColor forState:UIControlStateNormal];
         
-        [_detailButton.titleLabel setFont:JXFontForNormal(15)];
+        [_detailButton.titleLabel setFont:JXFontForNormal(17*kPercent)];
     }
     return _detailButton;
 }
@@ -267,11 +290,11 @@
 - (UIButton *)reportButton{
     if (!_reportButton) {
         _reportButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _reportButton.backgroundColor = JXColorFromRGB(0xc3222c);
+        _reportButton.backgroundColor = JXColorFromRGB(0x2d8edd);
         [_reportButton setTitle:@"举报有奖" forState:UIControlStateNormal];
         [_reportButton setTitleColor:JXFfffffColor forState:UIControlStateNormal];
         
-        [_reportButton.titleLabel setFont:JXFontForNormal(15)];
+        [_reportButton.titleLabel setFont:JXFontForNormal(17*kPercent)];
     }
     return _reportButton;
 }
@@ -310,8 +333,8 @@
     
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.bottom.equalTo(self);
-        make.left.equalTo(self.mas_left).offset(60);
-        make.right.equalTo(self.mas_right).offset(-60);
+        make.left.equalTo(self.mas_left).offset(20);
+        make.right.equalTo(self.mas_right).offset(-20);
     }];
 }
 - (UIImageView *)arrow{
@@ -340,7 +363,7 @@
         _titleLabel.textColor = JX333333Color;
         _titleLabel.textAlignment = NSTextAlignmentCenter;
         //_titleLabel.backgroundColor = JXDebugColor;
-        _titleLabel.font = JXFontForNormal(13);
+        _titleLabel.font = JXFontForNormal(14*kPercent);
         _titleLabel.text = @"商品认证信息";
     }
     return _titleLabel;
@@ -354,229 +377,115 @@
     if (self) {
         self.backgroundColor = JXFfffffColor;
         
-//        [self addSubview:self.productImage];
+        [self addSubview:self.leftImage];
+        [self addSubview:self.centerImage];
+        [self addSubview:self.rightImage];
         
-//        [self addSubview:self.infolabel1];
-//        [self addSubview:self.infolabel2];
-//        [self addSubview:self.infolabel3];
-//        [self addSubview:self.infolabel4];
-//        [self addSubview:self.infolabel5];
-//        
-//        [self addSubview:self.productAddress];
-//        [self addSubview:self.packageType];
-//        [self addSubview:self.packageStandard];
-//        [self addSubview:self.weight];
-//        [self addSubview:self.ingredient];
-        
-        [self mas_layoutSubviews];
+        [self mas_layoutSubviews:NO];
         
     }
     return self;
 }
-- (void)mas_layoutSubviews{
-        
-//    [self.productImage mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.and.left.and.right.equalTo(self).offset(0);
-//        make.height.mas_equalTo(200*kPercent);
-//    }];
-//    //1
-//    [self.infolabel1 mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(self.productImage.mas_bottom).offset(20);
-//        make.left.equalTo(self.mas_left).offset(25);
-//        make.width.mas_equalTo(17 * 5);
-//        make.height.mas_equalTo(16.5);
-//    }];
-//    
-//    [self.productAddress mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(self.infolabel1.mas_top);
-//        make.left.equalTo(self.infolabel1.mas_right).offset(0);
-//        make.right.equalTo(self.mas_right).offset(-25);
-//        make.height.mas_equalTo(16.5);
-//    }];
-//    //2
-//    [self.infolabel2 mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(self.infolabel1.mas_bottom).offset(20);
-//        make.left.equalTo(self.infolabel1.mas_left);
-//        make.width.equalTo(self.infolabel1.mas_width);
-//        make.height.equalTo(self.infolabel1.mas_height);
-//    }];
-//    
-//    [self.packageType mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(self.infolabel2.mas_top);
-//        make.left.equalTo(self.infolabel1.mas_right).offset(0);
-//        make.width.and.height.mas_equalTo(75);
-//    }];
-//    
-//    
-//    [self.infolabel3 mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(self.packageType.mas_bottom).offset(20);
-//        make.left.equalTo(self.infolabel1.mas_left);
-//        make.width.equalTo(self.infolabel1.mas_width);
-//        make.height.equalTo(self.infolabel1.mas_height);
-//    }];
-//    
-//    [self.packageStandard mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(self.infolabel3.mas_top);
-//        make.left.equalTo(self.infolabel1.mas_right).offset(0);
-//        make.right.equalTo(self.mas_right).offset(-25);
-//        make.height.equalTo(self.infolabel1);
-//    }];
-//    
-//    [self.infolabel4 mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(self.infolabel3.mas_bottom).offset(20);
-//        make.left.equalTo(self.infolabel1.mas_left);
-//        make.width.equalTo(self.infolabel1.mas_width);
-//        make.height.equalTo(self.infolabel1.mas_height);
-//    }];
-//    
-//    [self.weight mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(self.infolabel4.mas_top);
-//        make.left.equalTo(self.infolabel1.mas_right).offset(0);
-//        make.right.equalTo(self.mas_right).offset(-25);
-//        make.height.equalTo(self.infolabel1.mas_height);
-//    }];
-//    
-//    [self.infolabel5 mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(self.infolabel4.mas_bottom).offset(20);
-//        make.left.equalTo(self.infolabel1.mas_left);
-//        make.width.equalTo(self.infolabel1.mas_width);
-//        make.height.equalTo(self.infolabel1.mas_height);
-//    }];
-//    
-//    [self.ingredient mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(self.infolabel5.mas_top);
-//        make.left.equalTo(self.infolabel1.mas_right).offset(0);
-//        make.right.equalTo(self.mas_right).offset(-25);
-//        make.height.equalTo(self.infolabel1.mas_height);
-//    }];
+- (void)mas_layoutSubviews:(BOOL)isImageExist{
+    CGFloat leading = 20;
+    CGFloat space = 10;
+    CGFloat width = (kScreenWidth - 20*2 - 10 *2)/3;
+    self.imageHeight = isImageExist == YES ? width : 0;
     
+    [self.leftImage mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self);
+        make.left.equalTo(self.mas_left).offset(leading);
+        make.size.mas_equalTo(CGSizeMake(width, self.imageHeight));
+    }];
+    [self.centerImage mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self);
+        make.left.equalTo(self.leftImage.mas_right).offset(space);
+        make.size.mas_equalTo(CGSizeMake(width, self.imageHeight));
+    }];
+    [self.rightImage mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self);
+        make.left.equalTo(self.centerImage.mas_right).offset(space);
+        make.size.mas_equalTo(CGSizeMake(width, self.imageHeight));
+    }];
 }
 
-- (void)setEntity:(ScanGoodsEntity *)entity{
-    
+- (void)setImageArray:(NSArray *)imageArray{
+
+    switch (imageArray.count) {
+            case 0:
+        {
+            self.leftImage.hidden = YES;
+            self.centerImage.hidden = YES;
+            self.rightImage.hidden = YES;
+        }
+            break;
+            case 1:
+        {
+            [self.leftImage sd_setImageWithURL:[NSURL URLWithString:imageArray[0]] placeholderImage:nil];
+            self.centerImage.hidden = YES;
+            self.rightImage.hidden = YES;
+        }
+            break;
+            case 2:
+        {
+            [self.leftImage sd_setImageWithURL:[NSURL URLWithString:imageArray[0]] placeholderImage:nil];
+            [self.centerImage sd_setImageWithURL:[NSURL URLWithString:imageArray[1]] placeholderImage:nil];
+            self.rightImage.hidden = YES;
+        }
+            break;
+        default:
+        {
+            [self.leftImage sd_setImageWithURL:[NSURL URLWithString:imageArray[0]] placeholderImage:nil];
+            [self.centerImage sd_setImageWithURL:[NSURL URLWithString:imageArray[1]] placeholderImage:nil];
+            [self.rightImage sd_setImageWithURL:[NSURL URLWithString:imageArray[2]] placeholderImage:nil];
+        }
+            break;
+    }
+
+    [self mas_layoutSubviews:(imageArray.count > 0)];
 }
+
 - (AdScrollView *)scrollView{
     if (!_scrollView) {
         _scrollView = [[AdScrollView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 200*kPercent)];
     }
     return _scrollView;
 }
-- (UIImageView *)productImage{
-    if (!_productImage) {
-        _productImage = [[UIImageView alloc ] init];
-        _productImage.backgroundColor = JXDebugColor;
-        
+- (UIImageView *)leftImage{
+    if (!_leftImage) {
+        _leftImage = [[UIImageView alloc ] init];
+        _leftImage.backgroundColor = JXDebugColor;
+        _leftImage.userInteractionEnabled = YES;
+        _leftImage.tag = 0;
+        [_leftImage addGestureRecognizer: [[UITapGestureRecognizer alloc ] initWithTarget:self action:@selector(imageClick:)]];
     }
-    return _productImage;
+    return _leftImage;
+}
+- (UIImageView *)centerImage{
+    if (!_centerImage) {
+        _centerImage = [[UIImageView alloc ] init];
+        _centerImage.backgroundColor = JXDebugColor;
+        _centerImage.userInteractionEnabled = YES;
+        _centerImage.tag = 1;
+        [_centerImage addGestureRecognizer: [[UITapGestureRecognizer alloc ] initWithTarget:self action:@selector(imageClick:)]];
+    }
+    return _centerImage;
+}
+- (UIImageView *)rightImage{
+    if (!_rightImage) {
+        _rightImage = [[UIImageView alloc ] init];
+        _rightImage.backgroundColor = JXDebugColor;
+        _rightImage.userInteractionEnabled = YES;
+        _rightImage.tag = 2;
+        [_rightImage addGestureRecognizer: [[UITapGestureRecognizer alloc ] initWithTarget:self action:@selector(imageClick:)]];
+    }
+    return _rightImage;
 }
 
-- (UILabel *)infolabel1{
-    if (!_infolabel1) {
-        _infolabel1 = [[UILabel alloc ]init ];
-        _infolabel1.textColor = JX333333Color;
-        _infolabel1.textAlignment = NSTextAlignmentLeft;
-        _infolabel1.backgroundColor = JXDebugColor;
-        _infolabel1.font = JXFontForNormal(16.5);
-        _infolabel1.text = @"生产地址：";
+- (void)imageClick:(UITapGestureRecognizer *)tap {
+    if (_block) {
+        self.block(NO,tap.view.tag);
     }
-    return _infolabel1;
-}
-- (UILabel *)infolabel2{
-    if (!_infolabel2) {
-        _infolabel2 = [[UILabel alloc ]init ];
-        _infolabel2.textColor = JX333333Color;
-        _infolabel2.textAlignment = NSTextAlignmentLeft;
-        _infolabel2.backgroundColor = JXDebugColor;
-        _infolabel2.font = JXFontForNormal(16.5);
-        _infolabel2.text = @"包装类型：";
-    }
-    return _infolabel2;
-}
-- (UILabel *)infolabel3{
-    if (!_infolabel3) {
-        _infolabel3 = [[UILabel alloc ]init ];
-        _infolabel3.textColor = JX333333Color;
-        _infolabel3.textAlignment = NSTextAlignmentLeft;
-        _infolabel3.backgroundColor = JXDebugColor;
-        _infolabel3.font = JXFontForNormal(16.5);
-        _infolabel3.text = @"包装规格：";
-    }
-    return _infolabel3;
-}
-- (UILabel *)infolabel4{
-    if (!_infolabel4) {
-        _infolabel4 = [[UILabel alloc ]init ];
-        _infolabel4.textColor = JX333333Color;
-        _infolabel4.textAlignment = NSTextAlignmentLeft;
-        _infolabel4.backgroundColor = JXDebugColor;
-        _infolabel4.font = JXFontForNormal(16.5);
-        _infolabel4.text = @"重        量：";
-    }
-    return _infolabel4;
-}
-- (UILabel *)infolabel5{
-    if (!_infolabel5) {
-        _infolabel5 = [[UILabel alloc ]init ];
-        _infolabel5.textColor = JX333333Color;
-        _infolabel5.textAlignment = NSTextAlignmentLeft;
-        _infolabel5.backgroundColor = JXDebugColor;
-        _infolabel5.font = JXFontForNormal(16.5);
-        _infolabel5.text = @"主要成分：";
-    }
-    return _infolabel5;
-}
-
-- (UILabel *)productAddress{
-    if (!_productAddress) {
-        _productAddress = [[UILabel alloc ]init ];
-        _productAddress.textColor = JX333333Color;
-        _productAddress.textAlignment = NSTextAlignmentLeft;
-        _productAddress.backgroundColor = JXDebugColor;
-        _productAddress.font = JXFontForNormal(16.5);
-    }
-    return _productAddress;
-}
-
-- (UIImageView *)packageType{
-    if (!_packageType) {
-        _packageType = [[UIImageView alloc ] init];
-        _packageType.backgroundColor = JXDebugColor;
-        
-    }
-    return _packageType;
-}
-
-- (UILabel *)packageStandard{
-    if (!_packageStandard) {
-        _packageStandard = [[UILabel alloc ]init ];
-        _packageStandard.textColor = JX333333Color;
-        _packageStandard.textAlignment = NSTextAlignmentLeft;
-        _packageStandard.backgroundColor = JXDebugColor;
-        _packageStandard.font = JXFontForNormal(16.5);
-    }
-    return _packageStandard;
-}
-
-- (UILabel *)weight{
-    if (!_weight) {
-        _weight = [[UILabel alloc ]init ];
-        _weight.textColor = JX333333Color;
-        _weight.textAlignment = NSTextAlignmentLeft;
-        _weight.backgroundColor = JXDebugColor;
-        _weight.font = JXFontForNormal(16.5);
-    }
-    return _weight;
-}
-
-- (UILabel *)ingredient{
-    if (!_ingredient) {
-        _ingredient = [[UILabel alloc ]init ];
-        _ingredient.textColor = JX333333Color;
-        _ingredient.textAlignment = NSTextAlignmentLeft;
-        _ingredient.backgroundColor = JXDebugColor;
-        _ingredient.font = JXFontForNormal(16.5);
-    }
-    return _ingredient;
 }
 
 @end
@@ -637,7 +546,6 @@
 - (void)tapClick:(UITapGestureRecognizer * )tap{
     if (_block) {
         self.block(NO, tap.view.tag);
-        NSLog(@"click:%ld",tap.view.tag);
     }
 }
 

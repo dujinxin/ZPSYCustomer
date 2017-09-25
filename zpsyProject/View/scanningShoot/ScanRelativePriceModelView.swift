@@ -70,9 +70,9 @@ class ScanRelativePriceModelView: NSObject {
             if cell == nil {
                 cell = UITableViewCell.init(style: UITableViewCellStyle.value1, reuseIdentifier: "tableviewCellDetailId")
                 cell?.selectionStyle = UITableViewCellSelectionStyle.none
-                cell?.accessoryType=UITableViewCellAccessoryType.disclosureIndicator
+                cell?.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
                 cell?.separatorInset = UIEdgeInsetsMake(0, 15, 0, 15)
-                cell?.detailTextLabel?.textColor=kColor_red
+                cell?.detailTextLabel?.textColor = JXMainColor
                 cell?.separatorInset = UIEdgeInsetsMake(0, 15, 0, 15)
             }
             

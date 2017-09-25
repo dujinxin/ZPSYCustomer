@@ -10,7 +10,7 @@
 #import "Scanview.h"
 #import "WKwebVC.h"
 #import "ZPSYNav.h"
-#import "LocationManager.h"
+#import "JXViewManager.h"
 #import "ZPSY-Swift.h"
 
 #import "ScanDetailViewController.h"
@@ -18,7 +18,7 @@
 
 }
 @property(nonatomic,strong)Scanview *scanview;
-@property(nonatomic,strong)LocationManager *LocManager;
+
 @end
 
 @implementation ScanningShootVC
@@ -27,14 +27,16 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self viewinit];
-    [self.LocManager startLocation];
+    
+    //[[GDLocationManager manager] startLocation];
+    //[[GDLocationManager manager] startUpdateLocation];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES];
     [self setNeedsStatusBarAppearanceUpdate];
-    self.scanview.StartScaning=YES;
+    self.scanview.StartScaning = YES;
 }
 -(UIStatusBarStyle)preferredStatusBarStyle{
     return UIStatusBarStyleLightContent;
@@ -42,42 +44,34 @@
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:NO];
-    self.scanview.StartScaning=NO;
+    self.scanview.StartScaning =  NO;
 }
 
 -(void)scanresultWithValue:(NSString *)codeValue Type:(ScanTypeEnum) type{
-    self.scanview.StartScaning=NO;
+    
+    self.scanview.StartScaning = NO;
+    
+    if ([GDLocationManager manager].isEnabled == YES ){
+        if ([GDLocationManager manager].location == nil || [GDLocationManager manager].reGeocode == nil || [GDLocationManager manager].isLoacating == YES) {
+            
+            //[[JXViewManager sharedInstance] showJXNoticeMessage:@"正在定位，请稍候再试"];
+            self.scanview.StartScaning = YES;
+        
+            return;
+        }
+    }else{
+        LocationViewController * alert = [[LocationViewController alloc ] init ];
+        [self.navigationController pushViewController:alert animated:NO];
+        return;
+    }
     
     if (type==ScanTypeQRCode || type==ScanTypeBarCode || type==ScanTypeGmCode || type==ScanTypeOther) {
-        
-        
-        
-//        NSURL *url = [NSURL URLWithString:codeValue];
-//        NSString *lastpath = url.lastPathComponent;
-//        if (lastpath==nil || [lastpath isEqualToString:@""]) {
-//            [self AlertShowWithStr:@"解码失败"];
-//        }else{
-//            [self snRequestWithCode:lastpath];
-//        }
         
         if (codeValue==nil || [codeValue isEqualToString:@""]) {
             [self AlertShowWithStr:@"解码失败"];
         }else{
             [self snRequestWithCode:codeValue];
         }
-        
-        
-//        NSArray *arr = [codeValue componentsSeparatedByString:@"/"];
-//        if (arr && arr.count>0) {
-//            NSString *codeStr = arr.lastObject;
-//            if (codeStr == nil || [codeStr isEqualToString:@""]) {
-//                codeStr = @"";
-//            }
-//            [self snRequestWithCode:arr.lastObject];
-//        }
-//        else{
-//         [self AlertShowWithStr:@"解码失败"];
-//        }
     }else{
         [self AlertShowWithStr:@"解码失败"];
     }
@@ -85,19 +79,29 @@
 }
 
 -(void)snRequestWithCode:(NSString*)codeStr{
+    
 
     NSDictionary *dict = @{@"codeId":codeStr,
-                           @"scanMobile":[UserModel ShareInstance].userInfo.mobile,
-                           @"scanLoc":@"北京",
-                           @"longitude":self.LocManager.longitute,
-                           @"latitude":self.LocManager.latitude,
+                           @"scanMobile":[UserManager manager].userEntity.mobile,
+                           @"country":[GDLocationManager manager].reGeocode.country,
+                           @"province":[GDLocationManager manager].reGeocode.province,
+                           @"city":[GDLocationManager manager].reGeocode.city,
+                           @"district":[GDLocationManager manager].reGeocode.district,
+                           @"street":[GDLocationManager manager].reGeocode.street,
+                           @"number":[GDLocationManager manager].reGeocode.number,
+                           @"address":[GDLocationManager manager].reGeocode.formattedAddress,
+                           
+//                           @"longitude":self.LocManager.longitute,
+//                           @"latitude":self.LocManager.latitude,
+                           @"longitude":[NSString stringWithFormat:@"%f",[GDLocationManager manager].location.coordinate.longitude],
+                           @"latitude":[NSString stringWithFormat:@"%f",[GDLocationManager manager].location.coordinate.latitude],
                            @"model":[Utility getCurrentDeviceModel]
                            };
     [BaseSeverHttp ZpsyPostWithPath:Api_scanRecordFind WithParams:dict WithSuccessBlock:^(NSDictionary* result) {
         
         if ([[result objectForKey:@"goodsStatus"] isKindOfClass:[NSDictionary class]]) {
             NSDictionary * dict = [result objectForKey:@"goodsStatus"];
-            if ([[dict objectForKey:@"status"] integerValue] !=1) {
+            if ([[dict objectForKey:@"status"] integerValue] != 1) {
                 UIAlertView * alert = [[UIAlertView alloc ] initWithTitle:nil message:dict[@"describe"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
                 [alert show];
                 return;
@@ -125,9 +129,9 @@
 
 //失败页面
 -(void)failShowVC{
-    WKwebVC *web=[[WKwebVC alloc] init];
-    web.IsrequestFile=YES;
-    web.pathStr=@"scannoresult.html";
+    WKwebVC *web = [[WKwebVC alloc] init];
+    web.IsrequestFile = YES;
+    web.pathStr = @"scannoresult.html";
     [self.navigationController pushViewController:web animated:YES];
 };
 
@@ -168,18 +172,10 @@
     return _scanview;
 }
 
--(LocationManager *)LocManager{
-
-    if (!_LocManager) {
-        _LocManager = [[LocationManager alloc] init];
-    }
-    return _LocManager;
-}
-
 -(void)otherViewInit{
 
     UIView *navStatusView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 20)];
-    navStatusView.backgroundColor=kColor_red;
+    navStatusView.backgroundColor = JXMainColor;
     [self.view addSubview:navStatusView];
 
     UILabel *zpsyLab=[[UILabel alloc] initWithFrame:CGRectMake(0, (kScreenHeight+kWidth_fit(250))/2.0, kScreenWidth, 20)];

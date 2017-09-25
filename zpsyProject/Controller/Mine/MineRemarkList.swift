@@ -187,9 +187,11 @@ class MineRemarkList: UITableViewController {
                     likeStr = model.praiseNum!
                 }
             }
+            if let avatar = UserManager.manager.userEntity.avatar {
+                cell.MyImageView.sd_setImage(with: URL(string: avatar), placeholderImage: UIImage.init(named: PlaceHoldeImageStr))
+            }
             
-            cell.MyImageView.sd_setImage(with: URL.init(string: UserModel.shareInstance().userInfo.avatar), placeholderImage: UIImage.init(named: PlaceHoldeImageStr))
-            cell.myTitleLab.text = UserModel.shareInstance().userInfo.nickName
+            cell.myTitleLab.text = UserManager.manager.userEntity.nickName
             cell.myLikeLab.text = likeStr
             cell.myDetLab.text = contentStr
             cell.myTimeLab.text = CTUtility.string(from: timerStr, sourceformat: "yyyy-MM-dd HH:mm:ss", toFormat: "yyyy年MM月dd日 HH:mm")

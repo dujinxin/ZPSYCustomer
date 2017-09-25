@@ -19,10 +19,10 @@ class ProductOrExposureSelectView: UIView {
     
     func viewinit(){
         
-        let segment=UISegmentedControl.init(items: ["商品","曝光","正品优选"])
-        segment.selectedSegmentIndex=0
+        let segment=UISegmentedControl.init(items: ["商品","发现","正品优选"])
+        segment.selectedSegmentIndex = 0
         segment.tintColor = UIColor.clear
-        segment.backgroundColor = kColor_red
+        segment.backgroundColor = JXMainColor
         
         segment.setTitleTextAttributes([NSFontAttributeName:UIFont.systemFont(ofSize: 16),NSForegroundColorAttributeName:UIColor.white], for: UIControlState.selected)
         segment.setTitleTextAttributes([NSFontAttributeName:UIFont.systemFont(ofSize: 16),NSForegroundColorAttributeName:UIColor.init(white: 1, alpha: 0.5)], for: UIControlState.normal)

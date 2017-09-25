@@ -9,9 +9,9 @@
 import Foundation
 import UIKit
 //MARK:尺寸类
-//let kScreenWidth = UIScreen.main.bounds.width
-//let kScreenHeight = UIScreen.main.bounds.height
-//let kScreenBounds = UIScreen.main.bounds
+let kScreenWidth = UIScreen.main.bounds.width
+let kScreenHeight = UIScreen.main.bounds.height
+let kScreenBounds = UIScreen.main.bounds
 
 let kStatusBarHeight = CGFloat(20)
 let kNavBarHeight = CGFloat(44)
@@ -19,7 +19,7 @@ let kNavStatusHeight = kStatusBarHeight + kNavBarHeight
 let kTabBarHeight = CGFloat(49)
 
 let kHWPercent = (kScreenHeight / kScreenWidth)//高宽比例
-let kPercent = kScreenWidth / 375.0
+let kPercent = kScreenWidth / 414.0
 
 //MARK:颜色
 
@@ -29,6 +29,8 @@ let JX999999Color = UIColor.rgbColor(rgbValue: 0x999999)
 let JXEeeeeeColor = UIColor.rgbColor(rgbValue: 0xeeeeee)
 let JXFfffffColor = UIColor.rgbColor(rgbValue: 0xffffff)
 let JXF1f1f1Color = UIColor.rgbColor(rgbValue: 0xf1f1f1)
+
+let JXMainColor = UIColor.rgbColor(rgbValue: 0xc3222c)
 
 //MARK:字体
 //let JXFontNormarl

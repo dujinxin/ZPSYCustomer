@@ -11,6 +11,7 @@ import UIKit
 class ReportViewController: UITableViewController {
     
     public var SNString: String?
+    public var countryType : String?
     public var PruductId:String?
     public var porductModel:productDetailModel?
     
@@ -60,7 +61,7 @@ class ReportViewController: UITableViewController {
         
         let commitButton = UIButton.init()
         commitButton.setTitle("提交", for: UIControlState.normal)
-        commitButton.backgroundColor = kColor_red
+        commitButton.backgroundColor = JXMainColor
         commitButton.layer.cornerRadius = 5
         commitButton.setTitleColor(UIColor.white, for: UIControlState.normal)
         commitButton.addTarget(self, action: #selector(commitEvents), for: UIControlEvents.touchUpInside)
@@ -94,7 +95,7 @@ class ReportViewController: UITableViewController {
     }
     @objc private func commitEvents(){
         //        successShow()
-        if !UserModel.shareInstance().isLogin {
+        if !UserManager.manager.isLogin {
             let login = LoginVC.init()
             login.hidesBottomBarWhenPushed =  true
             self.navigationController?.pushViewController(login, animated: false)
@@ -132,7 +133,7 @@ class ReportViewController: UITableViewController {
         //提交请求
         if self.PicSelect.localImageArray.count == 0 {
             
-            self.datarequest(["sn":self.SNString ?? "","report_contents":suggestString,"mobile":phoneNumString,"image1":"","productid":self.PruductId ?? "","cause":selectType,"name":nameStr])
+            self.datarequest(["sn":self.SNString ?? "","countryType":self.countryType ?? "","report_contents":suggestString,"mobile":phoneNumString,"image1":"","productid":self.PruductId ?? "","cause":selectType,"name":nameStr])
             
         }else{
             UploadImageTool.uploadImages(self.PicSelect.localImageArray, progress: nil, success: { (result:[Any]?) in
@@ -146,13 +147,15 @@ class ReportViewController: UITableViewController {
                 let length:NSInteger = imgStr.characters.count - 1
                 let imgUrlStr = (imgStr as NSString).substring(to: length)
                 
-                self.datarequest(["sn":self.SNString ?? "","report_contents":suggestString,"mobile":phoneNumString,"image1":imgUrlStr,"productid":self.PruductId ?? "","cause":self.selectType,"name":nameStr])
+                self.datarequest(["sn":self.SNString ?? "","countryType":self.countryType ?? "","report_contents":suggestString,"mobile":phoneNumString,"image1":imgUrlStr,"productid":self.PruductId ?? "","cause":self.selectType,"name":nameStr])
             }, failure: {
                 MBProgressHUD.hide(for: self.view)
             })
         }
     }
     private func datarequest(_ dict:Any) {
+        self.view.endEditing(true)
+        MBProgressHUD.showAdded(to: self.view, animated: true)
         
         BaseSeverHttp.zpsyPost(withPath: Api_creatReport, withParams: dict, withSuccessBlock: {[weak self] (result:Any?) in
             MBProgressHUD.hide(for: self?.view)
@@ -160,7 +163,6 @@ class ReportViewController: UITableViewController {
         }) { (err:Error?) in
             MBProgressHUD.hide(for: self.view)
         }
-        
     }
     
     //提交成功界面显示
@@ -246,7 +248,7 @@ class ReportViewController: UITableViewController {
             if indexPath.row == 0 {
                 
                 let cell:FeedBackViewCell = tableView.dequeueReusableCell(withIdentifier: "FeedBackViewCell") as! FeedBackViewCell
-                cell.contentPlaceholderString = "请您填写疑似伪品的原因，经我方确认您举报的商品时伪品，我们会抽取幸运者为您送上一份礼物"
+                cell.contentPlaceholderString = "请您填写疑似伪品的原因，经我方确认您举报的商品是伪品，我们会抽取幸运者为您送上一份礼物"
                 cell.suggestBlock = {(result:String)->Void in
                     self.suggestStr = result
                 }
@@ -268,10 +270,10 @@ class ReportViewController: UITableViewController {
         }
     }
 
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        self.view.endEditing(true)
-    }
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
-    }
+//    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        self.view.endEditing(true)
+//    }
+//    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        self.view.endEditing(true)
+//    }
 }

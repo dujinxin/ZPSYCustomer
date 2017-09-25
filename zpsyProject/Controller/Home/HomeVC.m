@@ -78,13 +78,48 @@
     return 1;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 8;
+    if (section == 2) {
+        return 44;
+    }
+    return 10;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     return 0.1;
 }
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return UITableViewAutomaticDimension;
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    if (section == 2) {
+        UIView * contentView = [[UIView alloc ]init];
+        contentView.backgroundColor = [UIColor whiteColor];
+        contentView.frame = CGRectMake(0, 0, kScreenWidth, 44);
+        
+        UIView * backgroundView = [[UIView alloc ]init];
+        backgroundView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        backgroundView.frame = CGRectMake(0, 0, kScreenWidth, 10);
+        [contentView addSubview:backgroundView];
+        
+        UILabel * sectionTitle = [[UILabel alloc ] init];
+        sectionTitle.frame = CGRectMake(15*kPercent, 15 + 10, kScreenWidth - 15*2*kPercent, 14);
+        sectionTitle.text = @"曝光";
+        sectionTitle.textColor = JX333333Color;
+        sectionTitle.textAlignment = NSTextAlignmentLeft;
+        sectionTitle.font = JXFontForNormal(14);
+        [contentView addSubview:sectionTitle];
+        return contentView;
+    }else{
+        return [UIView new];
+    }
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 1) {
+        CGFloat width = (kScreenWidth - 15*2*kPercent - 5*2*kPercent)/3;
+        CGFloat height = width * (280.f / 315.f) + 44 + 15*kPercent ;
+        return height;
+    }else if (indexPath.section >= 2){
+        CGFloat height = 10 + 524.f/3.f*kPercent + 44;
+        return height;
+    }else{
+        return UITableViewAutomaticDimension;
+    }
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section==0) {
@@ -133,18 +168,19 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 #pragma get
--(UITableView *)tableview{
+- (UITableView *)tableview{
 
     if (!_tableview) {
-        _tableview=[[UITableView alloc] initWithFrame:kScreenBounds style:UITableViewStyleGrouped];
-        _tableview.separatorStyle=UITableViewCellSeparatorStyleNone;
-        _tableview.delegate=self;
-        _tableview.dataSource=self;
-        _tableview.tableHeaderView=self.sdCycleScrollView;
+        _tableview = [[UITableView alloc] initWithFrame:kScreenBounds style:UITableViewStyleGrouped];
+        _tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
+        _tableview.delegate = self;
+        _tableview.dataSource = self;
+        _tableview.tableHeaderView = self.sdCycleScrollView;
         [self reloadBanner];
-        _tableview.estimatedRowHeight=10;
-        _tableview.showsVerticalScrollIndicator=NO;
-        _tableview.showsHorizontalScrollIndicator=NO;
+        _tableview.estimatedRowHeight = 10;
+        _tableview.rowHeight = UITableViewAutomaticDimension;
+        _tableview.showsVerticalScrollIndicator = NO;
+        _tableview.showsHorizontalScrollIndicator = NO;
         [_tableview registerClass:[HomeCell class] forCellReuseIdentifier:@"homeCellId"];
         [_tableview registerClass:[homeHotCell class] forCellReuseIdentifier:@"homeHotCellId"];
         [_tableview registerClass:[homeNewCell class] forCellReuseIdentifier:@"homeNewCellId"];
@@ -152,19 +188,21 @@
     return _tableview;
 }
 
--(void)reloadBanner{
+- (void)reloadBanner{
     NSMutableArray *arr = [NSMutableArray array];
     [self.homemodel.banerListArr enumerateObjectsUsingBlock:^(bannerEntity * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [arr addObject:obj.img];
     }];
     self.sdCycleScrollView.imageURLStringsGroup=arr;
 }
--(SDCycleScrollView *)sdCycleScrollView{
+- (SDCycleScrollView *)sdCycleScrollView{
 
     if (!_sdCycleScrollView) {
-        _sdCycleScrollView=[SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, kScreenWidth, kWidth_fit(174)) delegate:nil placeholderImage:[UIImage imageNamed:PlaceHoldeImageStr]];
-        _sdCycleScrollView.imageURLStringsGroup=@[];
-        _sdCycleScrollView.autoScrollTimeInterval=5;
+        _sdCycleScrollView=[SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, kScreenWidth, 200*kPercent) delegate:nil placeholderImage:[UIImage imageNamed:PlaceHoldeImageStr]];
+        _sdCycleScrollView.imageURLStringsGroup = @[];
+        _sdCycleScrollView.autoScrollTimeInterval = 5;
+        _sdCycleScrollView.currentPageDotImage = JXImageNamed(@"pageDotSelected");
+        _sdCycleScrollView.pageDotImage = JXImageNamed(@"pageDotNormal");
         JXWeakSelf(self)
         [_sdCycleScrollView setClickItemOperationBlock:^(NSInteger index) {
             bannerEntity *model = weakSelf.homemodel.banerListArr[index];
@@ -224,15 +262,5 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -16,13 +16,19 @@
 @interface ScanDetailViewController ()<UITableViewDelegate,UITableViewDataSource,WaterFlowLayoutDelegate>{
     CGFloat              _headViewHeight;//头视图总高度
     UIView             * _headView;
-    ScanGoodsView      * _goodsView;
     AuthResultView     * _resultView;
     CGFloat              _resultViewHeight;//鉴定结果高度
-    CGFloat              _infoViewHeight;//产品出厂信息
-    CGFloat              _varHeight;//动态高度
+    
+    TitleView          * _firstTitleView;
+    UIView             * _firstView;
+    CGFloat              _firstViewHeight;//首次扫描高度
+    
     TitleView          * _authTitleView;
     ScanGoodsInfoView  * _infoView;
+    CGFloat              _infoViewHeight;//产品出厂信息
+    CGFloat              _varHeight;//动态高度
+    
+    
     ExtraView          * _extraView;
     CGFloat              _extraViewHeight;//企业信息
     TitleView          * _flowTitleView;
@@ -61,16 +67,8 @@ static NSString * const reuseIdentifierHeader = @"Header";
 
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
     self.title = @"正品溯源";
-//    [self.view addSubview:self.collectionView];
-//    _isCollectionViewOpen = YES;
-//    _deviceArray = [NSMutableArray array];
-//    [self headViewConfig];
-    
-    
+ 
     [self.collectionView reloadData];
-    
-    
-    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
@@ -79,11 +77,7 @@ static NSString * const reuseIdentifierHeader = @"Header";
 }
 - (UICollectionView *)collectionView{
     if (!_collectionView) {
-        CGFloat leading = 20;
-        CGFloat pointWidth = 5;
-        CGFloat pictureWidth = (kScreenWidth - leading *2 -5 -25 *3)/3;
-        
-        //CGSize itemSize = CGSizeMake(kScreenWidth, 10 *2 +15 +15 + pictureWidth);
+
         CGSize itemSize = CGSizeMake(kScreenWidth, 40);
         // +15 +15 +pictureWidth;
         
@@ -120,22 +114,36 @@ static NSString * const reuseIdentifierHeader = @"Header";
             [_collectionView registerClass:[ScanFlowCollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:reuseIdentifierHeader];
         }
         [_collectionView registerClass:[ScanFlowCollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifierCell];
-        
-        
     }
     return _collectionView;
 }
 - (void)addSubviews{
-    _goodsView = ({
-        ScanGoodsView * goodsView = [[ScanGoodsView alloc ]init ];
-        goodsView;
-    });
     _resultView = ({
         AuthResultView * resulltView = [[AuthResultView alloc ]init ];
         resulltView;
     });
+    _firstTitleView = ({
+        TitleView * titleView = [[TitleView alloc ]init ];
+        titleView.arrow.hidden = YES;
+        titleView.titleLabel.textAlignment = NSTextAlignmentLeft;
+        titleView.titleLabel.text = @"查询信息";
+        titleView;
+    });
+    _firstView = ({
+        UIView * view = [[UIView alloc] init ];
+        view.backgroundColor = [UIColor whiteColor];
+        
+        UIView * line = [[UIView alloc ] init ];
+        line.backgroundColor = [UIColor lightGrayColor];
+        line.frame = CGRectMake(0, 0, kScreenWidth, 0.5);
+        [view addSubview:line];
+        
+        view;
+    });
     _authTitleView = ({
         TitleView * titleView = [[TitleView alloc ]init ];
+        titleView.titleLabel.textAlignment = NSTextAlignmentLeft;
+        titleView.titleLabel.text = @"商品认证信息";
         titleView;
     });
     _infoView = ({
@@ -149,30 +157,36 @@ static NSString * const reuseIdentifierHeader = @"Header";
     _flowTitleView = ({
         TitleView * titleView = [[TitleView alloc ]init ];
         titleView.titleLabel.text = @"溯源信息";
+        titleView.titleLabel.font = JXFontForNormal(15*kPercent);
         titleView.arrow.transform = CGAffineTransformRotate(titleView.arrow.transform, DEGREES_TO_RADIANS(180));
         titleView.open = NO;
         titleView;
     });
-    [_headView addSubview:_goodsView];
     [_headView addSubview:_resultView];
+//    [_headView addSubview:_firstTitleView];
+//    [_headView addSubview:_firstView];
     [_headView addSubview:_authTitleView];
     [_headView addSubview:_infoView];
     [_headView addSubview:_extraView];
     
     [_headView addSubview:_flowTitleView];
     
-    
-    [_goodsView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.left.right.equalTo(_headView);
-        make.height.mas_equalTo(120);
-    }];
-    
     [_resultView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_goodsView.mas_bottom).offset(10);
-        make.left.right.equalTo(_headView);
+        make.top.left.right.equalTo(_headView);
         make.height.mas_equalTo(_resultViewHeight);
     }];
+//    [_firstTitleView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(_resultView.mas_bottom).offset(10);
+//        make.left.right.equalTo(_headView);
+//        make.height.mas_equalTo(40);
+//    }];
+//    [_firstView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(_firstTitleView.mas_bottom);
+//        make.left.right.equalTo(_headView);
+//        make.height.mas_equalTo(_firstViewHeight);
+//    }];
     [_authTitleView mas_makeConstraints:^(MASConstraintMaker *make) {
+        //make.top.equalTo(_firstView.mas_bottom).offset(10);
         make.top.equalTo(_resultView.mas_bottom).offset(10);
         make.left.right.equalTo(_headView);
         make.height.mas_equalTo(40);
@@ -183,6 +197,11 @@ static NSString * const reuseIdentifierHeader = @"Header";
         make.height.mas_equalTo(_infoViewHeight);
     }];
     [_extraView mas_makeConstraints:^(MASConstraintMaker *make) {
+        if (_myProductType == Doubt) {
+            make.top.equalTo(_infoView.mas_bottom).offset(0);
+        }else{
+            make.top.equalTo(_infoView.mas_bottom).offset(10);
+        }
         make.top.equalTo(_infoView.mas_bottom).offset(10);
         make.left.right.equalTo(_headView);
         make.height.mas_equalTo(_extraViewHeight);
@@ -198,10 +217,10 @@ static NSString * const reuseIdentifierHeader = @"Header";
     _contentOffset = CGPointMake(0, 0);
     _varHeight = 0;
     
-    _resultViewHeight = 150 -10;//150*kPercent;
-    _infoViewHeight = 200*kPercent + _varHeight;
-    _extraViewHeight = 60 + 30 + 14;
-    _headViewHeight =  120 + 10*4 + _resultViewHeight +40 *2 + _infoViewHeight + _extraViewHeight;
+    _firstViewHeight = 0;
+    _infoViewHeight = 0 + _varHeight;
+    _extraViewHeight = 0;
+    _headViewHeight =  10*4 + _resultViewHeight +40 *3 + _infoViewHeight + _extraViewHeight;
     
     self.collectionView.contentInset = UIEdgeInsetsMake(_headViewHeight, 0, 0, 0);
     
@@ -214,7 +233,6 @@ static NSString * const reuseIdentifierHeader = @"Header";
     
     [self addSubviews];
 }
-
 - (priceCompareView *)priceView{
     if (!_priceView) {
         _priceView = [[priceCompareView alloc ]initWithFrame:[UIScreen mainScreen].bounds];
@@ -222,7 +240,6 @@ static NSString * const reuseIdentifierHeader = @"Header";
     }
     return _priceView;
 }
-
 - (JXSelectView *)companySelectView{
     if (!_companySelectView) {
         if ([_scanFinishModel.proDetailModel.countryType isEqualToString:@"kr"]) {
@@ -237,13 +254,7 @@ static NSString * const reuseIdentifierHeader = @"Header";
 }
 - (JXSelectView *)deviceSelectView{
     if (!_deviceSelectView) {
-        
-        if ([_scanFinishModel.proDetailModel.countryType isEqualToString:@"kr"]) {
-            _deviceSelectView = [[JXSelectView alloc ]initWithCustomView:[self addKrDeviceTableView]];
-        } else {
-            _deviceSelectView = [[JXSelectView alloc ]initWithCustomView:[self addCnDeviceTableView]];
-        }
-        
+        _deviceSelectView = [[JXSelectView alloc ]initWithCustomView:[self addDeviceTableView]];
         _deviceSelectView.selectViewPosition = JXSelectViewShowPositionMiddle;
         _deviceSelectView.useTopButton = NO;
     }
@@ -453,102 +464,7 @@ static NSString * const reuseIdentifierHeader = @"Header";
     
     return contentView;
 }
-- (UIView *)addCnDeviceTableView{
-    UIView * contentView = [[UIView alloc ]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenWidth)];
-    contentView.layer.masksToBounds = YES;
-//    contentView.layer.cornerRadius = 5;
-//    contentView.clipsToBounds = YES;
-    contentView.backgroundColor = [UIColor whiteColor];
-    
-    UIView * blueBgView = [[UIView alloc ]init ];
-    blueBgView.backgroundColor = JXColorFromRGB(0x00b9de);
-    [contentView addSubview:blueBgView];
-    
-    UILabel * titleLabel = [[UILabel alloc] init ];
-    titleLabel.text = @"扫码详情";
-    titleLabel.textColor = JXFfffffColor;
-    titleLabel.textAlignment = NSTextAlignmentCenter;
-    titleLabel.font = JXFontForNormal(15);
-    [contentView addSubview:titleLabel];
-    
-    UIButton * closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [closeButton setImage:[JXImageNamed(@"popover_btn_close") imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]forState:UIControlStateNormal];
-    closeButton.tintColor = [UIColor whiteColor];
-    //[closeButton setTitle:@"ⅹ" forState:UIControlStateNormal];
-    closeButton.backgroundColor = JXDebugColor;
-    [closeButton addTarget:self action:@selector(close2) forControlEvents:UIControlEventTouchUpInside];
-    [contentView addSubview:closeButton];
-   
-    UITableView * tableView = [[UITableView alloc ] initWithFrame:CGRectZero style:UITableViewStylePlain];
-    tableView.delegate = self;
-    tableView.dataSource = self;
-    tableView.contentInset = UIEdgeInsetsMake(60, 0, 0, 0);
-    tableView.rowHeight = 44;
-    tableView.tag = 1001;
-    tableView.backgroundColor = JXDebugColor;
-    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
-    [tableView registerClass:[DeviceCell class] forCellReuseIdentifier:@"cellId"];
-    [contentView addSubview:tableView];
-    
-    NSString * infoStr = [NSString stringWithFormat:@"此正品溯源码已在不同设备、不同地点总共扫了%lu次！请仔细核对以下扫码记录，如果有确认不是您本人掌握的扫码记录，则此商品可能有疑问。",(unsigned long)_deviceArray.count];
-    UILabel * infoLabel = [UILabel new];
-    infoLabel.text = infoStr;
-    infoLabel.textColor = JX333333Color;
-    infoLabel.textAlignment = NSTextAlignmentCenter;
-    infoLabel.font = JXFontForNormal(13);
-    infoLabel.backgroundColor = JXDebugColor;
-    infoLabel.numberOfLines = 0;
-    [tableView addSubview:infoLabel];
-    
-    
-    NSMutableParagraphStyle * paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-    paragraphStyle.lineSpacing = 6;
-    paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-    
-    NSMutableAttributedString * attributeString = [[NSMutableAttributedString alloc ]initWithString:infoStr attributes:@{NSParagraphStyleAttributeName:paragraphStyle}];
-    infoLabel.attributedText = attributeString;
-    
-    NSStringDrawingOptions option = NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading | NSStringDrawingTruncatesLastVisibleLine;
-    CGRect rect = [infoStr boundingRectWithSize:CGSizeMake(contentView.size.width - 40, CGFLOAT_MAX) options:option attributes:@{NSParagraphStyleAttributeName:paragraphStyle,NSFontAttributeName:infoLabel.font} context:nil];
-    
-    
-    
-    [blueBgView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.left.equalTo(contentView).offset(0);
-        make.right.equalTo(contentView).offset(0);
-        make.height.mas_equalTo(60);
-    }];
-    [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.center.equalTo(blueBgView);
-        make.height.mas_equalTo(30);
-        make.width.mas_equalTo(100);
-    }];
-    [closeButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(contentView.mas_top).offset(15);
-        make.right.equalTo(contentView.mas_right).offset(-5);
-        make.size.mas_equalTo(CGSizeMake(30, 30));
-    }];
-
-    [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(blueBgView.mas_bottom);
-        make.left.right.equalTo(contentView);
-        make.bottom.equalTo(contentView.mas_bottom);
-    }];
-    [infoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(tableView.mas_top).offset(-rect.size.height -12);
-        make.left.equalTo(tableView.mas_left).offset(20);
-        make.size.mas_equalTo(CGSizeMake(rect.size.width, rect.size.height +12));
-    }];
-    
-    
-    contentView.frame = CGRectMake(0, 0, kScreenWidth,60 + rect.size.height +12 + 44 *3);
-    tableView.contentOffset = CGPointMake(0, - (rect.size.height + 12));
-    tableView.contentInset = UIEdgeInsetsMake(rect.size.height + 12, 0, 0, 0);
-    
-    return contentView;
-}
-- (UIView *)addKrDeviceTableView{
+- (UIView *)addDeviceTableView{
     UIView * contentView = [[UIView alloc ]initWithFrame:CGRectMake(0, 0, kScreenWidth - 40, kScreenWidth - 40)];
     contentView.layer.masksToBounds = YES;
     contentView.layer.cornerRadius = 5;
@@ -559,12 +475,10 @@ static NSString * const reuseIdentifierHeader = @"Header";
     blueBgView.backgroundColor = JXColorFromRGB(0x00b9de);
     [contentView addSubview:blueBgView];
     
-    UILabel * titleLabel = [[UILabel alloc] init ];
-    titleLabel.text = @"扫码详情";
-    titleLabel.textColor = JXFfffffColor;
-    titleLabel.textAlignment = NSTextAlignmentCenter;
-    titleLabel.font = JXFontForNormal(15);
-    [contentView addSubview:titleLabel];
+    UIImageView * logoImageView = [[UIImageView alloc ]init ];
+    logoImageView.backgroundColor = JXDebugColor;
+    logoImageView.image = JXImageNamed(@"scanDetail");
+    [contentView addSubview:logoImageView];
     
     UIButton * closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [closeButton setImage:[JXImageNamed(@"popover_btn_close") imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]forState:UIControlStateNormal];
@@ -577,7 +491,7 @@ static NSString * const reuseIdentifierHeader = @"Header";
     UITableView * tableView = [[UITableView alloc ] initWithFrame:CGRectZero style:UITableViewStylePlain];
     tableView.delegate = self;
     tableView.dataSource = self;
-    tableView.contentInset = UIEdgeInsetsMake(60, 0, 0, 0);
+    tableView.contentInset = UIEdgeInsetsMake(110*kPercent, 0, 0, 0);
     tableView.rowHeight = 44;
     tableView.tag = 1001;
     tableView.backgroundColor = JXDebugColor;
@@ -610,18 +524,18 @@ static NSString * const reuseIdentifierHeader = @"Header";
     
     
     [blueBgView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.left.equalTo(contentView).offset(0);
-        make.right.equalTo(contentView).offset(0);
-        make.height.mas_equalTo(60);
+        make.top.left.equalTo(contentView).offset(5*kPercent);
+        make.right.equalTo(contentView).offset(-5*kPercent);
+        make.height.mas_equalTo(105*kPercent);
     }];
-    [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    [logoImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo(blueBgView);
-        make.height.mas_equalTo(30);
-        make.width.mas_equalTo(100);
+        make.height.mas_equalTo(77*kPercent);
+        make.width.mas_equalTo(77*kPercent);
     }];
     [closeButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(contentView.mas_top).offset(15);
-        make.right.equalTo(contentView.mas_right).offset(-5);
+        make.top.equalTo(contentView.mas_top).offset(10*kPercent);
+        make.right.equalTo(contentView.mas_right).offset(-10*kPercent);
         make.size.mas_equalTo(CGSizeMake(30, 30));
     }];
     
@@ -637,7 +551,7 @@ static NSString * const reuseIdentifierHeader = @"Header";
     }];
     
     
-    contentView.frame = CGRectMake(0, 20, kScreenWidth - 40,60 + rect.size.height +12 + 44 *3);
+    contentView.frame = CGRectMake(0, 20, kScreenWidth - 40,110*kPercent + rect.size.height +12 + 44 *3);
     tableView.contentOffset = CGPointMake(0, - (rect.size.height + 12));
     tableView.contentInset = UIEdgeInsetsMake(rect.size.height + 12, 0, 0, 0);
     
@@ -717,15 +631,6 @@ static NSString * const reuseIdentifierHeader = @"Header";
     
     return cell;
 }
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 #pragma mark - Item height 
 - (CGFloat)waterFlow:(GuiderViewFlowLayout *)waterFlow headerIndexPath:(NSIndexPath *)indexPath{
@@ -753,32 +658,31 @@ static NSString * const reuseIdentifierHeader = @"Header";
         GoodsFlowModel * model = self.scanFinishModel.goodsFlowArr[indexPath.section];
         GoodsFlowSubModel * subModel = [GoodsFlowSubModel mj_objectWithKeyValues:model.list_batchField[indexPath.item]];
         
-        NSString * dateStr = [subModel.operationTime substringToIndex:10];
-        NSString * contentStr = [NSString stringWithFormat:@"%@      %@",dateStr,subModel.contents];
+        NSString * contentStr = subModel.contents;
         
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc]init];
-        paragraphStyle.lineSpacing = 5;
+        //paragraphStyle.lineSpacing = 5;
         //paragraphStyle.paragraphSpacing = 6;
         
-        NSStringDrawingOptions option = NSStringDrawingTruncatesLastVisibleLine |  NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading;
-        NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:10],NSParagraphStyleAttributeName:paragraphStyle};
-        CGRect rect = [contentStr boundingRectWithSize:CGSizeMake(kScreenWidth -(105 + 20+ 0.5), CGFLOAT_MAX) options:option attributes:attributes context:nil];
+        NSStringDrawingOptions option =  NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading;
+        NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:12],NSParagraphStyleAttributeName:paragraphStyle};
+        CGRect rect = [contentStr boundingRectWithSize:CGSizeMake(kScreenWidth -(25 + 20*2), CGFLOAT_MAX) options:option attributes:attributes context:nil];
   
-        if (rect.size.height < 20){
-            CGRect frame = rect;
-            frame.size.height = 14;
-            rect = frame;
-        }
-        CGFloat pictureWidth = (kScreenWidth - 20 *2 -5 -25 *3)/3;
-        CGFloat height =  10 *2 +10 + pictureWidth + rect.size.height;
+//        if (rect.size.height < 20){
+//            CGRect frame = rect;
+//            frame.size.height = 14;
+//            rect = frame;
+//        }
+        CGFloat pictureWidth = (kScreenWidth - 20 -15 -5 -25 *3)/3;
+        CGFloat height =  10 *2 +10 + 13 + rect.size.height;
         NSArray * fileArr = @[];
         if ([subModel.file hasPrefix:@"http"]) {
             fileArr = [subModel.file componentsSeparatedByString:@","];
         }
         if (fileArr.count >0) {
-            height =  10 *2 + pictureWidth + rect.size.height;
+            height += (10 + pictureWidth);
         }else{
-            height =  10 + rect.size.height;
+            height += 10;
         }
         return height;
     }
@@ -788,7 +692,6 @@ static NSString * const reuseIdentifierHeader = @"Header";
 #pragma mark <UICollectionViewDataSource>
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-#warning Incomplete implementation, return the number of sections
     if (_myProductType == Forge) {
         return 1;
     }
@@ -800,10 +703,7 @@ static NSString * const reuseIdentifierHeader = @"Header";
         return count;
     }
 }
-
-
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of items
     if (_myProductType == Forge) {
         return 0;
     }
@@ -836,7 +736,6 @@ static NSString * const reuseIdentifierHeader = @"Header";
         }
     }
 }
-
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     
@@ -866,7 +765,6 @@ static NSString * const reuseIdentifierHeader = @"Header";
     // Configure the cell
     
 }
-
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
     
     if ((self.scanFinishModel.goodsLotBatchArr.count >0)) {
@@ -901,38 +799,7 @@ static NSString * const reuseIdentifierHeader = @"Header";
     }
     
 }
-
 #pragma mark <UICollectionViewDelegate>
-
-/*
-// Uncomment this method to specify if the specified item should be highlighted during tracking
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-	return YES;
-}
-*/
-
-/*
-// Uncomment this method to specify if the specified item should be selected
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
-}
-*/
-
-/*
-// Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
-	return NO;
-}
-
-- (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	return NO;
-}
-
-- (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	
-}
-*/
-
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     if (scrollView == _collectionView) {
         _contentOffset = scrollView.contentOffset;
@@ -947,117 +814,223 @@ static NSString * const reuseIdentifierHeader = @"Header";
     [self.view addSubview:self.collectionView];
     _isCollectionViewOpen = NO;
     _myProductType = Quality;
-    _deviceArray = [NSMutableArray array];
     [self headViewConfig];
     
-    _deviceArray = [NSMutableArray arrayWithArray:scanFinishModel.scanrecordForSuspectProductArr];
-    
-    //商品信息
-    if (scanFinishModel.proDetailModel.thumbnail) {
-        [_goodsView.goodsImage sd_setImageWithURL:[NSURL URLWithString:scanFinishModel.proDetailModel.thumbnail] placeholderImage:nil];
+    //查询结果信息
+    [self setResultInfo:scanFinishModel];
+    //首次查询信息
+    //[self setFirstInfo];
+    //商品认证信息
+    [self setAuthInfo:scanFinishModel];
+    //附加信息
+    if (_myProductType != Doubt) {
+        [self setExtraInfo:scanFinishModel];
     }
-    _goodsView.goodsName.text = scanFinishModel.proDetailModel.name;
-    _goodsView.productCanpanyName.text = scanFinishModel.proDetailModel.officeName;
-    _goodsView.productCode.text = [NSString stringWithFormat:@"正品溯源码：%@",scanFinishModel.proDetailModel.code];
     
+    JXWeakSelf(self)
+    if ((self.scanFinishModel.goodsLotBatchArr.count >0 || self.scanFinishModel.goodsFlowArr.count > 0) && _myProductType != Forge){
+        
+        _flowTitleView.block = ^(BOOL isOpen, NSInteger index) {
+            if (isOpen) {
+                _isCollectionViewOpen = NO;
+            }else{
+                _isCollectionViewOpen = YES;
+            }
+            //isCollectionViewOpen = !isOpen;
+            
+            [weakSelf.collectionView reloadData];
+        };
+        if (_myProductType == Doubt) {
+            _headViewHeight = 10*2 + _resultViewHeight +40 *2 + _firstViewHeight + _infoViewHeight + _extraViewHeight;
+        }else{
+            _headViewHeight = 10*3 + _resultViewHeight +40 *2 + _firstViewHeight + _infoViewHeight + _extraViewHeight;
+        }
+    }else{
+        if (_myProductType == Doubt) {
+            _headViewHeight = 10 + _resultViewHeight +40 + _firstViewHeight + _infoViewHeight + _extraViewHeight;
+        }else{
+            _headViewHeight = 10*2 + _resultViewHeight +40 + _firstViewHeight + _infoViewHeight + _extraViewHeight;
+        }
+        
+        [_flowTitleView removeFromSuperview];
+    }
+    
+    self.collectionView.contentInset = UIEdgeInsetsMake(_headViewHeight, 0, 0, 0);
+    self.collectionView.contentOffset = CGPointMake(0, -_headViewHeight);
+    _headView.frame = CGRectMake(0, -_headViewHeight, kScreenWidth, _headViewHeight);
+    [self.collectionView reloadData];
+    
+    _deviceArray = [NSMutableArray arrayWithArray:scanFinishModel.scanrecordForSuspectProductArr];
+}
+
+- (void)setResultInfo:(scanFinishModel *)scanFinishModel{
     //扫描状态
-    NSString * detailStr = @"";
-    NSString * bgImageStr = @"qualityBg";
     NSString * statusImgStr= @"quality";
-    NSString * resultTitleStr= @"正品";
+    NSString * infoTitle = @"该商品经过CECC和正品溯源公司鉴定为正品";
+    
+    [_resultView.resultButton setTitle:[NSString stringWithFormat:@"正品溯源码：%@",scanFinishModel.proDetailModel.code] forState:UIControlStateNormal];
+    //(25+132+15+25+8+16)+15+27+15 正品
+    //(25+132+15+25+8+16)+10+13+15+44 可疑
+    //(25+132+15+25+8+16)+10+13+15+44 伪品
+    
+    
+    scanFinishModel.quality = @"0";
     
     if ([scanFinishModel.quality isEqual: @"0"]) {
         _myProductType = Quality;
         _resultView.type = Quality;
-        _resultViewHeight = 150 -10;//150*kPercent;
-        [_resultView setNeedsUpdateConstraints];
-        _resultView.infoLabel.hidden = YES;
+        _resultViewHeight = ((25+132+15+25+8+16)+15+27+15)*kPercent;
+        _resultView.bgImage.backgroundColor = JXColorFromRGB(0xb1d165);
+        
+        _resultView.detailLabel.hidden = YES;
+        _resultView.detailButton.hidden = YES;
+        
+        _resultView.reportButton.layer.cornerRadius = 3.0f;
     }else if ([scanFinishModel.quality isEqual: @"1"]){
         _myProductType = Doubt;
         _resultView.type = Doubt;
-        _resultViewHeight = 150 -10 + 55 +26;
-        detailStr = [NSString stringWithFormat:@"此正品码在不同的设备上已经被查询%lu次",scanFinishModel.scanrecordForSuspectProductArr.count];
-        bgImageStr = @"doubtBg";
+        _resultViewHeight = ((25+132+15+25+8+16)+10+13+15+44)*kPercent;
+        _resultView.bgImage.backgroundColor = JXColorFromRGB(0xf0de4f);
         statusImgStr = @"doubt";
-        resultTitleStr = @"可疑品";
+        infoTitle = [NSString stringWithFormat:@"此正品溯源码已经被验证过%lu次",(long)scanFinishModel.scanrecordForSuspectProductArr.count];
         
-        NSMutableParagraphStyle * paragraphStyle = [[NSMutableParagraphStyle alloc ] init ];
-        paragraphStyle.lineSpacing = 6;
-        
-        NSMutableAttributedString * attributeString = [[NSMutableAttributedString alloc ] initWithString:detailStr attributes:@{NSFontAttributeName:_resultView.infoLabel.font,NSParagraphStyleAttributeName:paragraphStyle}];
-        
-        _resultView.infoLabel.attributedText = attributeString;
-        
-        [_resultView setNeedsUpdateConstraints];
-        
-        [_resultView addSubview:_resultView.detailButton];
-        [_resultView.detailButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(_resultView.titleLabel.mas_centerX).offset(-30);
-            make.top.equalTo(_resultView.reportButton.mas_top);
-            make.size.equalTo(_resultView.reportButton);
-        }];
+        _resultView.detailLabel.text = @"请核对经销商资质并仔细检查商品，谨防假冒";
         [_resultView.detailButton addTarget:self action:@selector(showDeviceView) forControlEvents:UIControlEventTouchUpInside];
+        
     }else{
         _myProductType = Forge;
         _resultView.type = Forge;
-        _resultViewHeight = 150 -10 + 80 +26;
-        detailStr = @"欢迎举报此产品，告诉我们详细信息，经确认后可获得积分奖励";
-        bgImageStr = @"forgeBg";
+        _resultViewHeight = ((25+132+15+25+8+16)+10+13+15+44)*kPercent;
+        _resultView.bgImage.backgroundColor = JXColorFromRGB(0xf57955);
         statusImgStr = @"forge";
-        resultTitleStr = @"伪品";
+        infoTitle = [NSString stringWithFormat:@"此正品溯源码已经被验证过%lu次",(long)scanFinishModel.scanrecordForSuspectProductArr.count];
         
-        NSMutableParagraphStyle * paragraphStyle = [[NSMutableParagraphStyle alloc ] init ];
-        paragraphStyle.lineSpacing = 6;
-        
-        NSMutableAttributedString * attributeString = [[NSMutableAttributedString alloc ] initWithString:detailStr attributes:@{NSFontAttributeName:_resultView.infoLabel.font,NSParagraphStyleAttributeName:paragraphStyle}];
-        
-        _resultView.infoLabel.attributedText = attributeString;
-        [_resultView setNeedsUpdateConstraints];
+        _resultView.detailLabel.text = @"请联系经销商或举报此商品";
+        [_resultView.detailButton addTarget:self action:@selector(showDeviceView) forControlEvents:UIControlEventTouchUpInside];
     }
-    
-    
-    _resultView.infoLabel.textAlignment = NSTextAlignmentCenter;
-    _resultView.bgImage.image = JXImageNamed(bgImageStr);
-    //self.titleLabel.text=TitleStr
-    [_resultView.resultButton setTitle:resultTitleStr forState:UIControlStateNormal];
-    [_resultView.resultButton setImage:JXImageNamed(statusImgStr) forState:UIControlStateNormal];
+    [_resultView setNeedsUpdateConstraints];
+    _resultView.infoLabel.text = infoTitle;
+    _resultView.resultImageView.image = JXImageNamed(statusImgStr);
+    [_resultView.resultButton setImage:JXImageNamed(@"ceccIcon") forState:UIControlStateNormal];
     
     [[_resultView.reportButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
-        
-        //ReportVC * report = [[ReportVC alloc ]initWithStyle:UITableViewStyleGrouped];
         ReportViewController * report = [[ReportViewController alloc ]initWithStyle:UITableViewStyleGrouped];
         report.PruductId = scanFinishModel.proDetailModel.ID;
-        report.SNString = scanFinishModel.codeSnId;
+        report.SNString = scanFinishModel.codeId;
+        report.countryType = scanFinishModel.proDetailModel.countryType;
         report.porductModel = scanFinishModel.proDetailModel;
         [self.navigationController pushViewController:report animated:YES];
     }];
     
-    [self updateUIWithData:scanFinishModel];
-    [self.collectionView reloadData];
+    [_resultView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_headView);
+        make.left.right.equalTo(_headView);
+        make.height.mas_equalTo(_resultViewHeight);
+    }];
 }
-- (void)updateUIWithData:(scanFinishModel *)scanFinishModel{
+- (void)setFirstInfo{
+    //首次查询信息
+    CGFloat firstHeight = 15;
+    NSArray * titleArray = @[@"首次查询时间",@"首次查询位置",@"首次查询机型"];
     
-    NSArray * imageArray = [scanFinishModel.proDetailModel.goodsImg componentsSeparatedByString:@","];
-    
-    BOOL isHaveBigImage = NO;
-    if (imageArray.count && scanFinishModel.proDetailModel.goodsImg.length) {
-        isHaveBigImage = YES;
-        [_infoView addSubview:_infoView.scrollView];
-        [_infoView.scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.and.left.and.right.equalTo(_infoView).offset(0);
-            make.height.mas_equalTo(200*kPercent);
+    for (int i = 0; i < titleArray.count; i ++) {
+        UILabel * nameLabel = ({
+            UILabel * lab = [UILabel new];
+            lab.numberOfLines = 0;
+            lab.font = JXFontForNormal(11);
+            lab.textColor = JX999999Color;
+            lab.backgroundColor = JXDebugColor;
+            lab.lineBreakMode = NSLineBreakByTruncatingMiddle;
+            lab.text = titleArray[i];
+            lab;
+        });
+        UILabel * detailLabel = ({
+            UILabel * lab = [UILabel new];
+            lab.numberOfLines = 0;
+            lab.font = JXFontForNormal(11);
+            lab.textColor = JX333333Color;
+            lab.backgroundColor = JXDebugColor;
+            lab.numberOfLines = 0;
+            lab;
+        });
+        [_firstView addSubview:nameLabel];
+        
+        [nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(_firstView.mas_top).offset(firstHeight);
+            make.left.equalTo(_firstView).offset(15);
+            make.width.mas_equalTo(13 *6);
+            make.height.mas_equalTo(13);
         }];
         
-        _infoView.scrollView.imageNameArray = nil;
-        _infoView.scrollView.imageNameArray = imageArray;
-        _infoView.scrollView.pageStyle = UIPageControlPointStyle;
-        _infoView.scrollView.pageControl.pageIndicatorTintColor = [UIColor whiteColor];
-        _infoView.scrollView.pageControl.currentPageIndicatorTintColor = JXff5252Color;
+        [_firstView addSubview:detailLabel];
+        
+        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc]init];
+        NSStringDrawingOptions option =  NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading;
+        NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:11],NSParagraphStyleAttributeName:paragraphStyle};
+        
+        CGRect rect = CGRectZero;
+        if (i == 0) {
+            detailLabel.text = self.scanFinishModel.firstScanEntity.scanTime;
+        }else if (i == 1){
+            rect = [self.scanFinishModel.firstScanEntity.city boundingRectWithSize:CGSizeMake(kScreenWidth -(78 + 15 * 2), CGFLOAT_MAX) options:option attributes:attributes context:nil];
+            detailLabel.text = self.scanFinishModel.firstScanEntity.city;
+        }else{
+            rect = [self.scanFinishModel.firstScanEntity.model boundingRectWithSize:CGSizeMake(kScreenWidth -(78 + 15 * 2), CGFLOAT_MAX) options:option attributes:attributes context:nil];
+            detailLabel.text = self.scanFinishModel.firstScanEntity.model;
+        }
+        [detailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(nameLabel.mas_top);
+            make.left.equalTo(nameLabel.mas_right).offset(10);
+            make.right.equalTo(_firstView.mas_right).offset(-15);
+            if (rect.size.height < 20) {
+                make.height.mas_equalTo(13);
+            }else{
+                make.height.mas_equalTo(rect.size.height);
+            }
+        }];
+        if (rect.size.height < 20) {
+            firstHeight += (15 +13);
+        }else{
+            firstHeight += (15 +rect.size.height);
+        }
     }
+    _firstViewHeight = firstHeight;
+    [_firstView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_firstTitleView.mas_bottom);
+        make.left.right.equalTo(_headView);
+        make.height.mas_equalTo(_firstViewHeight);
+    }];
+}
+- (void)setAuthInfo:(scanFinishModel *)scanFinishModel{
+    NSArray * imageArray = [scanFinishModel.proDetailModel.goodsImg componentsSeparatedByString:@","];
+    [_infoView setImageArray:imageArray];
+    JXWeakSelf(self)
+    _infoView.block = ^(BOOL isOpen, NSInteger index) {
+        JZAlbumViewController *imgVC = [[JZAlbumViewController alloc] init];
+        imgVC.currentIndex = index;
+        imgVC.imgArr = imageArray;
+        [weakSelf.navigationController presentViewController:imgVC animated:YES completion:nil];
+    };
+    //    BOOL isHaveBigImage = NO;
+    //    if (imageArray.count && scanFinishModel.proDetailModel.goodsImg.length) {
+    //        isHaveBigImage = YES;
+    //
+    //        [_infoView addSubview:_infoView.scrollView];
+    //        [_infoView.scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+    //            make.top.and.left.and.right.equalTo(_infoView).offset(0);
+    //            make.height.mas_equalTo(200*kPercent);
+    //        }];
+    //
+    //        _infoView.scrollView.imageNameArray = nil;
+    //        _infoView.scrollView.imageNameArray = imageArray;
+    //        _infoView.scrollView.pageStyle = UIPageControlPointStyle;
+    //        _infoView.scrollView.pageControl.pageIndicatorTintColor = [UIColor whiteColor];
+    //        _infoView.scrollView.pageControl.currentPageIndicatorTintColor = JXff5252Color;
+    //    }
     
     //[_infoView.productImage sd_setImageWithURL:[NSURL URLWithString:scanFinishModel.proDetailModel.getfirstGoodImg] placeholderImage:nil];
     
-    CGFloat height = 15;
+    CGFloat infoHeight = 15;
     for (int i = 0; i < scanFinishModel.proDetailModel.list_ceccGoodsField.count; i ++) {
         UILabel * nameLabel = ({
             UILabel * lab = [UILabel new];
@@ -1086,17 +1059,16 @@ static NSString * const reuseIdentifierHeader = @"Header";
         });
         
         NSDictionary * dict = scanFinishModel.proDetailModel.list_ceccGoodsField[i];
-        nameLabel.text = [NSString stringWithFormat:@"%@:",dict[@"fieldName"]];
+        NSMutableString * name = [NSMutableString stringWithFormat:@"%@", dict[@"fieldName"]];
+        if (name.length == 2) {
+            [name insertString:@"   " atIndex:1];
+        }
+        nameLabel.text = [NSString stringWithFormat:@"%@:",name];
         NSInteger type = [dict[@"fieldType"] integerValue];
         [_infoView addSubview:nameLabel];
         
         [nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            if (isHaveBigImage) {
-                make.top.equalTo(_infoView.mas_top).offset(height + 200*kPercent);
-            }else{
-                make.top.equalTo(_infoView.mas_top).offset(height);
-            }
-            
+            make.top.equalTo(_infoView.leftImage.mas_bottom).offset(infoHeight);
             make.left.equalTo(_infoView).offset(15);
             make.width.mas_equalTo(12 * 5);
             make.height.mas_equalTo(12);
@@ -1110,26 +1082,27 @@ static NSString * const reuseIdentifierHeader = @"Header";
             
             [detailImageView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.equalTo(nameLabel.mas_top);
-                make.left.equalTo(nameLabel.mas_right).offset(0);
+                make.left.equalTo(nameLabel.mas_right).offset(15*kPercent);
                 make.width.and.height.mas_equalTo(50*kPercent);
             }];
             
-            height += (15 +50*kPercent);
+            infoHeight += (15 +50*kPercent);
             
         }else{
             [_infoView addSubview:detailLabel];
             
-            NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc]init];
+            //NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc]init];
             //paragraphStyle.lineSpacing = 5;
             //paragraphStyle.paragraphSpacing = 6;
+            //NSParagraphStyleAttributeName:paragraphStyle
             
             NSStringDrawingOptions option =  NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading;
-            NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:11],NSParagraphStyleAttributeName:paragraphStyle};
-            CGRect rect = [dict[@"fieldValue"] boundingRectWithSize:CGSizeMake(kScreenWidth -(60 + 15 * 2), CGFLOAT_MAX) options:option attributes:attributes context:nil];
+            NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:11]};
+            CGRect rect = [dict[@"fieldValue"] boundingRectWithSize:CGSizeMake(kScreenWidth -(60 + 15*2 + 15*kPercent), CGFLOAT_MAX) options:option attributes:attributes context:nil];
             detailLabel.text = dict[@"fieldValue"];
             [detailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.equalTo(nameLabel.mas_top);
-                make.left.equalTo(nameLabel.mas_right).offset(0);
+                make.left.equalTo(nameLabel.mas_right).offset(15*kPercent);
                 make.right.equalTo(_infoView.mas_right).offset(-15);
                 if (rect.size.height < 20) {
                     make.height.mas_equalTo(12);
@@ -1139,33 +1112,65 @@ static NSString * const reuseIdentifierHeader = @"Header";
                 
             }];
             if (rect.size.height < 20) {
-                height += (15 +12);
+                infoHeight += (15 +12);
             }else{
-                height += (15 +rect.size.height);
+                infoHeight += (15 +rect.size.height);
             }
             
         }
         
     }
+    _varHeight = infoHeight;
+    _infoViewHeight = _infoView.imageHeight + _varHeight;
+    //NSLog(@"_infoViewHeight = %ld",_infoViewHeight);
     
+    [_infoView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_authTitleView.mas_bottom);
+        make.left.right.equalTo(_headView);
+        make.height.mas_equalTo(_infoViewHeight);
+    }];
+    //功能暂停
+    _authTitleView.arrow.hidden = YES;
+    //    _authTitleView.block = ^(BOOL isOpen,NSInteger index) {
+    //
+    //        if (isOpen) {
+    //            headViewHeight -= infoViewHeight;
+    //            infoViewHeight = 0;
+    //            [infoView setHidden:YES];
+    //        }else{
+    //            infoViewHeight = 200 *kPercent + _varHeight;
+    //            headViewHeight += infoViewHeight;
+    //            [infoView setHidden:NO];
+    //        }
+    //        weakSelf.collectionView.contentInset = UIEdgeInsetsMake(headViewHeight, 0, 0, 0);
+    //        headView.frame = CGRectMake(0, -headViewHeight, kScreenWidth, headViewHeight);
+    //
+    //        [infoView mas_remakeConstraints:^(MASConstraintMaker *make) {
+    //            make.top.equalTo(authTitleView.mas_bottom);
+    //            make.left.right.equalTo(headView);
+    //            make.height.mas_equalTo(infoViewHeight);
+    //        }];
+    //    };
+}
+- (void)setExtraInfo:(scanFinishModel *)scanFinishModel{
     CGFloat imageViewWidth = 60;
     CGFloat space = (kScreenWidth - imageViewWidth* 3) /4;
     _titleArray = [NSMutableArray arrayWithObject:@"企业介绍"];
     _imageNameArray = [NSMutableArray arrayWithObject:@"companyProfile"];
     
-    if (scanFinishModel.proDetailModel.reportFile && scanFinishModel.proDetailModel.reportFile.length > 0) {
+    if (![scanFinishModel.proDetailModel.reportFile isEqualToString:@"<null>"] && scanFinishModel.proDetailModel.reportFile.length > 0) {
         [_titleArray addObject:@"检测报告"];
         [_imageNameArray addObject:@"examiningReport"];
     }
-    if (scanFinishModel.proDetailModel.certificateFile && scanFinishModel.proDetailModel.certificateFile.length > 0) {
+    if (![scanFinishModel.proDetailModel.certificateFile isEqualToString:@"<null>"] && scanFinishModel.proDetailModel.certificateFile.length > 0) {
         [_titleArray addObject:@"认证信息"];
         [_imageNameArray addObject:@"authentication"];
     }
-    if (scanFinishModel.qualificate && scanFinishModel.qualificate.length > 0) {
+    if (![scanFinishModel.qualificate isEqualToString:@"<null>"] && scanFinishModel.qualificate.length > 0) {
         [_titleArray addObject:@"资质证书"];
         [_imageNameArray addObject:@"qualificationCertificate"];
     }
-    if (scanFinishModel.proDetailModel.ownershipFile && scanFinishModel.proDetailModel.ownershipFile.length > 0) {
+    if (![scanFinishModel.proDetailModel.ownershipFile isEqualToString:@"<null>"] && scanFinishModel.proDetailModel.ownershipFile.length > 0) {
         [_titleArray addObject:@"商标权证书"];
         [_imageNameArray addObject:@"brandCertificate"];
     }
@@ -1173,7 +1178,7 @@ static NSString * const reuseIdentifierHeader = @"Header";
         UIImageView * imageView = [[UIImageView alloc ]init ];
         imageView.image = JXImageNamed(_imageNameArray[i]);
         imageView.backgroundColor = JXDebugColor;
-        imageView.tag = i;
+        imageView.tag = 10 +i;
         imageView.userInteractionEnabled = YES;
         
         UILabel * label = [[UILabel alloc ] init];
@@ -1211,79 +1216,21 @@ static NSString * const reuseIdentifierHeader = @"Header";
     }else{
         _extraViewHeight = (10 + (60 +10 +14) + 10) * (_titleArray.count /3 + 1);
     }
-    
-    
-    _varHeight = height;
-    _infoViewHeight = 200*kPercent + _varHeight;
-    
-    [_infoView mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_authTitleView.mas_bottom);
-        make.left.right.equalTo(_headView);
-        make.height.mas_equalTo(_infoViewHeight);
-    }];
     [_extraView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_infoView.mas_bottom).offset(10);
         make.left.right.equalTo(_headView);
         make.height.mas_equalTo(_extraViewHeight);
     }];
-    
-    [_resultView mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_goodsView.mas_bottom).offset(10);
-        make.left.right.equalTo(_headView);
-        make.height.mas_equalTo(_resultViewHeight);
-    }];
-    
-    
-    
-    
     JXWeakSelf(self)
-//    __block CGFloat headViewHeight = _headViewHeight;
-//    __block UIView * headView = _headView;
-//    __block CGFloat infoViewHeight = _infoViewHeight;
-//    __block UIView * authTitleView = _authTitleView;
-//    __block UIView * infoView = _infoView;
-//    __block UIView * flowTitleView = _flowTitleView;
-//    __block BOOL     isCollectionViewOpen = _isCollectionViewOpen;
-    
-    
-    [_goodsView.comparePriseButton addTarget:self action:@selector(comparePrice) forControlEvents:UIControlEventTouchUpInside];
-    
-    //功能暂停
-    _authTitleView.arrow.hidden = YES;
-    
-//    _authTitleView.block = ^(BOOL isOpen,NSInteger index) {
-//        
-//        if (isOpen) {
-//            headViewHeight -= infoViewHeight;
-//            infoViewHeight = 0;
-//            [infoView setHidden:YES];
-//        }else{
-//            infoViewHeight = 200 *kPercent + _varHeight;
-//            headViewHeight += infoViewHeight;
-//            [infoView setHidden:NO];
-//        }
-//        weakSelf.collectionView.contentInset = UIEdgeInsetsMake(headViewHeight, 0, 0, 0);
-//        headView.frame = CGRectMake(0, -headViewHeight, kScreenWidth, headViewHeight);
-//        
-//        [infoView mas_remakeConstraints:^(MASConstraintMaker *make) {
-//            make.top.equalTo(authTitleView.mas_bottom);
-//            make.left.right.equalTo(headView);
-//            make.height.mas_equalTo(infoViewHeight);
-//        }];
-//    };
-    
     _extraView.block = ^(BOOL isOpen, NSInteger index) {
         switch (index) {
             case 0:
             {
-                NSLog(@"111111");
                 [weakSelf.companySelectView show];
             }
                 break;
             case 1:
             {
-                NSLog(@"222222");
-    
                 NSArray * imageArray = [scanFinishModel.proDetailModel.reportFile componentsSeparatedByString:@","];
                 JZAlbumViewController *imgVC = [[JZAlbumViewController alloc] init];
                 imgVC.currentIndex = 0;
@@ -1294,7 +1241,6 @@ static NSString * const reuseIdentifierHeader = @"Header";
                 break;
             case 2:
             {
-                NSLog(@"333333");
                 NSArray * imageArray = [scanFinishModel.proDetailModel.certificateFile componentsSeparatedByString:@","];
                 JZAlbumViewController *imgVC = [[JZAlbumViewController alloc] init];
                 imgVC.currentIndex = 0;
@@ -1308,28 +1254,5 @@ static NSString * const reuseIdentifierHeader = @"Header";
                 break;
         }
     };
-    if ((self.scanFinishModel.goodsLotBatchArr.count >0 || self.scanFinishModel.goodsFlowArr.count > 0) && _myProductType != Forge){
-        
-        _flowTitleView.block = ^(BOOL isOpen, NSInteger index) {
-            if (isOpen) {
-                _isCollectionViewOpen = NO;
-            }else{
-                _isCollectionViewOpen = YES;
-            }
-            //isCollectionViewOpen = !isOpen;
-            
-            [weakSelf.collectionView reloadData];
-        };
-        _headViewHeight =  120 + 10*4 + _resultViewHeight +40 *2 + _infoViewHeight + _extraViewHeight;
-    }else{
-        _headViewHeight =  120 + 10*3 + _resultViewHeight +40 + _infoViewHeight + _extraViewHeight;
-        [_flowTitleView removeFromSuperview];
-    }
-    
-    self.collectionView.contentInset = UIEdgeInsetsMake(_headViewHeight, 0, 0, 0);
-    self.collectionView.contentOffset = CGPointMake(0, -_headViewHeight);
-    _headView.frame = CGRectMake(0, -_headViewHeight, kScreenWidth, _headViewHeight);
-    NSLog(@"_headViewHeight = %f",_headViewHeight);
 }
-
 @end

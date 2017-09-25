@@ -7,6 +7,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
+#import "KeyChainMethod.h"
 
 int hwaddr_aton(const char *txt, unsigned char *addr);
 
@@ -117,6 +118,7 @@ typedef NS_ENUM(NSInteger, MWWeekday){
 
 
 + (NSString*)getCurrentDeviceModel;
++ (NSString*)getUaString;
 + (BOOL)checkAVDeniedStatus;//判断是否用户禁止访问相机
 + (BOOL)checkPhotoDeniedStatus;
 + (void)playSoundWithName:(NSString *)name type:(NSString *)type;

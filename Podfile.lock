@@ -14,6 +14,9 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
+  - AMapFoundation (1.4.2)
+  - AMapLocation (2.4.0):
+    - AMapFoundation (~> 1.4)
   - AMScrollingNavbar (1.5.1)
   - FMDB (2.6.2):
     - FMDB/standard (= 2.6.2)
@@ -65,6 +68,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking (~> 3.1.0)
+  - AMapLocation
   - AMScrollingNavbar (~> 1.5.1)
   - FMDB (~> 2.6.2)
   - IQKeyboardManager (~> 3.3.6)
@@ -86,6 +90,8 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  AMapFoundation: 6c0471c9a6a0ad17dad46e3d800ad56ca170f82a
+  AMapLocation: 47b62b5381a66e4d0c2931b70ffde72682427896
   AMScrollingNavbar: 767ed2db60d927a809bddff5d01b739b7020b12b
   FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
   HappyDNS: 06a9fed2796663fd87626dbf02552933265bf059
@@ -103,6 +109,6 @@ SPEC CHECKSUMS:
   UITableView+FDTemplateLayoutCell: 234e1582bcc4e18461af91155123bb96538ed030
   UMengUShare: d39cb682598df87ebdd3c055d03d00eb0102d42c
 
-PODFILE CHECKSUM: ed6a73a1694e2578cc628ca679344907673d5cf2
+PODFILE CHECKSUM: 7748000b486b388e4b5958ed1c27b720a8d8f97a
 
 COCOAPODS: 1.2.1

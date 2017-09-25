@@ -10,7 +10,7 @@ import UIKit
 
 class Setting: UITableViewController {
     
-    private let listArr=[["意见反馈","关于我们","协议声明"],
+    private let listArr=[["意见反馈","关于我们","协议声明","版本信息"],
                          ["商家合作","联系客服     QQ:3558634820"]];
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,10 +35,24 @@ class Setting: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath);
-        cell.selectionStyle=UITableViewCellSelectionStyle.none;
-        cell.accessoryType=UITableViewCellAccessoryType.disclosureIndicator;
-        cell.textLabel?.text=listArr[indexPath.section][indexPath.row];
+        cell.selectionStyle = UITableViewCellSelectionStyle.none;
         
+        cell.textLabel?.textColor = JX333333Color
+        cell.textLabel?.text = listArr[indexPath.section][indexPath.row];
+        
+        if indexPath.section == 0 && indexPath.row == 3 {
+            cell.accessoryType=UITableViewCellAccessoryType.none;
+            
+            let detail = UILabel()
+            detail.frame = CGRect(x: kScreenWidth - 80 - 20, y: 0, width: 80, height: 44)
+            detail.text = kVersion
+            detail.textColor = JX333333Color
+            detail.textAlignment = .right
+            cell.contentView.addSubview(detail)
+            
+        }else{
+            cell.accessoryType=UITableViewCellAccessoryType.disclosureIndicator;
+        }
         return cell
     }
     

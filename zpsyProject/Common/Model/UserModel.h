@@ -23,15 +23,15 @@
 
 @interface UserModel : NSObject
 
-+(instancetype)ShareInstance;
-
-
-
-@property(nonatomic,assign)BOOL IsLogin;//是否登录
-
-
-@property(nonatomic,strong)userInfoModel *userInfo;//用户信息
-
-@property(nonatomic,strong)NSString * TOKEN;
+//+(instancetype)ShareInstance;
+//
+//
+//
+//@property(nonatomic,assign)BOOL IsLogin;//是否登录
+//
+//
+//@property(nonatomic,strong)userInfoModel *userInfo;//用户信息
+//
+//@property(nonatomic,strong)NSString * TOKEN;
 
 @end
