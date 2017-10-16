@@ -17,9 +17,18 @@ class UserManager : NSObject{
     //登录接口获取
     var userEntity = UserEntity()
     
+//    var isLogin: Bool {
+//        return !self.userEntity.token.isEmpty
+//    }
     var isLogin: Bool {
-        return !self.userEntity.token.isEmpty
+        get {
+            return !self.userEntity.token.isEmpty
+        }
+        set {
+            self.isLogin = newValue
+        }
     }
+    
     
     override init() {
         super.init()
@@ -57,6 +66,7 @@ class UserManager : NSObject{
     /// 删除用户信息
     func removeAccound() {
         self.userEntity = UserEntity()
+        self.isLogin = false
         
         let fileManager = FileManager.default
         try? fileManager.removeItem(atPath: userPath)

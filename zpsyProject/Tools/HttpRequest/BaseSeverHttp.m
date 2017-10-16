@@ -68,20 +68,13 @@
     NSString* errorCode = [response objectForKey:@"errorCode"];
     NSLog(@"responseObject = %@",responseObject);
     
+    [MBProgressHUD hideHUD];
     if ([errorCode isEqualToString:@"0"]) {
-        [MBProgressHUD hideHUD];
         BLOCK_SAFE(success)([responseObject objectForKey:@"result"]);
     }else if ([errorCode isEqualToString:@"-2"]){
-        //BLOCK_SAFE(failure)(nil);
-        [[UserManager manager] removeAccound];
-        
-        ZPSYTabbarVc * rootVc = (ZPSYTabbarVc *)[UIApplication sharedApplication].keyWindow.rootViewController;
-        ZPSYNav * nvc = (ZPSYNav *)rootVc.selectedViewController;
-        UIViewController * vc = nvc.topViewController;
-        LoginVC * lvc = [[LoginVC alloc] init];
-        lvc.hidesBottomBarWhenPushed = YES;
-        [vc.navigationController pushViewController:lvc animated:NO];
-        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"NotificationShouldLogin" object:nil];
+    }else if ([errorCode isEqualToString:@"-3"]){
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"NotificationLoginFromOtherDevice" object:nil];
     }else{
         BLOCK_SAFE(failure)(nil);
         [MBProgressHUD showError:[response objectForKey:@"reason"]];

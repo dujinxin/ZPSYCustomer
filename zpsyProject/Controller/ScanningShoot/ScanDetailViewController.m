@@ -500,7 +500,7 @@ static NSString * const reuseIdentifierHeader = @"Header";
     [tableView registerClass:[DeviceCell class] forCellReuseIdentifier:@"cellId"];
     [contentView addSubview:tableView];
     
-    NSString * infoStr = [NSString stringWithFormat:@"本商品已进行%lu次正品认证扫码！请仔细核对以下扫码记录，如果有确认不是您本人掌握的扫码记录，则此商品可能有疑问。",(unsigned long)_deviceArray.count];
+    NSString * infoStr = [NSString stringWithFormat:@"本商品已进行%lu次正品认证扫码（参考下方）",(unsigned long)_deviceArray.count];
     UILabel * infoLabel = [UILabel new];
     infoLabel.text = infoStr;
     infoLabel.textColor = JX333333Color;
@@ -814,6 +814,7 @@ static NSString * const reuseIdentifierHeader = @"Header";
     [self.view addSubview:self.collectionView];
     _isCollectionViewOpen = NO;
     _myProductType = Quality;
+    
     [self headViewConfig];
     
     //查询结果信息
@@ -874,7 +875,7 @@ static NSString * const reuseIdentifierHeader = @"Header";
     //(25+132+15+25+8+16)+10+13+15+44 伪品
     
     
-    scanFinishModel.quality = @"0";
+    //scanFinishModel.quality = @"0";
     
     if ([scanFinishModel.quality isEqual: @"0"]) {
         _myProductType = Quality;
@@ -1045,6 +1046,7 @@ static NSString * const reuseIdentifierHeader = @"Header";
         UILabel * detailLabel = ({
             UILabel * lab = [UILabel new];
             lab.numberOfLines = 0;
+            //lab.lineBreakMode = NSLineBreakByWordWrapping;
             lab.font = JXFontForNormal(11);
             lab.textColor = JX333333Color;
             lab.backgroundColor = JXDebugColor;
@@ -1096,27 +1098,28 @@ static NSString * const reuseIdentifierHeader = @"Header";
             //paragraphStyle.paragraphSpacing = 6;
             //NSParagraphStyleAttributeName:paragraphStyle
             
+            NSMutableString * detail = [NSMutableString stringWithFormat:@" %@", dict[@"fieldValue"]];
+            
             NSStringDrawingOptions option =  NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading;
             NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:11]};
-            CGRect rect = [dict[@"fieldValue"] boundingRectWithSize:CGSizeMake(kScreenWidth -(60 + 15*2 + 15*kPercent), CGFLOAT_MAX) options:option attributes:attributes context:nil];
-            detailLabel.text = dict[@"fieldValue"];
+            CGRect rect = [detail boundingRectWithSize:CGSizeMake(kScreenWidth -(60 + 15*2 + 15*kPercent), CGFLOAT_MAX) options:option attributes:attributes context:nil];
+            detailLabel.text = detail;
             [detailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.equalTo(nameLabel.mas_top);
                 make.left.equalTo(nameLabel.mas_right).offset(15*kPercent);
                 make.right.equalTo(_infoView.mas_right).offset(-15);
-                if (rect.size.height < 20) {
-                    make.height.mas_equalTo(12);
-                }else{
-                    make.height.mas_equalTo(rect.size.height);
-                }
-                
+//                if (rect.size.height < 20) {
+//                    make.height.mas_equalTo(12);
+//                }else{
+//                    make.height.mas_equalTo(rect.size.height);
+//                }
             }];
-            if (rect.size.height < 20) {
+            CGSize size = [detailLabel sizeThatFits:CGSizeMake(kScreenWidth -(60 + 15*2 + 15*kPercent), CGFLOAT_MAX)];
+            if (size.height < 20) {
                 infoHeight += (15 +12);
             }else{
-                infoHeight += (15 +rect.size.height);
+                infoHeight += (15 +size.height);
             }
-            
         }
         
     }

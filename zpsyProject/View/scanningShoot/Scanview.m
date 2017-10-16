@@ -186,7 +186,7 @@ static const CGFloat kScanH=250;
 
 #pragma 扫描
 -(void)setStartScaning:(BOOL)StartScaning{
-    _StartScaning=StartScaning;
+    _StartScaning = StartScaning;
     if(_StartScaning){
         [_session startRunning];
     }else{

@@ -21,12 +21,12 @@
 
 @implementation mineloginStatusView
 
--(instancetype)initWithFrame{
+- (instancetype)initWithFrame{
     CGRect frame=CGRectMake(0, 0, kScreenWidth, kWidth_fit(150)+15);
     if ([UserManager manager].isLogin) {
         frame=CGRectMake(0, 0, kScreenWidth, kWidth_fit(84)+15);
     }
-    self=[super initWithFrame:frame];
+    self = [super initWithFrame:frame];
     if (self) {
         if ([UserManager manager].isLogin) {
             [self LoginInInitview];

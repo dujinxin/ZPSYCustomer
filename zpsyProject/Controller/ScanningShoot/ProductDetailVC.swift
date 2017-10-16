@@ -23,35 +23,34 @@ class ProductDetailVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
     }()
     
     private lazy var CycleScroll:SDCycleScrollView={
-        let cyclescroll=SDCycleScrollView.init(frame: CGRect.init(x: 0, y: 0, width: kScreenWidth, height: 242*kScaleOfScreen), delegate: nil, placeholderImage: UIImage.init(named: PlaceHoldeImageStr))
+        let cyclescroll = SDCycleScrollView.init(frame: CGRect.init(x: 0, y: 0, width: kScreenWidth, height: 242*kScaleOfScreen), delegate: nil, placeholderImage: UIImage.init(named: PlaceHoldeImageStr))
         cyclescroll?.imageURLStringsGroup = []
         cyclescroll?.autoScroll = false
-        cyclescroll?.pageControlAliment=SDCycleScrollViewPageContolAlimentCenter
+        cyclescroll?.pageControlAliment = SDCycleScrollViewPageContolAlimentCenter
         return cyclescroll!
     }()
-    
-    
     private lazy var tableView:UITableView={
     
-        let tab=UITableView.init(frame: CGRect.init(x: 0, y: 0, width: kScreenWidth, height: kScreenHeight-60-64), style: UITableViewStyle.grouped)
-        tab.tableHeaderView=self.CycleScroll
-        tab.rowHeight=UITableViewAutomaticDimension
-        tab.estimatedRowHeight=10
-        tab.sectionHeaderHeight=UITableViewAutomaticDimension
-        tab.sectionFooterHeight=UITableViewAutomaticDimension
-        tab.estimatedSectionHeaderHeight=5
-        tab.estimatedSectionFooterHeight=5
+        let tab = UITableView.init(frame: CGRect.init(x: 0, y: 0, width: kScreenWidth, height: kScreenHeight-60-64), style: UITableViewStyle.plain)
+        tab.tableHeaderView = self.CycleScroll
+        tab.tableFooterView = UIView()
+        tab.backgroundColor = UIColor.groupTableViewBackground;
+        
+        tab.rowHeight = UITableViewAutomaticDimension
+        tab.estimatedRowHeight = 10
+        //tab.sectionHeaderHeight = UITableViewAutomaticDimension
+        //tab.sectionFooterHeight = UITableViewAutomaticDimension
+        tab.estimatedSectionHeaderHeight = 5
+        //tab.estimatedSectionFooterHeight = 5
         tab.separatorStyle = UITableViewCellSeparatorStyle.none
-        tab.delegate=self
-        tab.dataSource=self
+        tab.delegate = self
+        tab.dataSource = self
         tab.register(productDetailCell.self, forCellReuseIdentifier: "productDetailCellId")
         return tab
     }()
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title="详情"
+        self.title = "详情"
         self.edgesForExtendedLayout = UIRectEdge.init(rawValue: 0)
         datarequest()
         viewinit()
@@ -64,7 +63,7 @@ class ProductDetailVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
     func viewinit(){
         self.view.addSubview(self.tableView)
         
-        let inputview=CommentInputView.init(false)
+        let inputview = CommentInputView.init(false)
         inputview.Mycommenttype = commentType.commentProduct
         inputview.resourcesId = self.ProductID
         self.view.addSubview(inputview)
@@ -75,8 +74,6 @@ class ProductDetailVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
             let _ = make?.top.mas_equalTo()(self.tableView.mas_bottom);
         }
     }
-    
-    
     private func datarequest(){
         MBProgressHUD.showAnimationtoView(self.view)
         BaseSeverHttp.zpsyGet(withPath: Api_productFindById, withParams: ["id":self.ProductID], withSuccessBlock: { (result:Any?) in
@@ -89,24 +86,16 @@ class ProductDetailVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
             MBProgressHUD.hide(for: self.view)
         }
     }
-    
-        // MARK: - Table view data source
-
+    // MARK: - Table view data source
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
-
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
         if section == 0 {
             return 1
         }
-        
        return (self.productdetailModel?.list_ceccGoodsField?.count)!
-        
-        
     }
-
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 1 {
             let dict:NSDictionary = self.productdetailModel?.list_ceccGoodsField![indexPath.row] as! NSDictionary
@@ -133,12 +122,12 @@ class ProductDetailVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
        
         if indexPath.section == 0 {
             var cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier")
-            if cell==nil{
-                cell=UITableViewCell.init(style: UITableViewCellStyle.value1, reuseIdentifier: "reuseIdentifier")
-                cell?.selectionStyle=UITableViewCellSelectionStyle.none
+            if cell == nil{
+                cell = UITableViewCell.init(style: UITableViewCellStyle.value1, reuseIdentifier: "reuseIdentifier")
+                cell?.selectionStyle = UITableViewCellSelectionStyle.none
                 let img = UIImageView.init(image: UIImage.init(named: "collect"))
-                img.size = CGSize.init(width: 30, height: 30)
-                cell?.accessoryView=img
+                img.size = CGSize.init(width: 20, height: 20)
+                cell?.accessoryView = img
                 img.isUserInteractionEnabled = true
                 img.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(self.collectionBtnClick(gest:))))
             }
@@ -167,18 +156,31 @@ class ProductDetailVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
                 cell.detailLabel.text = keyStr
             }
             cell.resetProductPackageType(type: Int(type)!)
+            
            return cell
         }
     }
-    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        
         if section == 1 {
             return headerget()
         }
-        return nil
+        return UIView()
     }
-    
+//    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+//        return UIView()
+//    }
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        if section == 0{
+            return 10
+        }
+        return 0.1
+    }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0{
+            return 0.1
+        }
+        return UITableViewAutomaticDimension//66
+    }
     private var hasthread:Bool? = false
 
     @objc private func collectionBtnClick(gest : UIGestureRecognizer){
@@ -275,65 +277,4 @@ class ProductDetailVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
         view.backgroundColor = Utility.color(withHex: colorHex)
         return view
     }
-    
-    
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 0{
-            return 0.1
-        }
-        return UITableViewAutomaticDimension
-    }
-    
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

@@ -83,28 +83,13 @@ class JXRequest: JXBaseRequest {
                 msg = message ?? "请求成功"
                 isSuccess = true
             }else if code == .kResponseTokenDisabled{
-//                JXNetworkManager.manager.userAccound?.removeAccound()
-//                JXNetworkManager.manager.userAccound = nil
-                
-                UserManager.manager.removeAccound()
-                
-//                if let rootVc = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController,
-//                    let vc = rootVc.topViewController{
-//                    
-//                    if rootVc.viewControllers.count > 1 {
-//                        vc.navigationController?.popToRootViewController(animated: false)
-//                    }
-//                    print("rootVc = \(rootVc)")
-//                    print("rootVc.viewControllers = \(rootVc.viewControllers)")
-//                    print("vc = \(String(describing: vc))")
-//                }
-//                
-//                NotificationCenter.default.post(name: NSNotification.Name(rawValue: NotificationLoginStatus), object: false)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: NotificationShouldLogin), object: false)
+            }else if code == .kResponseLoginFromOtherDevice{
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: NotificationLoginFromOtherDevice), object: false)
             }else{
                 print("请求失败")
                 msg = message ?? "请求失败"
             }
-            
         }else if result is Array<Any>{
             print("Array")
         }else if result is String{

@@ -49,9 +49,10 @@ class productDetailCell: UITableViewCell {
         
         self.nameLabel.mas_makeConstraints { (make:MASConstraintMaker?) in
             //let _ = make?.edges.equalTo()(UIEdgeInsetsMake(5, 30, 5, 15))
-            let _ = make?.top.equalTo()(self.contentView.mas_top)?.offset()(15)
+            let _ = make?.top.equalTo()(self.contentView.mas_top)?.offset()(7.5)
+            let _ = make?.bottom.equalTo()(self.contentView.mas_bottom)?.offset()(-7.5)
             let _ = make?.left.equalTo()(self.contentView.mas_left)?.offset()(25)
-            let _ = make?.width.mas_equalTo()(70)
+            let _ = make?.width.mas_equalTo()(78)
             let _ = make?.height.mas_equalTo()(14)
         }
         
@@ -68,7 +69,8 @@ class productDetailCell: UITableViewCell {
             let _ = make?.top.equalTo()(self.nameLabel.mas_top)
             let _ = make?.left.equalTo()(self.nameLabel.mas_right)
             let _ = make?.width.and().height().mas_equalTo()(0);
-            //let _ = make?.bottom.equalTo()(self.contentView.mas_bottom)?.offset()(-15)
+            
+            let _ = make?.bottom.equalTo()(self.contentView.mas_bottom)?.offset()(-7.5)
         }
         
         
@@ -77,15 +79,15 @@ class productDetailCell: UITableViewCell {
     
     func resetProductPackageType(type:Int) -> Void {
         if type == 0 || type == 1 || type == 2 || type == 3 || type == 5 {
+            self.detailImageView.image = nil
             self.detailLabel.mas_remakeConstraints { (make:MASConstraintMaker?) in
                 let _ = make?.top.equalTo()(self.nameLabel.mas_top)
                 let _ = make?.left.equalTo()(self.nameLabel.mas_right)
                 let _ = make?.right.equalTo()(self.contentView.mas_right)?.offset()(-25)
                 let _ = make?.height.mas_equalTo()(14)
                 
-                let _ = make?.bottom.equalTo()(self.contentView.mas_bottom)?.offset()(-15)
+                let _ = make?.bottom.equalTo()(self.contentView.mas_bottom)?.offset()(-7.5)
             }
-            
             self.detailImageView.mas_remakeConstraints { (make:MASConstraintMaker?) in
                 let _ = make?.top.equalTo()(self.nameLabel.mas_top)
                 let _ = make?.left.equalTo()(self.nameLabel.mas_right)
@@ -93,32 +95,30 @@ class productDetailCell: UITableViewCell {
                 //let _ = make?.bottom.equalTo()(self.contentView.mas_bottom)?.offset()(-15)
             }
         }else if type == 6{
+            self.detailLabel.text = ""
             self.detailLabel.mas_remakeConstraints { (make:MASConstraintMaker?) in
                 let _ = make?.top.equalTo()(self.nameLabel.mas_top)
                 let _ = make?.left.equalTo()(self.nameLabel.mas_right)
                 let _ = make?.right.equalTo()(self.contentView.mas_right)?.offset()(-25)
                 let _ = make?.height.mas_equalTo()(0)
                 
-                let _ = make?.bottom.equalTo()(self.contentView.mas_bottom)?.offset()(-15)
+                let _ = make?.bottom.equalTo()(self.contentView.mas_bottom)?.offset()(-7.5)
             }
             
             self.detailImageView.mas_remakeConstraints { (make:MASConstraintMaker?) in
                 let _ = make?.top.equalTo()(self.nameLabel.mas_top)
                 let _ = make?.left.equalTo()(self.nameLabel.mas_right)
                 let _ = make?.width.and().height().mas_equalTo()(50*kPercent);
-                let _ = make?.bottom.equalTo()(self.contentView.mas_bottom)?.offset()(-15)
+                let _ = make?.bottom.equalTo()(self.contentView.mas_bottom)?.offset()(-7.5)
             }
         }else{
             
         }
     }
-    
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

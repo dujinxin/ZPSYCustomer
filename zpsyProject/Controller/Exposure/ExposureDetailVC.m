@@ -82,12 +82,6 @@
 //    }];
 }
 
-
-
-
-
-
-
 #pragma GET
 -(ExposureDetailView *)detailView{
     if (!_detailView) {
@@ -120,7 +114,6 @@
     UIBarButtonItem *bar_2 = [[UIBarButtonItem alloc] initWithCustomView:btn];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItems = @[bar_2,bar_1];
-    
 }
 
 -(void)isfaverite{

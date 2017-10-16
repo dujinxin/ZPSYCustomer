@@ -15,6 +15,8 @@
 #import "MineVC.h"
 #import "ZPSY-Swift.h"
 
+#import "LoginVC.h"
+
 #define photoIdentifier @"photoIdentifierJadge"
 @interface ZPSYTabbarVc ()<UITabBarControllerDelegate>
 @property(nonatomic,strong)ZPSYNav *scaningNav;
@@ -33,7 +35,7 @@
     ZPSYNav *historyNav=[[ZPSYNav alloc] initWithRootViewController:[HistoryVC new]];
     ZPSYNav *exposureNav=[[ZPSYNav alloc] initWithRootViewController:[ExposureVC new]];
     ZPSYNav *mineVcNav=[[ZPSYNav alloc] initWithRootViewController:[MineVC new]];
-    UIViewController *scaningShoot=[UINavigationController new];
+    UIViewController *scaningShoot = [UINavigationController new];
     scaningShoot.restorationIdentifier=photoIdentifier;
     
     self.viewControllers=@[homeNav,historyNav,scaningShoot,exposureNav,mineVcNav];
@@ -58,6 +60,10 @@
     [[UITabBarItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:JX333333Color} forState:UIControlStateNormal];
     [[UITabBarItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:JXMainColor} forState:UIControlStateSelected];
     [self.tabBar setBackgroundColor:[UIColor whiteColor]];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gotoLogin) name:@"NotificationShouldLogin" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginFromOtherDevice) name:@"NotificationLoginFromOtherDevice" object:nil];
+    
 }
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController{
     
@@ -76,7 +82,7 @@
         [[GDLocationManager manager] startUpdateLocation];
         ScanningShootVC *scaningshootVc = [ScanningShootVC new];
         ZPSYNav *nav = [[ZPSYNav alloc] initWithRootViewController:scaningshootVc];
-        [self presentViewController:nav animated:NO completion:nil];
+        [self.selectedViewController presentViewController:nav animated:NO completion:nil];
 //        if ([CTUtility handleWithAuthWith:AuthorizationTakePhoto]) {
 //            ScanningShootVC *scaningshootVc = [ScanningShootVC new];
 //            ZPSYNav *nav=[[ZPSYNav alloc] initWithRootViewController:scaningshootVc];
@@ -95,20 +101,37 @@
         [BaseSeverHttp afnetForZpsyGetWithPath:Api_userScoreChange WithParams:@{@"type":@"1"} WithSuccessBlock:nil WithFailurBlock:nil];
     }
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)gotoLogin{
+    [[UserManager manager] removeAccound];
+ 
+    UIViewController * vc = [UIViewController topStackViewController];
+    LoginVC * lvc = [[LoginVC alloc] init];
+    lvc.hidesBottomBarWhenPushed = YES;
+    [vc.navigationController pushViewController:lvc animated:NO];
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)loginFromOtherDevice{
+    //custom
+//    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:NSLocalizedString(@"loginUserRemoveFromServer1", "your account has been removed from the server side,please register to login") delegate:self cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
+    
+    [[UserManager manager] removeAccound];
+    
+    UIViewController * vc = UIViewController.topVisibleViewController;
+    [vc dismissViewControllerAnimated:NO completion:nil];
+    UIViewController * nvc = UIViewController.topStackViewController;
+    if (nvc != nil){
+        [nvc.navigationController popToRootViewControllerAnimated:NO];
+    }
+    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"用户在其他设备登录，请重新登录！" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    alertView.tag = 1001;
+    [alertView show];
 }
-*/
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (alertView.tag == 1001) {
+        LoginVC * login = [[LoginVC alloc] init];
+        login.hidesBottomBarWhenPushed = YES;
+        [UIViewController.topVisibleViewController.navigationController pushViewController:login animated:false];
+    }
+}
 
 @end

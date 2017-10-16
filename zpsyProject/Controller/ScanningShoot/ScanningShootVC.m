@@ -49,8 +49,6 @@
 
 -(void)scanresultWithValue:(NSString *)codeValue Type:(ScanTypeEnum) type{
     
-    self.scanview.StartScaning = NO;
-    
     if ([GDLocationManager manager].isEnabled == YES ){
         if ([GDLocationManager manager].location == nil || [GDLocationManager manager].reGeocode == nil || [GDLocationManager manager].isLoacating == YES) {
             
@@ -64,7 +62,7 @@
         [self.navigationController pushViewController:alert animated:NO];
         return;
     }
-    
+    self.scanview.StartScaning = NO;
     if (type==ScanTypeQRCode || type==ScanTypeBarCode || type==ScanTypeGmCode || type==ScanTypeOther) {
         
         if (codeValue==nil || [codeValue isEqualToString:@""]) {

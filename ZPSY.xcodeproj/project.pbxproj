@@ -41,6 +41,8 @@
 		355947F31F2F16BD008145BB /* NotificationEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355947D41F2F16BD008145BB /* NotificationEnum.swift */; };
 		355947F41F2F16BD008145BB /* ProjectHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355947D51F2F16BD008145BB /* ProjectHeader.swift */; };
 		356173431EE025110086C73F /* ZPselectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356173421EE025110086C73F /* ZPselectView.swift */; };
+		357317CD1F7B911600A3F922 /* beep.wav in Resources */ = {isa = PBXBuildFile; fileRef = 357317CA1F7B911600A3F922 /* beep.wav */; };
+		357317CE1F7B911600A3F922 /* libgmyDecoder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 357317CC1F7B911600A3F922 /* libgmyDecoder.a */; };
 		3597506C1EF37EE900419474 /* JZAlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3597506B1EF37EE900419474 /* JZAlbumViewController.m */; };
 		3597506F1EF37F5D00419474 /* PhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3597506E1EF37F5D00419474 /* PhotoView.m */; };
 		359750721EF3E96C00419474 /* GuiderViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 359750711EF3E96C00419474 /* GuiderViewFlowLayout.m */; };
@@ -124,8 +126,6 @@
 		3809F3371E8674B5001ABE0C /* UploadImageTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 3809F3361E8674B5001ABE0C /* UploadImageTool.m */; };
 		3809F33A1E8674CC001ABE0C /* QiniuUploadHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3809F3391E8674CC001ABE0C /* QiniuUploadHelper.m */; };
 		3809F33C1E878BF6001ABE0C /* feedbackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3809F33B1E878BF6001ABE0C /* feedbackModel.swift */; };
-		380AB6031E94EC0400055A54 /* beep.wav in Resources */ = {isa = PBXBuildFile; fileRef = 380AB6001E94EC0400055A54 /* beep.wav */; };
-		380AB6041E94EC0400055A54 /* libgmyDecoder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 380AB6021E94EC0400055A54 /* libgmyDecoder.a */; };
 		380B307C1E504CD10037D918 /* MBProgressHUD+Add.m in Sources */ = {isa = PBXBuildFile; fileRef = 380B30791E504CD10037D918 /* MBProgressHUD+Add.m */; };
 		380B308A1E5061F10037D918 /* Clip.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 380B30801E5061F10037D918 /* Clip.bundle */; };
 		380B308B1E5061F10037D918 /* ClipImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 380B30821E5061F10037D918 /* ClipImageView.m */; };
@@ -323,6 +323,9 @@
 		355947D41F2F16BD008145BB /* NotificationEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationEnum.swift; sourceTree = "<group>"; };
 		355947D51F2F16BD008145BB /* ProjectHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectHeader.swift; sourceTree = "<group>"; };
 		356173421EE025110086C73F /* ZPselectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZPselectView.swift; sourceTree = "<group>"; };
+		357317CA1F7B911600A3F922 /* beep.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = beep.wav; sourceTree = "<group>"; };
+		357317CB1F7B911600A3F922 /* gmyDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gmyDecoder.h; sourceTree = "<group>"; };
+		357317CC1F7B911600A3F922 /* libgmyDecoder.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libgmyDecoder.a; sourceTree = "<group>"; };
 		3597506A1EF37EE900419474 /* JZAlbumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JZAlbumViewController.h; sourceTree = "<group>"; };
 		3597506B1EF37EE900419474 /* JZAlbumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JZAlbumViewController.m; sourceTree = "<group>"; };
 		3597506D1EF37F5D00419474 /* PhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoView.h; sourceTree = "<group>"; };
@@ -553,9 +556,6 @@
 		3809F3381E8674CC001ABE0C /* QiniuUploadHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QiniuUploadHelper.h; sourceTree = "<group>"; };
 		3809F3391E8674CC001ABE0C /* QiniuUploadHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QiniuUploadHelper.m; sourceTree = "<group>"; };
 		3809F33B1E878BF6001ABE0C /* feedbackModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = feedbackModel.swift; sourceTree = "<group>"; };
-		380AB6001E94EC0400055A54 /* beep.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = beep.wav; sourceTree = "<group>"; };
-		380AB6011E94EC0400055A54 /* gmyDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gmyDecoder.h; sourceTree = "<group>"; };
-		380AB6021E94EC0400055A54 /* libgmyDecoder.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libgmyDecoder.a; sourceTree = "<group>"; };
 		380B30761E5044E80037D918 /* Apimacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Apimacro.h; sourceTree = "<group>"; };
 		380B30781E504CD10037D918 /* MBProgressHUD+Add.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+Add.h"; sourceTree = "<group>"; };
 		380B30791E504CD10037D918 /* MBProgressHUD+Add.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+Add.m"; sourceTree = "<group>"; };
@@ -790,6 +790,7 @@
 				380B31A51E51D5600037D918 /* UIKit.framework in Frameworks */,
 				380B31A31E51D5540037D918 /* Foundation.framework in Frameworks */,
 				380B31A11E51D5470037D918 /* CoreGraphics.framework in Frameworks */,
+				357317CE1F7B911600A3F922 /* libgmyDecoder.a in Frameworks */,
 				3559479A1F27491E008145BB /* libeIDmm.a in Frameworks */,
 				380B319F1E51D53F0037D918 /* SystemConfiguration.framework in Frameworks */,
 				380B319D1E51D5350037D918 /* CoreTelephony.framework in Frameworks */,
@@ -798,7 +799,6 @@
 				380B31971E51D4A30037D918 /* jpush-ios-3.0.2.a in Frameworks */,
 				380B31961E51D4A30037D918 /* jcore-ios-1.1.1.a in Frameworks */,
 				35BF18251F25DDD200980117 /* libCaSimBle.a in Frameworks */,
-				380AB6041E94EC0400055A54 /* libgmyDecoder.a in Frameworks */,
 				6CC4C5BC0F37BAF0CD1DDC25 /* libPods-ZPSY.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -986,6 +986,16 @@
 				355947D31F2F16BD008145BB /* JXPhotoBrowserController.swift */,
 			);
 			path = JXViewController;
+			sourceTree = "<group>";
+		};
+		357317C91F7B911600A3F922 /* GM */ = {
+			isa = PBXGroup;
+			children = (
+				357317CA1F7B911600A3F922 /* beep.wav */,
+				357317CB1F7B911600A3F922 /* gmyDecoder.h */,
+				357317CC1F7B911600A3F922 /* libgmyDecoder.a */,
+			);
+			path = GM;
 			sourceTree = "<group>";
 		};
 		35BF179E1F25DDD200980117 /* eID */ = {
@@ -1427,16 +1437,6 @@
 				380425151E46F53D00CB477E /* AFHTTPClient.m */,
 			);
 			path = HttpRequest;
-			sourceTree = "<group>";
-		};
-		380AB5FF1E94EC0400055A54 /* GM */ = {
-			isa = PBXGroup;
-			children = (
-				380AB6001E94EC0400055A54 /* beep.wav */,
-				380AB6011E94EC0400055A54 /* gmyDecoder.h */,
-				380AB6021E94EC0400055A54 /* libgmyDecoder.a */,
-			);
-			path = GM;
 			sourceTree = "<group>";
 		};
 		380B30771E504CD10037D918 /* MBProgressHUD */ = {
@@ -1938,8 +1938,8 @@
 		384DD9561E481A1E0032AB37 /* thirdCommen */ = {
 			isa = PBXGroup;
 			children = (
+				357317C91F7B911600A3F922 /* GM */,
 				35BF179E1F25DDD200980117 /* eID */,
-				380AB5FF1E94EC0400055A54 /* GM */,
 				380B31B41E52A9220037D918 /* QiNIu */,
 				380B31911E51D4A30037D918 /* JguangLib */,
 				380B317E1E5185BF0037D918 /* Umeng */,
@@ -2352,11 +2352,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				380AB6031E94EC0400055A54 /* beep.wav in Resources */,
 				380B311B1E5062D90037D918 /* PhotoBroswerVC.xib in Resources */,
 				35E74C501EDE6020003EA223 /* close-icon@2x.png in Resources */,
 				380424BF1E45B27500CB477E /* LaunchScreen.storyboard in Resources */,
 				380B308F1E5061F10037D918 /* KevenPicEditPic.bundle in Resources */,
+				357317CD1F7B911600A3F922 /* beep.wav in Resources */,
 				35E74C511EDE6020003EA223 /* search-icon.png in Resources */,
 				380B31191E5062D90037D918 /* PhotoItemView.xib in Resources */,
 				380B31121E5062D90037D918 /* PB.bundle in Resources */,

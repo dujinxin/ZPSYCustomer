@@ -9,9 +9,12 @@
 #import "AppDelegate.h"
 #import "ZPSYTabbarVc.h"
 #import "AppDelegate+ADD.h"
+
 @interface AppDelegate ()
+
 @property(strong, nonatomic)NSTimer* mTimer;
 @property(assign, nonatomic)UIBackgroundTaskIdentifier backIden;
+
 @end
 
 @implementation AppDelegate{
@@ -21,7 +24,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    self.window=[[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = JXMainColor;
     self.window.rootViewController = [ZPSYTabbarVc new];
     

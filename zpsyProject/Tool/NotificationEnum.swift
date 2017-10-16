@@ -13,6 +13,7 @@ let NotificationLocatedStatus = "NotificationLocatedStatus"
 
 let NotificationLoginStatus = "NotificationLoginStatus"
 let NotificationShouldLogin = "NotificationShouldLogin"
+let NotificationLoginFromOtherDevice = "NotificationLoginFromOtherDevice"
 
 let NotificationMainDeliveringNumber = "NotificationMainDeliveringNumber"
 

@@ -13,6 +13,7 @@ enum JXNetworkError : Int {
     case kResponseSuccess     = 0
     case kResponsefailedForsss     = -1
     case kResponseTokenDisabled      = -2  //token过期
+    case kResponseLoginFromOtherDevice      = -3  //在其他设备登录
     case kResponseFailed      = 202
     case kResponseUnknow      = 203
     case kResponseDeliverTagNotEnough = 204

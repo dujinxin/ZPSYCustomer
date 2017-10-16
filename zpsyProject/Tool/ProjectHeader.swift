@@ -8,7 +8,7 @@
 
 import Foundation
 
-let kVersion = "v1.1.0.1"
+let kVersion = "v1.1.0.2"
 
 //高德
 let GDAppKey = "79dc6f237a5d5d92bb5b613cf1dafc67"

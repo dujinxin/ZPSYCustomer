@@ -31,7 +31,7 @@ class FindCell: UITableViewCell {
         var lab = UILabel()
         lab.numberOfLines = 1
         lab.textColor = UIColor.gray
-        lab.lineBreakMode = .byClipping
+        //lab.lineBreakMode = .byClipping
         lab.font = UIFont.systemFont(ofSize: 11)
         return lab
     }()
@@ -87,7 +87,9 @@ class FindCell: UITableViewCell {
             self.bigImageView.sd_setImage(with: URL.init(string: (entity?.thumbnail)! as String), placeholderImage: UIImage.init(named: PlaceHoldeImageStr))
             self.titleLabel.text = entity?.title as String?
             self.goodsNameLabel.text = entity?.summary as String?
-            if let hazardClass = entity?.hazardClass {
+            if
+                let hazardClass = entity?.hazardClass,
+                hazardClass != "0" {
                 self.levelImageView.image = UIImage(named: "warning"+hazardClass)
             }else{
                 self.levelImageView.isHidden = true
