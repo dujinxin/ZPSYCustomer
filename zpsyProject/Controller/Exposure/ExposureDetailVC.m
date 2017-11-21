@@ -17,7 +17,7 @@
 @interface ExposureDetailVC ()
 
 @property(nonatomic, strong)ExposureDetailView *detailView;
-@property(nonatomic,strong)UIButton *collectionBtn;
+@property(nonatomic, strong)UIButton *collectionBtn;
 
 @end
 
@@ -86,7 +86,7 @@
 -(ExposureDetailView *)detailView{
     if (!_detailView) {
         
-        _detailView=[[ExposureDetailView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
+        _detailView = [[ExposureDetailView alloc] initWithFrame:CGRectMake(0, kNavStatusHeight, kScreenWidth, kScreenHeight - kNavStatusHeight)];
         [self.view addSubview:_detailView];
     }
     return _detailView;

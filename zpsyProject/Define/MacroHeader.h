@@ -54,7 +54,6 @@
 #define jxRGB210Color JXColorFromR_G_B(210,210,210)//灰色系 按钮背景颜色 
 
 
-//#define JXMainColor   JXColorFromR_G_B(250,229,88) //app 主色调，
 #define JXMainColor   JXColorFromRGB(0xc3222c)//app 主色调，
 
 #define JXTextColor      JX333333Color //主要文本颜色

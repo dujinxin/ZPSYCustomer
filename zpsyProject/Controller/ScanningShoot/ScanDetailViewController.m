@@ -547,7 +547,7 @@ static NSString * const reuseIdentifierHeader = @"Header";
     [infoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(tableView.mas_top).offset(-rect.size.height -12);
         make.left.equalTo(tableView.mas_left).offset(20);
-        make.size.mas_equalTo(CGSizeMake(rect.size.width, rect.size.height +12));
+        make.size.mas_equalTo(CGSizeMake(contentView.size.width - 40, rect.size.height +12));
     }];
     
     

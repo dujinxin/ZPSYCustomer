@@ -24,19 +24,19 @@
 @interface HomeVC ()<UITableViewDataSource,UITableViewDelegate>{
 }
 
-@property(nonatomic,strong)UITableView *tableview;
-@property(nonatomic,strong)SDCycleScrollView *sdCycleScrollView;
-@property(nonatomic,strong)homeModel *homemodel;
+@property(nonatomic, strong)UITableView * tableview;
+@property(nonatomic, strong)SDCycleScrollView * sdCycleScrollView;
+@property(nonatomic, strong)homeModel * homemodel;
 
 @end
 
 @implementation HomeVC
 @synthesize homemodel = _homemodel;
 
--(void)loadView{
+- (void)loadView{
     self.view=self.tableview;
 }
--(void)viewWillAppear:(BOOL)animated{
+- (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
     [self.sdCycleScrollView adjustWhenControllerViewWillAppera];
@@ -44,21 +44,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title=homeTile;
+    self.title = homeTile;
     [self resetBut];
     self.tableview.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        [self datarequest];
+        [self dataRequest];
     }];
     [self.tableview.mj_header beginRefreshing];
 }
-
-
--(void)datarequest{
-
-//    [MBProgressHUD showAnimationtoView:self.view];
+- (void)dataRequest{
     [BaseSeverHttp ZpsyGetWithPath:Api_homePage WithParams:nil WithSuccessBlock:^(id result) {
         [self.tableview.mj_header endRefreshing];
-//        [MBProgressHUD hideHUDForView:self.view];
         homeModel *model = [[homeModel alloc] init];
         model.banerListArr = [bannerEntity mj_objectArrayWithKeyValuesArray:[result objectForKey:@"list_banner"]];
         model.preferenceListArr = [ExposureEntity mj_objectArrayWithKeyValuesArray:[result objectForKey:@"list_preference"]];
@@ -67,24 +62,22 @@
         [self.tableview reloadData];
     } WithFailurBlock:^(NSError *error) {
         [self.tableview.mj_header endRefreshing];
-//        [MBProgressHUD hideHUDForView:self.view];
     }];
-
 }
 #pragma tableview delegate
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 2+self.homemodel.adverListArr.count;
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 2 + self.homemodel.adverListArr.count;
 }
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 1;
 }
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 2) {
         return 44;
     }
     return 10;
 }
--(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     return 0.1;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
@@ -100,7 +93,7 @@
         
         UILabel * sectionTitle = [[UILabel alloc ] init];
         sectionTitle.frame = CGRectMake(15*kPercent, 15 + 10, kScreenWidth - 15*2*kPercent, 14);
-        sectionTitle.text = @"曝光";
+        sectionTitle.text = @"头条";
         sectionTitle.textColor = JX333333Color;
         sectionTitle.textAlignment = NSTextAlignmentLeft;
         sectionTitle.font = JXFontForNormal(14);
@@ -122,28 +115,26 @@
         return UITableViewAutomaticDimension;
     }
 }
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section==0) {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 0) {
         HomeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"homeCellId"];
-        cell.ImgView.image=[UIImage imageNamed:@"home_scan"];
-        cell.Tiltelab.hidden=YES;
+        cell.ImgView.image = [UIImage imageNamed:@"home_scan"];
+        cell.Tiltelab.hidden = YES;
         return cell;
-    }
-    else if (indexPath.section==1){
+    }else if (indexPath.section == 1){
         homeHotCell *cell = [tableView dequeueReusableCellWithIdentifier:@"homeHotCellId"];
         cell.modelArr = self.homemodel.preferenceListArr;
         return cell;
-    }
-    else{
+    }else{
         homeNewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"homeNewCellId"];
         cell.model = self.homemodel.adverListArr[indexPath.section-2];
         return cell;
     }
 }
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 
     if (indexPath.section==0) {
-        ZPSYTabbarVc *tab=(ZPSYTabbarVc*)[UIApplication sharedApplication].keyWindow.rootViewController;
+        ZPSYTabbarVc *tab = (ZPSYTabbarVc*)[UIApplication sharedApplication].keyWindow.rootViewController;
         [tab pushToScanVC];
     }else if (indexPath.section==1){
         return;
@@ -153,7 +144,7 @@
     }
 }
 
--(void)exposureDetail:(NSString*)urlStr webType:(NSString*)type ID:(NSString*)ID detailStr:(NSString*)detailStr imgStr:(NSString*)imgstr{
+- (void)exposureDetail:(NSString*)urlStr webType:(NSString*)type ID:(NSString*)ID detailStr:(NSString*)detailStr imgStr:(NSString*)imgstr{
     if (![type isEqualToString:@"0"]&&![type isEqualToString:@"1"]&&![type isEqualToString:@"2"]) {
         WKwebVC *web = [[WKwebVC alloc] init];
         web.URLstr = urlStr;
@@ -197,7 +188,6 @@
     self.sdCycleScrollView.imageURLStringsGroup=arr;
 }
 - (SDCycleScrollView *)sdCycleScrollView{
-
     if (!_sdCycleScrollView) {
         _sdCycleScrollView=[SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, kScreenWidth, 200*kPercent) delegate:nil placeholderImage:[UIImage imageNamed:PlaceHoldeImageStr]];
         _sdCycleScrollView.imageURLStringsGroup = @[];
@@ -212,7 +202,6 @@
     }
     return _sdCycleScrollView;
 }
-
 -(homeModel *)homemodel{
 
     if (_homemodel == nil) {
@@ -257,8 +246,6 @@
     }];
     
 }
-
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

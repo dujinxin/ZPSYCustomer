@@ -17,6 +17,8 @@ enum commentType:NSInteger {
 class CommentInputView: UIView,UITextFieldDelegate {
 
     public var resourcesId : String? = ""
+    public var countryType : String? = ""
+    
     public var Mycommenttype:commentType? = .commentProduct
     public var successBlock:(()->Void)?
     
@@ -26,7 +28,7 @@ class CommentInputView: UIView,UITextFieldDelegate {
         textfield.layer.borderColor=UIColor.groupTableViewBackground.cgColor
         textfield.layer.cornerRadius=3
         textfield.font = UIFont.systemFont(ofSize: 15)
-        textfield.placeholder="说点什么吧"
+        textfield.placeholder = "说点什么吧"
         textfield.returnKeyType = UIReturnKeyType.send
         
         let img = UIImageView.init(image: UIImage.init(named: "writing"))
@@ -69,7 +71,15 @@ class CommentInputView: UIView,UITextFieldDelegate {
     
         MBProgressHUD.showAnimationtoView(CTUtility.findViewController(self).view)
         let type:NSInteger = (self.Mycommenttype?.rawValue)!
-        let dict = ["content":textStr,"type":type,"resourcesId":self.resourcesId ?? "0"] as [String : Any]
+        let dict : Dictionary<String,Any>!
+        if
+            let mytype = self.countryType,
+            mytype.isEmpty == false  {
+            dict = ["content":textStr,"type":type,"resourcesId":self.resourcesId ?? "0" ,"countryType":mytype]
+        }else{
+            dict = ["content":textStr,"type":type,"resourcesId":self.resourcesId ?? "0"]
+        }
+        print(self.countryType,dict)
         BaseSeverHttp.zpsyPost(withPath: Api_commentPublish, withParams:dict ,withSuccessBlock: {[weak self] (result:Any?) in
             MBProgressHUD.hide(for: CTUtility.findViewController(self).view)
             if (self?.successBlock != nil) {
@@ -120,9 +130,11 @@ class CommentInputView: UIView,UITextFieldDelegate {
     
     func hotremarkShow(){
         let remarkvc=HotRemarkVC();
-        remarkvc.hidesBottomBarWhenPushed=true
+        remarkvc.hidesBottomBarWhenPushed = true
         remarkvc.mycommenttype = self.Mycommenttype
         remarkvc.resourcesId = self.resourcesId
+        remarkvc.countryType = self.countryType
+        
         CTUtility.findViewController(self).navigationController?.pushViewController(remarkvc, animated: true)
     }
     

@@ -29,7 +29,6 @@ class UserManager : NSObject{
         }
     }
     
-    
     override init() {
         super.init()
         
@@ -66,7 +65,7 @@ class UserManager : NSObject{
     /// 删除用户信息
     func removeAccound() {
         self.userEntity = UserEntity()
-        self.isLogin = false
+        isLogin = false
         
         let fileManager = FileManager.default
         try? fileManager.removeItem(atPath: userPath)

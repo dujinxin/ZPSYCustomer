@@ -34,16 +34,16 @@
         
         if ([_pathStr containsString:@"."]) {
             
-            NSArray *arr=[_pathStr componentsSeparatedByString:@"."];
-            NSString *type=arr[arr.count-1];
-            __block NSString *source=@"";
-            NSMutableString *name=[[NSMutableString alloc] init];
+            NSArray *arr = [_pathStr componentsSeparatedByString:@"."];
+            NSString *type = arr[arr.count-1];
+            __block NSString *source = @"";
+            NSMutableString *name = [[NSMutableString alloc] init];
             [arr enumerateObjectsUsingBlock:^(NSString * obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                if (idx!=arr.count-1) {
+                if (idx != arr.count -1) {
                     [name appendString:obj];
                     [name appendString:@"."];
                 }else{
-                    source=[name substringToIndex:name.length-1];
+                    source=[name substringToIndex:name.length -1];
                 }
             }];
             
@@ -54,8 +54,8 @@
 
         
     }else{
-        NSURL *url=[NSURL URLWithString:_URLstr];
-        NSURLRequest *request=[[NSURLRequest alloc] initWithURL:url];
+        NSURL *url = [NSURL URLWithString:_URLstr];
+        NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
         [self.webView loadRequest:request];
     }
 }
@@ -114,9 +114,10 @@
         // 注入JS对象名称senderModel，当JS通过senderModel来调用时，我们可以在WKScriptMessageHandler代理中接收到
         [config.userContentController addScriptMessageHandler:self name:@"getNavigationBarInfo"];
         
-        _webView = [[WKWebView alloc]initWithFrame:self.view.bounds configuration:config];
+        _webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, kNavStatusHeight, kScreenWidth, kScreenHeight - kNavStatusHeight) configuration:config];
         self.webView.navigationDelegate = self;
         self.webView.UIDelegate = self;
+        self.webView.scrollView.contentOffset = CGPointMake(0, 0);
         [self.view addSubview:_webView];
         [self userAgent];
         [_webView evaluateJavaScript:@"navigator.userAgent" completionHandler:^(id _Nullable result, NSError * _Nullable error) {
@@ -129,8 +130,8 @@
 -(UIProgressView *)progressView{
 
     if (!_progressView) {
-        _progressView = [[UIProgressView alloc]initWithFrame:CGRectMake(0, 64, kScreenWidth,5)];
-        _progressView.tintColor = [UIColor greenColor];
+        _progressView = [[UIProgressView alloc]initWithFrame:CGRectMake(0, kNavStatusHeight, kScreenWidth,5)];
+        _progressView.tintColor = JXMainColor;
         _progressView.trackTintColor = [UIColor whiteColor];
         [self.view addSubview:_progressView];
         [self.view bringSubviewToFront:_progressView];

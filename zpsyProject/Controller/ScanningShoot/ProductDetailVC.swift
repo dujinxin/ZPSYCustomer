@@ -11,6 +11,7 @@ import UIKit
 class ProductDetailVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
     public var ProductID:String?
+    public var countryType:String?
     
     private var productdetailModel:productDetailModel? = productDetailModel()
     
@@ -29,7 +30,7 @@ class ProductDetailVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
         cyclescroll?.pageControlAliment = SDCycleScrollViewPageContolAlimentCenter
         return cyclescroll!
     }()
-    private lazy var tableView:UITableView={
+    private lazy var tableView:UITableView = {
     
         let tab = UITableView.init(frame: CGRect.init(x: 0, y: 0, width: kScreenWidth, height: kScreenHeight-60-64), style: UITableViewStyle.plain)
         tab.tableHeaderView = self.CycleScroll
@@ -48,12 +49,17 @@ class ProductDetailVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
         tab.register(productDetailCell.self, forCellReuseIdentifier: "productDetailCellId")
         return tab
     }()
+    lazy var inputview: CommentInputView = {
+        let inputview = CommentInputView.init(false)
+        inputview.Mycommenttype = commentType.commentProduct
+        return inputview
+    }()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "详情"
         self.edgesForExtendedLayout = UIRectEdge.init(rawValue: 0)
-        datarequest()
         viewinit()
+        datarequest()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -62,10 +68,6 @@ class ProductDetailVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
 
     func viewinit(){
         self.view.addSubview(self.tableView)
-        
-        let inputview = CommentInputView.init(false)
-        inputview.Mycommenttype = commentType.commentProduct
-        inputview.resourcesId = self.ProductID
         self.view.addSubview(inputview)
         inputview.mas_makeConstraints { (make:MASConstraintMaker?) in
             let _ = make?.left.mas_equalTo()(self.view.mas_left);
@@ -76,11 +78,16 @@ class ProductDetailVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
     }
     private func datarequest(){
         MBProgressHUD.showAnimationtoView(self.view)
-        BaseSeverHttp.zpsyGet(withPath: Api_productFindById, withParams: ["id":self.ProductID], withSuccessBlock: { (result:Any?) in
+        
+        BaseSeverHttp.zpsyGet(withPath: Api_productFindById, withParams: ["id":self.ProductID,"countryType":self.countryType], withSuccessBlock: { (result:Any?) in
             MBProgressHUD.hide(for: self.view)
             self.productdetailModel = productDetailModel.mj_object(withKeyValues: result)
             self.CycleScroll.imageURLStringsGroup = self.productdetailModel?.getArrGoodsImg() as! [Any]!
             self.collectionNumLab.text = (self.productdetailModel?.favoritesNum)! + "人收藏了该产品"
+            
+            self.inputview.resourcesId = self.ProductID
+            self.inputview.countryType = self.productdetailModel?.countryType
+            
             self.tableView.reloadData()
         }) { (err:Error?) in
             MBProgressHUD.hide(for: self.view)
@@ -210,7 +217,7 @@ class ProductDetailVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
             img.image = UIImage.init(named: "collect")
         }
         self.productdetailModel?.isFavorites = flag
-        BaseSeverHttp.zpsyGet(withPath: Api_userFavorites, withParams: ["resourceId":self.ProductID,"flag":flag,"type":"0"], withSuccessBlock: { (result:Any?) in
+        BaseSeverHttp.zpsyGet(withPath: Api_userFavorites, withParams: ["resourceId":self.ProductID,"flag":flag,"type":"0","countryType":self.countryType], withSuccessBlock: { (result:Any?) in
             self.hasthread = false
             var num:NSInteger = NSInteger.init((self.productdetailModel?.getProperty(key: "favoritesNum"))!)!
             if self.productdetailModel?.isFavorites == "0"  {

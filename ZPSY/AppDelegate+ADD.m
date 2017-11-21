@@ -8,6 +8,7 @@
 
 #import "AppDelegate+ADD.h"
 #import <UMSocialCore/UMSocialCore.h>
+#import "ZPSY-Swift.h"
 
 @implementation AppDelegate (ADD)
 - (BOOL)ADDapplication:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {

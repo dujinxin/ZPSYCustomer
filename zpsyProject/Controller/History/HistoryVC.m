@@ -53,6 +53,9 @@
         NSArray *arr = [productModel mj_objectArrayWithKeyValuesArray:result];
         if (PageNo==1) {
             listArr = [NSMutableArray arrayWithArray:arr];
+            if (listArr.count == 0) {
+                [MBProgressHUD showError:@"暂无数据"];
+            }
         }else{
             [listArr addObjectsFromArray:arr];
         }
@@ -113,6 +116,7 @@
     productModel* model = [listArr objectAtIndex:indexPath.row];
     ProductDetailVC* productdetail= [[ProductDetailVC alloc] init];
     productdetail.ProductID = model.ID;
+    productdetail.countryType = model.countryType;
     productdetail.hidesBottomBarWhenPushed=YES;
     [self.navigationController pushViewController:productdetail animated:YES];
 }

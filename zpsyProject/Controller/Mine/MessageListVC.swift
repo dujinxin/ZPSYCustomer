@@ -49,6 +49,9 @@ class MessageListVC: UITableViewController {
             
             if self.pageNo == 1{
                 self.ListArray = NSMutableArray.init(array: messageModel.mj_objectArray(withKeyValuesArray: result))
+                if self.ListArray.count == 0 {
+                    MBProgressHUD.showError("暂无数据")
+                }
             }else{
                 self.ListArray.addObjects(from: ((messageModel.mj_objectArray(withKeyValuesArray: result))as NSArray) as! [Any])
             }

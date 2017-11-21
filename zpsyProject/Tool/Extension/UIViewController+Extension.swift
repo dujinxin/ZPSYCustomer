@@ -11,9 +11,16 @@ import UIKit
 extension UIViewController {
     /// 获取根控制器
     static var rootViewController : UIViewController? {
-        guard let rootVc = UIApplication.shared.keyWindow?.rootViewController else {
+        guard
+            let delegate = UIApplication.shared.delegate,
+            let window = delegate.window,
+            let rootVc = window?.rootViewController else {
             return nil
         }
+        //在其他弹出视图比如  alert 这时keywindow会发生变化，获取到的rootviewcontroller也会变为UIApplicationRotationFollowingController
+//        guard let rootVc = UIApplication.shared.keyWindow?.rootViewController else {
+//            return nil
+//        }
         return rootVc
     }
     /// 获取当前栈顶控制器

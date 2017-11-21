@@ -44,6 +44,9 @@ class ReportListVC: UITableViewController {
             MBProgressHUD.hide(for: self.view)
             if self.pageNo == 1{
                 self.listArr = NSMutableArray.init(array: reportModel.mj_objectArray(withKeyValuesArray: result))
+                if self.listArr.count == 0 {
+                    MBProgressHUD.showError("暂无数据")
+                }
             }else{
                 let arr:Array = reportModel.mj_objectArray(withKeyValuesArray: result) as Array
                 self.listArr.addObjects(from: arr)

@@ -146,37 +146,31 @@ class FindCell: UITableViewCell {
         
         self.bigImageView.mas_makeConstraints { (make:MASConstraintMaker?) in
             let _ = make?.left.equalTo()(self.contentView.mas_left)?.with().offset()(leading)
-         
             //let _ = make?.bottom.equalTo()(self.contentView.mas_bottom)?.with().offset()(-10)
             let _ = make?.top.equalTo()(self.contentView.mas_top)?.with().offset()(10)
             let _ = make?.size.mas_equalTo()(CGSize(width: 124, height: 124))
         }
-        
         self.titleLabel.mas_makeConstraints { (make:MASConstraintMaker?) in
             let _ = make?.left.equalTo()(self.bigImageView.mas_right)?.with().offset()(textLeading)
             let _ = make?.top.equalTo()(self.contentView.mas_top)?.with().offset()(20)
             let _ = make?.right.equalTo()(self.contentView.mas_right)?.with().offset()(-leading)
             let _ = make?.height.mas_equalTo()(35)
         }
-        
         self.goodsNameLabel.mas_makeConstraints { (make:MASConstraintMaker?) in
             
             let _ = make?.left.equalTo()(self.titleLabel)
             let _ = make?.top.equalTo()(self.titleLabel.mas_bottom)?.with().offset()(5)
             let _ = make?.right.mas_equalTo()(self.contentView.mas_right)?.with().offset()(-leading)
         }
-        
         self.levelLabel.mas_makeConstraints { (make:MASConstraintMaker?) in
             let _ = make?.left.equalTo()(self.titleLabel)
             let _ = make?.top.equalTo()(self.goodsNameLabel.mas_bottom)?.with().offset()(15)
         }
-        
         self.levelImageView.mas_makeConstraints { (make:MASConstraintMaker?) in
             let _ = make?.left.equalTo()(self.levelLabel.mas_right)?.with().offset()(10)
             let _ = make?.centerY.equalTo()(self.levelLabel)
             let _ = make?.size.equalTo()(CGSize(width: 15, height: 15))
         }
-        
         self.commentButton.mas_makeConstraints { (make:MASConstraintMaker?) in
             let _ = make?.right.equalTo()(self.contentView.mas_right)?.with().offset()(-leading)
             let _ = make?.top.equalTo()(self.levelLabel.mas_bottom)
@@ -198,8 +192,6 @@ class FindCell: UITableViewCell {
     }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
         // Configure the view for the selected state
     }
-    
 }

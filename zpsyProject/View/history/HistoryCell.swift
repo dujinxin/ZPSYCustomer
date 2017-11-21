@@ -44,8 +44,8 @@ class HistoryCell: UITableViewCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.accessoryType=UITableViewCellAccessoryType.disclosureIndicator
-        self.selectionStyle=UITableViewCellSelectionStyle.none
+        self.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
+        self.selectionStyle = UITableViewCellSelectionStyle.none
         self.layer.shouldRasterize = true;
         self.layer.rasterizationScale = UIScreen.main.scale;
         viewinit()

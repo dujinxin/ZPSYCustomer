@@ -103,6 +103,7 @@
 }
 - (void)gotoLogin{
     [[UserManager manager] removeAccound];
+    [UserManager manager].isLogin = false;
  
     UIViewController * vc = [UIViewController topStackViewController];
     LoginVC * lvc = [[LoginVC alloc] init];
@@ -114,9 +115,12 @@
 //    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"prompt", @"Prompt") message:NSLocalizedString(@"loginUserRemoveFromServer1", "your account has been removed from the server side,please register to login") delegate:self cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
     
     [[UserManager manager] removeAccound];
+    [UserManager manager].isLogin = false;
     
     UIViewController * vc = UIViewController.topVisibleViewController;
-    [vc dismissViewControllerAnimated:NO completion:nil];
+    if ([vc respondsToSelector:@selector(dismissViewControllerAnimated:completion:)]) {
+        [vc dismissViewControllerAnimated:NO completion:nil];
+    }
     UIViewController * nvc = UIViewController.topStackViewController;
     if (nvc != nil){
         [nvc.navigationController popToRootViewControllerAnimated:NO];
@@ -130,7 +134,8 @@
     if (alertView.tag == 1001) {
         LoginVC * login = [[LoginVC alloc] init];
         login.hidesBottomBarWhenPushed = YES;
-        [UIViewController.topVisibleViewController.navigationController pushViewController:login animated:false];
+        [UIViewController.topStackViewController.navigationController pushViewController:login animated:false];
+        NSLog(@"UIViewController.topStackViewController == %@",UIViewController.topStackViewController);
     }
 }
 

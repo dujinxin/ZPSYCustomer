@@ -76,10 +76,8 @@ class ExposureViewController: ZPTableViewController {
             self.tableView.mj_footer.endRefreshing()
             self.tableView.mj_header.endRefreshing()
             self.tableView.reloadData()
-            if isSuccess {
-                //self.tableView.reloadData()
-            }else{
-                
+            if isSuccess && self.vm.dataArray.count == 0{
+                MBProgressHUD.showError("暂无数据")
             }
         }
     }

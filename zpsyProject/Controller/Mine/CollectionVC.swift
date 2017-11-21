@@ -23,7 +23,7 @@ class CollectionVC: UITableViewController {
     private var selectIndex = 0
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title="收藏"
+        self.title = "收藏"
         viewinit()
     }
 
@@ -44,7 +44,6 @@ class CollectionVC: UITableViewController {
             }else if self?.selectIndex==2 && self?.PrefomersModelStruct.ListArray?.count == 0{
                 self?.daterequest()
             }
-            
             self?.tableView.reloadData()
         }
         
@@ -63,20 +62,16 @@ class CollectionVC: UITableViewController {
                 self.exposureModelStruct.page+=1
             }else if self.selectIndex == 2{
                 self.PrefomersModelStruct.page+=1
-            }
-            else{
+            }else{
                 self.productModelStruct.page+=1
             }
             self.daterequest()
         })
-        
-        
     }
     
    private func daterequest() {
         MBProgressHUD.showAnimationtoView(self.view)
         if self.selectIndex == 1 {
-            
             BaseSeverHttp.zpsyGet(withPath: Api_GetFavoritesExposureBarList, withParams: ["pageNo":self.exposureModelStruct.page], withSuccessBlock: {[unowned self] (result:Any?) in
                 MBProgressHUD.hide(for: self.view)
                 
@@ -84,9 +79,11 @@ class CollectionVC: UITableViewController {
                 
                 if self.exposureModelStruct.page == 1{
                     self.exposureModelStruct.ListArray = NSMutableArray.init(array: arr)
-                }
-                else{
-                self.exposureModelStruct.ListArray?.addObjects(from: arr)
+                    if arr.isEmpty == true {
+                        MBProgressHUD.showError("暂无数据")
+                    }
+                }else{
+                    self.exposureModelStruct.ListArray?.addObjects(from: arr)
                 }
                 self.tableView.reloadData()
                 
@@ -103,8 +100,10 @@ class CollectionVC: UITableViewController {
                 
                 if self.PrefomersModelStruct.page == 1{
                     self.PrefomersModelStruct.ListArray = NSMutableArray.init(array: arr)
-                }
-                else{
+                    if arr.isEmpty == true {
+                        MBProgressHUD.showError("暂无数据")
+                    }
+                }else{
                     self.PrefomersModelStruct.ListArray?.addObjects(from: arr)
                 }
                 self.tableView.reloadData()
@@ -122,8 +121,10 @@ class CollectionVC: UITableViewController {
                 
                 if self.productModelStruct.page == 1{
                     self.productModelStruct.ListArray = NSMutableArray.init(array: arr)
-                }
-                else{
+                    if arr.isEmpty == true {
+                        MBProgressHUD.showError("暂无数据")
+                    }
+                }else{
                     self.productModelStruct.ListArray?.addObjects(from: arr)
                 }
                 self.tableView.reloadData()
@@ -191,6 +192,7 @@ class CollectionVC: UITableViewController {
             let model:productModel = self.productModelStruct.ListArray?.object(at: indexPath.row) as! productModel
             let detailVC:ProductDetailVC = ProductDetailVC()
             detailVC.ProductID = model.ID as String?
+            detailVC.countryType = model.countryType as! String
             self.navigationController?.pushViewController(detailVC, animated: true)
         
         }else{

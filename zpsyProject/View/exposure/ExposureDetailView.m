@@ -69,12 +69,13 @@
     NSString *hostname = navigationAction.request.URL.host;
     NSString *schemename = navigationAction.request.URL.scheme;
     
+    self.progressView.alpha = 1.0;
     if (schemename && [schemename isEqualToString:@"zpsy"]) {
         BLOCK_SAFE(self.enventDoBlock)(hostname);
         decisionHandler(WKNavigationActionPolicyCancel);
+    }else{
+        decisionHandler(WKNavigationActionPolicyAllow);
     }
-    self.progressView.alpha = 1.0;
-    decisionHandler(WKNavigationActionPolicyAllow);
     
 //    if (navigationAction.navigationType == WKNavigationTypeLinkActivated) {
 //        // 对于跨域，需要手动跳转
@@ -130,8 +131,8 @@
 -(UIProgressView *)progressView{
     
     if (!_progressView) {
-        _progressView = [[UIProgressView alloc]initWithFrame:CGRectMake(0, 64, kScreenWidth,5)];
-        _progressView.tintColor = [UIColor greenColor];
+        _progressView = [[UIProgressView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth,5)];
+        _progressView.tintColor = JXMainColor;
         _progressView.trackTintColor = [UIColor whiteColor];
         [self addSubview:_progressView];
         [self bringSubviewToFront:_progressView];

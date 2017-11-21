@@ -16,6 +16,7 @@ class productModel: NSObject {
     public var createDateStr:NSString?
     public var name:NSString?
     public var goodsName:NSString? //历史中用
+    public var countryType:NSString? //新增 国家类型
     
     public func getfirstGoodImg() -> String {
         

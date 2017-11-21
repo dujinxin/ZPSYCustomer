@@ -16,7 +16,7 @@
 #import "NetWorkTools.h"
 #import "ZPSY-Swift.h"
 
-@interface LoginVC ()
+@interface LoginVC ()<UITextFieldDelegate>
 @property(nonatomic, strong)NSDateFormatter *formatter;
 @property(nonatomic, strong)UITextField *nameText;
 @property(nonatomic, strong)UITextField *checkCodeText;
@@ -104,17 +104,17 @@
     [params setObject:self.nameText.text forKey:@"mobile"];
     [params setObject:self.checkCodeText.text forKey:@"password"];
     [BaseSeverHttp ZpsyPostWithPath:Api_Login WithParams:params WithSuccessBlock:^(NSDictionary* result) {
-        hud.hidden=YES;
+        hud.hidden = YES;
         
         BOOL isSuccess = [[UserManager manager] saveAccoundWithDict:result];
-        
+        [UserManager manager].isLogin = isSuccess;
         NSLog(@"%d",isSuccess);
         
         [self.navigationController popViewControllerAnimated:NO];
         [self.navigationController setNavigationBarHidden:NO animated:NO];
         BLOCK_SAFE(self.loginSuccessBlock)();
     } WithFailurBlock:^(NSError *error) {
-        hud.hidden=YES;
+        hud.hidden = YES;
     }];
     
 }
@@ -126,12 +126,12 @@
     [self.view addSubview:self.nameText];
     [self.view addSubview:self.checkCodeText];
     
-    UIButton *loginBtn=[[UIButton alloc] init];
-    loginBtn.tag=22;
+    UIButton *loginBtn = [[UIButton alloc] init];
+    loginBtn.tag = 22;
     [loginBtn setTitle:@"登录" forState:UIControlStateNormal];
     [loginBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    loginBtn.layer.cornerRadius=22;
-    loginBtn.layer.backgroundColor=[UIColor colorWithWhite:1 alpha:0.65].CGColor;
+    loginBtn.layer.cornerRadius = 22;
+    loginBtn.layer.backgroundColor = [UIColor colorWithWhite:1 alpha:0.65].CGColor;
     [loginBtn addTarget:self action:@selector(LoginClickEvent) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:loginBtn];
     
@@ -282,17 +282,17 @@
                           };
     __block MBProgressHUD *hud= [MBProgressHUD showAnimationtoView:self.view];
     [BaseSeverHttp ZpsyPostWithPath:Api_LoginThird WithParams:dict WithSuccessBlock:^(NSDictionary* result) {
-        hud.hidden=YES;
+        hud.hidden = YES;
         
         BOOL isSuccess = [[UserManager manager] saveAccoundWithDict:result];
-        
+        [UserManager manager].isLogin = isSuccess;
         NSLog(@"%d",isSuccess);
         //[self dismissViewControllerAnimated:NO completion:nil];
         [self.navigationController popViewControllerAnimated:NO];
         [self.navigationController setNavigationBarHidden:NO animated:NO];
         BLOCK_SAFE(self.loginSuccessBlock)();
     } WithFailurBlock:^(NSError *error) {
-        hud.hidden=YES;
+        hud.hidden = YES;
     }];
     
 }
@@ -314,13 +314,14 @@
 -(UITextField *)nameText{
     
     if (!_nameText) {
-        _nameText=[[UITextField alloc] init];
-        _nameText.placeholder=@"请输入手机号";
-        _nameText.keyboardType=UIKeyboardTypeNumberPad;
-        _nameText.clearButtonMode=UITextFieldViewModeAlways;
-        _nameText.backgroundColor=[UIColor clearColor];
-        _nameText.textColor=[UIColor whiteColor];
-        UIView *line=[self LineView];
+        _nameText = [[UITextField alloc] init];
+        _nameText.placeholder = @"请输入手机号";
+        _nameText.keyboardType =UIKeyboardTypeNumberPad;
+        _nameText.clearButtonMode = UITextFieldViewModeAlways;
+        _nameText.backgroundColor = [UIColor clearColor];
+        _nameText.textColor = [UIColor whiteColor];
+        _nameText.delegate = self;
+        UIView *line = [self LineView];
         [_nameText addSubview:line];
         [line mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(_nameText);
@@ -461,5 +462,20 @@
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"timeFireMethod" object:nil];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"resultstr" object:nil];
 }
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [self.view endEditing:YES];
+}
+#pragma mark - UITextFieldDelegate
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [textField resignFirstResponder];
+    return YES;
+}
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    if (textField == self.nameText && range.location > 10) {
+        return NO;
+    }
+    return YES;
+}
+
 @end
 

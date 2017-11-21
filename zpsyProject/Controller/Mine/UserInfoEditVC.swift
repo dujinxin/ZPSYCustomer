@@ -90,26 +90,27 @@ class UserInfoEditVC: UITableViewController {
         if indexPath.section == 0 {
             editType = 0       //头像
             editTitle = "头像"
+            let editvc = InfoEditVC()
+            editvc.editType = editType
+            editvc.title = editTitle
+            self.navigationController?.pushViewController(editvc, animated: true)
         }else{
             if indexPath.row == 0 {
                 editType = 1   //昵称
                 editTitle = "昵称"
+                
+                let editvc = InfoEditVC()
+                editvc.editType = editType
+                editvc.title = editTitle
+                self.navigationController?.pushViewController(editvc, animated: true)
             }else{
                 if UserManager.manager.userEntity.mobile.isEmpty == true {
                     let bindingVc = BindingPhoneVC()
                     self.navigationController?.pushViewController(bindingVc, animated: true)
-                    return
                 }
             }
         }
-        
-        let editvc = InfoEditVC()
-        editvc.editType = editType
-        editvc.title = editTitle
-        self.navigationController?.pushViewController(editvc, animated: true)
     }
-    
-    
     func getCell(titleStr:String,detailStr:String) -> UITableViewCell  {
         let cell = UITableViewCell.init(style: UITableViewCellStyle.default, reuseIdentifier: "nameAndNumreuseIdentifier")
         cell.selectionStyle=UITableViewCellSelectionStyle.none

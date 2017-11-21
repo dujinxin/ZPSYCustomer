@@ -30,49 +30,58 @@
     
     listArr = @[
                 @[
-                  @{@"title":@"积分",@"image":@"minescroe"},
-                  @{@"title":@"收藏",@"image":@"collect"},
-                  @{@"title":@"消息",@"image":@"message"}
+                  @{@"title":@"积分",@"image":@"my_score"},
+                  @{@"title":@"收藏",@"image":@"my_collect"},
+                  @{@"title":@"消息",@"image":@"my_message"}
                 ],
                 @[
-                  @{@"title":@"举报",@"image":@"report"},
+                  @{@"title":@"举报",@"image":@"my_report"},
                 ]
               ];
-    self.hasLogin = [UserManager manager].isLogin;
     
+    self.hasLogin = [UserManager manager].isLogin;
+    //FIXME:第一次进入该页面时，同时已经被踢，那么会同时调用监听和wiewwillappear,会调用两次
     [RACObserve([UserManager manager], isLogin) subscribeNext:^(id x) {
-        if (self.hasLogin != [x boolValue]) {
-            self.hasLogin = [x boolValue];
+        self.hasLogin = [x boolValue];
+        if ([UserManager manager].isLogin) {
+            [self userinfoGetRequest];
         }
     }];
 }
-
--(void)viewWillAppear:(BOOL)animated{
+/*
+ 1.公司目前基本是单岗单人，缺少一些技术或者经验的交流，是否可以增加一些培训，或者外出参加行业技术的交流会等
+ 2.增加一些员工福利，比如一年一次的旅游，一年一次的体检
+ 3.公司的补贴是否可以通过现金（或者其他不与工资一起发放的方式）的形式发放
+ 4.
+ */
+- (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:false];
-    
     
     if ([UserManager manager].isLogin) {
         [self userinfoGetRequest];
     }
 }
--(void)userinfoGetRequest{
+- (void)userinfoGetRequest{
 
     [BaseSeverHttp ZpsyGetWithPath:Api_GetuserByToken WithParams:nil WithSuccessBlock:^(NSDictionary* dic) {
         BOOL isSuccess = [[UserManager manager] saveAccoundWithDict:dic];
         NSLog(@"%d",isSuccess);
-        self.hasLogin=YES;
-    } WithFailurBlock:nil];
+        //self.hasLogin = YES;
+    } WithFailurBlock:^(NSError *error) {
+        //self.hasLogin = NO;
+    }];
 }
 #pragma SET_GET
--(void)setHasLogin:(BOOL)hasLogin{
+- (void)setHasLogin:(BOOL)hasLogin{
     _hasLogin = hasLogin;
+    
     self.LoginOutBtn.hidden = !_hasLogin;
     self.tableView.tableHeaderView = [[mineloginStatusView alloc] initWithFrame];
     [self.tableView reloadData];
 }
 
--(UITableView *)tableView{
+- (UITableView *)tableView{
 
     if (!_tableView) {
         _tableView = [[UITableView alloc] initWithFrame:kScreenBounds style:UITableViewStyleGrouped];
@@ -89,7 +98,7 @@
 -(UIButton *)LoginOutBtn{
 
     if (!_LoginOutBtn) {
-        _LoginOutBtn = [[UIButton alloc] init];
+        _LoginOutBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_LoginOutBtn setTitle:@"退出登录" forState:UIControlStateNormal];
         _LoginOutBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
         _LoginOutBtn.contentEdgeInsets = UIEdgeInsetsMake(0, 15, 0, 0);
@@ -105,6 +114,7 @@
         }];
         [[_LoginOutBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) {
             [[UserManager manager] removeAccound];
+            [UserManager manager].isLogin = false;
         }];
     }
     return _LoginOutBtn;

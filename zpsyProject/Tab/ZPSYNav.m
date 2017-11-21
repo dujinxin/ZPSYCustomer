@@ -22,7 +22,7 @@
     [self.view setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
     [self.navigationBar setBarTintColor:JXMainColor];
     [self.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
-    self.navigationBar.shadowImage=[UIImage imageNamed:@""];
+    self.navigationBar.shadowImage = [UIImage imageNamed:@""];
 //    self.hidesBarsOnSwipe = YES;
 //    self.hidesBarsOnTap = YES;
 }

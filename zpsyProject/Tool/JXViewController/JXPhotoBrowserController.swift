@@ -211,9 +211,11 @@ class PhotoImageView: UICollectionViewCell,UIScrollViewDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     //MARK: - imageView gesture method
+    /// 收起
+    ///
+    /// - Parameter tap: 单击
     func tapDismiss(tap:UITapGestureRecognizer) {
-        //收起
-        print("收起")
+        
         if let block = closeBlock {
             block()
         }

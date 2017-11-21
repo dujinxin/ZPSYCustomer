@@ -15,7 +15,7 @@
     NSInteger pageno;
     NSMutableArray *dataList;
 }
-@property(nonatomic,strong)UITableView *MyTableView;
+@property(nonatomic, strong)UITableView * MyTableView;
 @property(nonatomic, strong)JXTopBarView * topBar;
 @property(nonatomic, strong)JXHorizontalView * horizontalView;
 @end
@@ -48,14 +48,6 @@
     
     self.horizontalView = [[JXHorizontalView alloc ] initWithFrame:CGRectMake(0, kNavStatusHeight + 45, self.view.bounds.size.width, kScreenHeight - kNavStatusHeight -kTabBarHeight - 45) containers:@[vc1,vc2,vc3] parentViewController:self];
     [self.view addSubview:self.horizontalView];
-//    
-//    deliveringVC.deliveringBlock = {(deliveringModel,deliveringOperatorModel)->() in
-//        self.performSegue(withIdentifier: "deliveringManager", sender: ["deliveringModel":deliveringModel,"deliveringOperatorModel":deliveringOperatorModel])
-//    }
-//    
-//    deliveredVC.deliveredBlock = { (deliveringModel,deliveringOperatorModel)->() in
-//        self.performSegue(withIdentifier: "deliveredManager", sender: ["deliveringModel":deliveringModel,"deliveringOperatorModel":deliveringOperatorModel])
-//    }
 }
 - (void)jxTopBarViewWithTopBarView:(JXTopBarView *)topBarView didSelectTabAt:(NSInteger)index{
     NSIndexPath * indexPath = [NSIndexPath indexPathForItem:index inSection:0];
@@ -81,33 +73,14 @@
         }
     }];
 }
--(void)datarequest{
-
-    JXWeakSelf(self)
-    [BaseSeverHttp ZpsyGetWithPath:Api_GetExposureList WithParams:@{@"pageNo":@(pageno)} WithSuccessBlock:^(NSArray* result) {
-        [weakSelf.MyTableView.mj_header endRefreshing];
-        [weakSelf.MyTableView.mj_footer endRefreshing];
-        if (pageno==1) {
-            dataList = [exposureModel mj_objectArrayWithKeyValuesArray:result];
-        }else{
-            [dataList addObjectsFromArray:[exposureModel mj_objectArrayWithKeyValuesArray:result]];
-        }
-        [weakSelf.MyTableView reloadData];
-    } WithFailurBlock:^(NSError *error) {
-        [weakSelf.MyTableView.mj_header endRefreshing];
-        [weakSelf.MyTableView.mj_footer endRefreshing];
-    }];
-}
-
-#pragma tableviewdelegate
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+#pragma UITableviewDelegate
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
 }
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return dataList.count;
 }
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    //CollectionExposureCell *cell=[tableView dequeueReusableCellWithIdentifier:@"CollectionExposureCellID"];
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     CollectionExposureCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CollectionExposureCellID" forIndexPath:indexPath];
     cell.mycommentType = @"1";
     cell.model=dataList[indexPath.row];
@@ -115,41 +88,30 @@
 }
 
 #pragma GET
--(UITableView *)MyTableView{
+- (UITableView *)MyTableView{
     if (!_MyTableView) {
-        _MyTableView=[[UITableView alloc] initWithFrame:kScreenBounds style:UITableViewStyleGrouped];
-        _MyTableView.estimatedRowHeight=10;
-        _MyTableView.rowHeight=UITableViewAutomaticDimension;
-        _MyTableView.tableHeaderView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 0.1)];
-        _MyTableView.delegate=self;
-        _MyTableView.dataSource=self;
+        _MyTableView = [[UITableView alloc] initWithFrame:kScreenBounds style:UITableViewStyleGrouped];
+        _MyTableView.estimatedRowHeight = 10;
+        _MyTableView.rowHeight = UITableViewAutomaticDimension;
+        _MyTableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 0.1)];
+        _MyTableView.delegate = self;
+        _MyTableView.dataSource = self;
     }
     return _MyTableView;
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    exposureModel *model=dataList[indexPath.row];
-    ExposureDetailVC *Vc=[[ExposureDetailVC alloc] init];
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    exposureModel *model = dataList[indexPath.row];
+    ExposureDetailVC *Vc = [[ExposureDetailVC alloc] init];
     Vc.urlStr = model.jumpUrl;
     Vc.ThatID = model.ID;
     Vc.webtype = model.field3;
     Vc.detilStr = model.detail;
-    Vc.hidesBottomBarWhenPushed=YES;
+    Vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:Vc animated:YES];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 @end
