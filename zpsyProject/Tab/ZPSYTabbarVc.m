@@ -79,7 +79,8 @@
         [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:nil]];
         [self presentViewController:alert animated:YES completion:nil];
     }else{
-        [[GDLocationManager manager] startUpdateLocation];
+        //[[GDLocationManager manager] startUpdateLocation];
+        [[BaiduLocationManager manager] startUpdateLocation];
         ScanningShootVC *scaningshootVc = [ScanningShootVC new];
         ZPSYNav *nav = [[ZPSYNav alloc] initWithRootViewController:scaningshootVc];
         [self.selectedViewController presentViewController:nav animated:NO completion:nil];

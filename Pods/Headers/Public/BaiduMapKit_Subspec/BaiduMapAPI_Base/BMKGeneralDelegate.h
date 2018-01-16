@@ -1,0 +1,1 @@
+../../../../BaiduMapKit_Subspec/BaiduMapKit/BaiduMapAPI_Base.framework/Headers/BMKGeneralDelegate.h

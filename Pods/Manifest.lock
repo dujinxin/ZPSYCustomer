@@ -18,6 +18,11 @@ PODS:
   - AMapLocation (2.4.0):
     - AMapFoundation (~> 1.4)
   - AMScrollingNavbar (1.5.1)
+  - BaiduMapKit_Subspec/Base (3.4.2)
+  - BaiduMapKit_Subspec/Location (3.4.2):
+    - BaiduMapKit_Subspec/Base
+  - BaiduMapKit_Subspec/Search (3.4.2):
+    - BaiduMapKit_Subspec/Base
   - FMDB (2.6.2):
     - FMDB/standard (= 2.6.2)
   - FMDB/standard (2.6.2)
@@ -70,6 +75,8 @@ DEPENDENCIES:
   - AFNetworking (~> 3.1.0)
   - AMapLocation
   - AMScrollingNavbar (~> 1.5.1)
+  - BaiduMapKit_Subspec/Location
+  - BaiduMapKit_Subspec/Search
   - FMDB (~> 2.6.2)
   - IQKeyboardManager (~> 3.3.6)
   - Masonry (~> 1.0.0)
@@ -93,6 +100,7 @@ SPEC CHECKSUMS:
   AMapFoundation: 6c0471c9a6a0ad17dad46e3d800ad56ca170f82a
   AMapLocation: 47b62b5381a66e4d0c2931b70ffde72682427896
   AMScrollingNavbar: 767ed2db60d927a809bddff5d01b739b7020b12b
+  BaiduMapKit_Subspec: 47d3762f32e963c36429e1c20b074da3d131098c
   FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
   HappyDNS: 06a9fed2796663fd87626dbf02552933265bf059
   IQKeyboardManager: 249c3946acf61345c18b038eb50863fe2793e3a8
@@ -109,6 +117,6 @@ SPEC CHECKSUMS:
   UITableView+FDTemplateLayoutCell: 234e1582bcc4e18461af91155123bb96538ed030
   UMengUShare: d39cb682598df87ebdd3c055d03d00eb0102d42c
 
-PODFILE CHECKSUM: 7748000b486b388e4b5958ed1c27b720a8d8f97a
+PODFILE CHECKSUM: 980e11f9a7bf412344a3f0c056159c4354065205
 
 COCOAPODS: 1.2.1

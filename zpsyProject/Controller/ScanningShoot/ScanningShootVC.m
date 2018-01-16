@@ -27,9 +27,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self viewinit];
-    
-    //[[GDLocationManager manager] startLocation];
-    //[[GDLocationManager manager] startUpdateLocation];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -49,10 +46,11 @@
 
 -(void)scanresultWithValue:(NSString *)codeValue Type:(ScanTypeEnum) type{
     
-    if ([GDLocationManager manager].isEnabled == YES ){
-        if ([GDLocationManager manager].location == nil || [GDLocationManager manager].reGeocode == nil || [GDLocationManager manager].isLoacating == YES) {
+    if ([BaiduLocationManager manager].isEnabled == YES ){
+        if ([BaiduLocationManager manager].location == nil || [BaiduLocationManager manager].reGeoComponent == nil
+            //|| [BaiduLocationManager manager].isLoacating == YES
+            ) {
             
-            //[[JXViewManager sharedInstance] showJXNoticeMessage:@"正在定位，请稍候再试"];
             self.scanview.StartScaning = YES;
         
             return;
@@ -81,18 +79,16 @@
 
     NSDictionary *dict = @{@"codeId":codeStr,
                            @"scanMobile":[UserManager manager].userEntity.mobile,
-                           @"country":[GDLocationManager manager].reGeocode.country,
-                           @"province":[GDLocationManager manager].reGeocode.province,
-                           @"city":[GDLocationManager manager].reGeocode.city,
-                           @"district":[GDLocationManager manager].reGeocode.district,
-                           @"street":[GDLocationManager manager].reGeocode.street,
-                           @"number":[GDLocationManager manager].reGeocode.number,
-                           @"address":[GDLocationManager manager].reGeocode.formattedAddress,
-                           
-//                           @"longitude":self.LocManager.longitute,
-//                           @"latitude":self.LocManager.latitude,
-                           @"longitude":[NSString stringWithFormat:@"%f",[GDLocationManager manager].location.coordinate.longitude],
-                           @"latitude":[NSString stringWithFormat:@"%f",[GDLocationManager manager].location.coordinate.latitude],
+                           @"country":[BaiduLocationManager manager].reGeoComponent.country,
+                           @"province":[BaiduLocationManager manager].reGeoComponent.province,
+                           @"city":[BaiduLocationManager manager].reGeoComponent.city,
+                           @"district":[BaiduLocationManager manager].reGeoComponent.district,
+                           @"street":[BaiduLocationManager manager].reGeoComponent.streetName,
+                           @"number":[BaiduLocationManager manager].reGeoComponent.streetNumber,
+                           @"address":[BaiduLocationManager manager].address,
+
+                           @"longitude":[NSString stringWithFormat:@"%f",[BaiduLocationManager manager].location.coordinate.longitude],
+                           @"latitude":[NSString stringWithFormat:@"%f",[BaiduLocationManager manager].location.coordinate.latitude],
                            @"model":[Utility getCurrentDeviceModel]
                            };
     [BaseSeverHttp ZpsyPostWithPath:Api_scanRecordFind WithParams:dict WithSuccessBlock:^(NSDictionary* result) {

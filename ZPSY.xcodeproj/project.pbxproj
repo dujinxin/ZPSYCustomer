@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		350B11B0200DE716002B8A6D /* ScanChickenDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 350B11AF200DE715002B8A6D /* ScanChickenDetailController.m */; };
+		350B11BA200DEACF002B8A6D /* ZPselectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350B11B9200DEACF002B8A6D /* ZPselectView.swift */; };
+		3517CFD21FC4259B009D127A /* BaiduLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3517CFD11FC4259B009D127A /* BaiduLocationManager.swift */; };
 		354368871F735A72006896C0 /* ExposureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354368861F735A72006896C0 /* ExposureViewController.swift */; };
 		354368921F735C10006896C0 /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3543688A1F735C10006896C0 /* BaseModel.swift */; };
 		354368931F735C10006896C0 /* JXDefaultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3543688C1F735C10006896C0 /* JXDefaultView.swift */; };
@@ -40,7 +43,6 @@
 		355947F21F2F16BD008145BB /* JXPhotoBrowserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355947D31F2F16BD008145BB /* JXPhotoBrowserController.swift */; };
 		355947F31F2F16BD008145BB /* NotificationEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355947D41F2F16BD008145BB /* NotificationEnum.swift */; };
 		355947F41F2F16BD008145BB /* ProjectHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355947D51F2F16BD008145BB /* ProjectHeader.swift */; };
-		356173431EE025110086C73F /* ZPselectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356173421EE025110086C73F /* ZPselectView.swift */; };
 		357317CD1F7B911600A3F922 /* beep.wav in Resources */ = {isa = PBXBuildFile; fileRef = 357317CA1F7B911600A3F922 /* beep.wav */; };
 		357317CE1F7B911600A3F922 /* libgmyDecoder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 357317CC1F7B911600A3F922 /* libgmyDecoder.a */; };
 		3597506C1EF37EE900419474 /* JZAlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3597506B1EF37EE900419474 /* JZAlbumViewController.m */; };
@@ -221,7 +223,6 @@
 		381903701E98673A00FC3D13 /* scanProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3819036F1E98673A00FC3D13 /* scanProductCell.swift */; };
 		381903721E9867FA00FC3D13 /* newScanProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381903711E9867FA00FC3D13 /* newScanProductCell.swift */; };
 		381903741E987D5900FC3D13 /* scanLogisticsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381903731E987D5900FC3D13 /* scanLogisticsCell.swift */; };
-		381903771E98822F00FC3D13 /* scanProductHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381903761E98822F00FC3D13 /* scanProductHeader.swift */; };
 		381903791E98FEA200FC3D13 /* priceCompareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381903781E98FEA200FC3D13 /* priceCompareView.swift */; };
 		381F73CA1E8289CB007FD221 /* youxuanModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 381F73C91E8289CB007FD221 /* youxuanModel.m */; };
 		3842C6AC1E4D61580029DCEE /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3842C6AB1E4D61580029DCEE /* UserModel.m */; };
@@ -260,10 +261,7 @@
 		38AA41271E7A41C000E30B6A /* CirculateInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AA411E1E7A41C000E30B6A /* CirculateInfoCell.swift */; };
 		38AA41281E7A41C000E30B6A /* circulateScrowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AA411F1E7A41C000E30B6A /* circulateScrowCell.swift */; };
 		38AA41291E7A41C000E30B6A /* HotRemarkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AA41201E7A41C000E30B6A /* HotRemarkCell.swift */; };
-		38AA412B1E7A41C000E30B6A /* ScanDeviceDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AA41221E7A41C000E30B6A /* ScanDeviceDataCell.swift */; };
-		38AA412C1E7A41C000E30B6A /* ScanDeviceDisCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AA41231E7A41C000E30B6A /* ScanDeviceDisCell.swift */; };
 		38AA412E1E7A41C000E30B6A /* ScanRelativePriceModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AA41251E7A41C000E30B6A /* ScanRelativePriceModelView.swift */; };
-		38AA41331E7ADC1B00E30B6A /* scanProdStandardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AA41321E7ADC1A00E30B6A /* scanProdStandardCell.swift */; };
 		38AA41391E7BF74000E30B6A /* ScanCommentModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AA41381E7BF74000E30B6A /* ScanCommentModelView.swift */; };
 		38AA413B1E7C230500E30B6A /* scanlikeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AA413A1E7C230500E30B6A /* scanlikeCell.swift */; };
 		38AA413D1E7F784F00E30B6A /* productDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AA413C1E7F784F00E30B6A /* productDetailCell.swift */; };
@@ -288,6 +286,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		350B11AE200DE715002B8A6D /* ScanChickenDetailController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScanChickenDetailController.h; sourceTree = "<group>"; };
+		350B11AF200DE715002B8A6D /* ScanChickenDetailController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScanChickenDetailController.m; sourceTree = "<group>"; };
+		350B11B9200DEACF002B8A6D /* ZPselectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZPselectView.swift; sourceTree = "<group>"; };
+		3517CFD11FC4259B009D127A /* BaiduLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaiduLocationManager.swift; sourceTree = "<group>"; };
 		354368861F735A72006896C0 /* ExposureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExposureViewController.swift; sourceTree = "<group>"; };
 		3543688A1F735C10006896C0 /* BaseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseModel.swift; sourceTree = "<group>"; };
 		3543688C1F735C10006896C0 /* JXDefaultView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JXDefaultView.swift; sourceTree = "<group>"; };
@@ -322,7 +324,6 @@
 		355947D31F2F16BD008145BB /* JXPhotoBrowserController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JXPhotoBrowserController.swift; sourceTree = "<group>"; };
 		355947D41F2F16BD008145BB /* NotificationEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationEnum.swift; sourceTree = "<group>"; };
 		355947D51F2F16BD008145BB /* ProjectHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectHeader.swift; sourceTree = "<group>"; };
-		356173421EE025110086C73F /* ZPselectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZPselectView.swift; sourceTree = "<group>"; };
 		357317CA1F7B911600A3F922 /* beep.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = beep.wav; sourceTree = "<group>"; };
 		357317CB1F7B911600A3F922 /* gmyDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gmyDecoder.h; sourceTree = "<group>"; };
 		357317CC1F7B911600A3F922 /* libgmyDecoder.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libgmyDecoder.a; sourceTree = "<group>"; };
@@ -712,7 +713,6 @@
 		3819036F1E98673A00FC3D13 /* scanProductCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = scanProductCell.swift; sourceTree = "<group>"; };
 		381903711E9867FA00FC3D13 /* newScanProductCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = newScanProductCell.swift; sourceTree = "<group>"; };
 		381903731E987D5900FC3D13 /* scanLogisticsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = scanLogisticsCell.swift; sourceTree = "<group>"; };
-		381903761E98822F00FC3D13 /* scanProductHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = scanProductHeader.swift; sourceTree = "<group>"; };
 		381903781E98FEA200FC3D13 /* priceCompareView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = priceCompareView.swift; sourceTree = "<group>"; };
 		381F73C81E8289CB007FD221 /* youxuanModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = youxuanModel.h; sourceTree = "<group>"; };
 		381F73C91E8289CB007FD221 /* youxuanModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = youxuanModel.m; sourceTree = "<group>"; };
@@ -762,10 +762,7 @@
 		38AA411E1E7A41C000E30B6A /* CirculateInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CirculateInfoCell.swift; sourceTree = "<group>"; };
 		38AA411F1E7A41C000E30B6A /* circulateScrowCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = circulateScrowCell.swift; sourceTree = "<group>"; };
 		38AA41201E7A41C000E30B6A /* HotRemarkCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HotRemarkCell.swift; sourceTree = "<group>"; };
-		38AA41221E7A41C000E30B6A /* ScanDeviceDataCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanDeviceDataCell.swift; sourceTree = "<group>"; };
-		38AA41231E7A41C000E30B6A /* ScanDeviceDisCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanDeviceDisCell.swift; sourceTree = "<group>"; };
 		38AA41251E7A41C000E30B6A /* ScanRelativePriceModelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanRelativePriceModelView.swift; sourceTree = "<group>"; };
-		38AA41321E7ADC1A00E30B6A /* scanProdStandardCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = scanProdStandardCell.swift; sourceTree = "<group>"; };
 		38AA41381E7BF74000E30B6A /* ScanCommentModelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanCommentModelView.swift; sourceTree = "<group>"; };
 		38AA413A1E7C230500E30B6A /* scanlikeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = scanlikeCell.swift; sourceTree = "<group>"; };
 		38AA413C1E7F784F00E30B6A /* productDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = productDetailCell.swift; sourceTree = "<group>"; };
@@ -961,6 +958,7 @@
 			children = (
 				354368B91F74A6CF006896C0 /* UserManager */,
 				354368B81F74A6CF006896C0 /* GDLocationManager.swift */,
+				3517CFD11FC4259B009D127A /* BaiduLocationManager.swift */,
 				355947B31F2F16BD008145BB /* LanguageManager.swift */,
 			);
 			path = CommonManager;
@@ -1930,7 +1928,6 @@
 		381903751E9881C000FC3D13 /* ScanHeader */ = {
 			isa = PBXGroup;
 			children = (
-				381903761E98822F00FC3D13 /* scanProductHeader.swift */,
 			);
 			path = ScanHeader;
 			sourceTree = "<group>";
@@ -2026,6 +2023,8 @@
 				384DD9801E4822720032AB37 /* ScanningShootVC.m */,
 				35E74BFA1ED91031003EA223 /* ScanDetailViewController.h */,
 				35E74BFB1ED91031003EA223 /* ScanDetailViewController.m */,
+				350B11AE200DE715002B8A6D /* ScanChickenDetailController.h */,
+				350B11AF200DE715002B8A6D /* ScanChickenDetailController.m */,
 				3545030F1EFB585B00D9EDA7 /* AdScrollView.h */,
 				354503101EFB585B00D9EDA7 /* AdScrollView.m */,
 				3597506A1EF37EE900419474 /* JZAlbumViewController.h */,
@@ -2181,9 +2180,6 @@
 				38AA413A1E7C230500E30B6A /* scanlikeCell.swift */,
 				38AA411F1E7A41C000E30B6A /* circulateScrowCell.swift */,
 				38AA41201E7A41C000E30B6A /* HotRemarkCell.swift */,
-				38AA41321E7ADC1A00E30B6A /* scanProdStandardCell.swift */,
-				38AA41221E7A41C000E30B6A /* ScanDeviceDataCell.swift */,
-				38AA41231E7A41C000E30B6A /* ScanDeviceDisCell.swift */,
 				38AA41381E7BF74000E30B6A /* ScanCommentModelView.swift */,
 				38AA41251E7A41C000E30B6A /* ScanRelativePriceModelView.swift */,
 				384DD98D1E4822720032AB37 /* Scanview.h */,
@@ -2195,7 +2191,7 @@
 				35E74BF81ED7BC2B003EA223 /* ScanFlowTableViewCell.m */,
 				359750701EF3E96C00419474 /* GuiderViewFlowLayout.h */,
 				359750711EF3E96C00419474 /* GuiderViewFlowLayout.m */,
-				356173421EE025110086C73F /* ZPselectView.swift */,
+				350B11B9200DEACF002B8A6D /* ZPselectView.swift */,
 			);
 			path = scanningShoot;
 			sourceTree = "<group>";
@@ -2475,6 +2471,7 @@
 				355947F41F2F16BD008145BB /* ProjectHeader.swift in Sources */,
 				35BF18131F25DDD200980117 /* GTMBase64.m in Sources */,
 				380B31131E5062D90037D918 /* PBBlurImageView.m in Sources */,
+				350B11BA200DEACF002B8A6D /* ZPselectView.swift in Sources */,
 				380B31341E5062D90037D918 /* UIImageView+SD.m in Sources */,
 				354503111EFB585B00D9EDA7 /* AdScrollView.m in Sources */,
 				354368931F735C10006896C0 /* JXDefaultView.swift in Sources */,
@@ -2484,11 +2481,9 @@
 				380B31C51E5462DE0037D918 /* SwiftHeader.swift in Sources */,
 				3804250B1E45CD7E00CB477E /* CTUtility.m in Sources */,
 				354368871F735A72006896C0 /* ExposureViewController.swift in Sources */,
-				38AA412C1E7A41C000E30B6A /* ScanDeviceDisCell.swift in Sources */,
 				380B310F1E5062D90037D918 /* PBConst.m in Sources */,
 				355947DA1F2F16BD008145BB /* ConstantHeader.swift in Sources */,
 				380349451E6425E80073D4CA /* FdbackAndReportShowPicCell.m in Sources */,
-				38AA412B1E7A41C000E30B6A /* ScanDeviceDataCell.swift in Sources */,
 				354368B01F73B530006896C0 /* FindCell.swift in Sources */,
 				3842C6B21E4D68E00029DCEE /* LoginVC.m in Sources */,
 				35E74C3C1EDE6020003EA223 /* JXAlertView.m in Sources */,
@@ -2528,7 +2523,6 @@
 				354368AB1F736EC0006896C0 /* JXNetworkManager.swift in Sources */,
 				380B31291E5062D90037D918 /* UIImage+Color.m in Sources */,
 				38AA413B1E7C230500E30B6A /* scanlikeCell.swift in Sources */,
-				356173431EE025110086C73F /* ZPselectView.swift in Sources */,
 				380B31141E5062D90037D918 /* PBPGView.m in Sources */,
 				38AA40A11E76BDF800E30B6A /* homeHotCell.swift in Sources */,
 				380B311F1E5062D90037D918 /* CALayer+Anim.m in Sources */,
@@ -2549,6 +2543,7 @@
 				380B31C31E5454470037D918 /* feedbackselectCell.swift in Sources */,
 				35E74C491EDE6020003EA223 /* JXSelectView.m in Sources */,
 				380B31CB1E55824F0037D918 /* feedbackinfoCell.swift in Sources */,
+				3517CFD21FC4259B009D127A /* BaiduLocationManager.swift in Sources */,
 				385AB9791E8AAE9300603B17 /* hotremarkModel.swift in Sources */,
 				380B31BA1E52ECCE0037D918 /* mineloginStatusView.m in Sources */,
 				35BF181C1F25DDD200980117 /* NSString+MD5.m in Sources */,
@@ -2607,7 +2602,6 @@
 				354368A81F736EC0006896C0 /* JXBaseRequest.swift in Sources */,
 				385AB9771E8A065800603B17 /* myCommentExpModel.swift in Sources */,
 				355947E11F2F16BD008145BB /* UIScreen+Extension.swift in Sources */,
-				381903771E98822F00FC3D13 /* scanProductHeader.swift in Sources */,
 				3807407B1E93C5210006ADA8 /* notificationModel.m in Sources */,
 				3842C6AC1E4D61580029DCEE /* UserModel.m in Sources */,
 				354368941F735C10006896C0 /* BaseViewController.swift in Sources */,
@@ -2631,9 +2625,9 @@
 				386452511E5DC98500FC2CD9 /* MessageListVC.swift in Sources */,
 				386452551E5E7D7800FC2CD9 /* InfoEditVC.swift in Sources */,
 				35E74C4A1EDE6020003EA223 /* FirstViewCell.m in Sources */,
+				350B11B0200DE716002B8A6D /* ScanChickenDetailController.m in Sources */,
 				35BF18151F25DDD200980117 /* NSArray+NSDictionary.m in Sources */,
 				355947DC1F2F16BD008145BB /* String+Extension.swift in Sources */,
-				38AA41331E7ADC1B00E30B6A /* scanProdStandardCell.swift in Sources */,
 				380B312D1E5062D90037D918 /* UIImage+Water.m in Sources */,
 				380B32161E5A82430037D918 /* feedbackListVC.swift in Sources */,
 				3809F3371E8674B5001ABE0C /* UploadImageTool.m in Sources */,
@@ -3001,6 +2995,14 @@
 					"\"AMapLocationKit\"",
 					"-framework",
 					"\"AMapFoundationKit\"",
+					"-framework",
+					"\"BaiduMapAPI_Base\"",
+					"-l\"crypto\"",
+					"-l\"ssl\"",
+					"-framework",
+					"\"BaiduMapAPI_Search\"",
+					"-framework",
+					"\"BaiduMapAPI_Location\"",
 					"-framework",
 					"\"CoreLocation\"",
 					"-framework",

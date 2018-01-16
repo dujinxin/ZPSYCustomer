@@ -8,15 +8,16 @@
 
 import Foundation
 
-let kVersion = "v1.1.1"
+let kVersion = "v1.1.3"
 
 //高德
 let GDAppKey = "79dc6f237a5d5d92bb5b613cf1dafc67"
+//百度地图
+let BaiduAppKey = "I8aQQsCpBqPeYzuAVuhDiRmbXuWnG4T0"
 
+let kBaseUrl = "http://192.168.10.12:8082/genuine/"
 
-//let kBaseUrl = "http://192.168.10.12:8082/genuine/"
-
-let kBaseUrl = "https://app.izheng.org/genuine/"
+//let kBaseUrl = "https://app.izheng.org/genuine/"
 
 let HtmlBasUrl = "http://app.izheng.org/#/"
 

@@ -48,6 +48,9 @@ pod 'UMengUShare/Social/WeChat'
 pod 'UMengUShare/Social/QQ'
 # 高德
 pod 'AMapLocation'
+# 百度
+pod 'BaiduMapKit_Subspec/Location'
+pod 'BaiduMapKit_Subspec/Search'
 
 pod 'MBProgressHUD'
 

@@ -1,0 +1,1 @@
+../../../../BaiduMapKit_Subspec/BaiduMapKit/BaiduMapAPI_Location.framework/Headers/BMKLocationComponent.h

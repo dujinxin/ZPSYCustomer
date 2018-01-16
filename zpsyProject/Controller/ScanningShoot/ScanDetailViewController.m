@@ -233,6 +233,8 @@ static NSString * const reuseIdentifierHeader = @"Header";
     
     [self addSubviews];
 }
+#pragma mark: 扫码结果-跑步鸡
+#pragma mark: 扫码结果-其他
 - (priceCompareView *)priceView{
     if (!_priceView) {
         _priceView = [[priceCompareView alloc ]initWithFrame:[UIScreen mainScreen].bounds];

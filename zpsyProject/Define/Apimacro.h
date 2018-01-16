@@ -11,9 +11,9 @@
 
 //=====================Api IP=======================
 
-#define BASEURL @"https://app.izheng.org/genuine/"
+//#define BASEURL @"https://app.izheng.org/genuine/"
 
-//#define BASEURL @"http://192.168.10.12:8082/genuine/"
+#define BASEURL @"http://192.168.10.12:8082/genuine/"
 
 #define HtmlBasUrl @"http://app.izheng.org/#/"
 //================================
