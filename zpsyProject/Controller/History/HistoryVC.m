@@ -24,12 +24,12 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
-    [self.tableview.mj_header beginRefreshing];
+    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title=histotyTile;
+    self.title = histotyTile;
     [self trashRightBtninit];
     [self.view addSubview:self.tableview];
     listArr = [NSMutableArray array];
@@ -42,7 +42,7 @@
         PageNo+=1;
         [self dataRequest];
     }];
-    
+    [self.tableview.mj_header beginRefreshing];
 }
 
 -(void)dataRequest{
@@ -144,15 +144,15 @@
 -(UITableView *)tableview{
 
     if (!_tableview) {
-        _tableview=[[UITableView alloc] initWithFrame:kScreenBounds style:UITableViewStyleGrouped];
+        _tableview = [[UITableView alloc] initWithFrame:CGRectMake(0, kNavStatusHeight, kScreenWidth, kScreenHeight - kNavStatusHeight - kTabBarHeight) style:UITableViewStyleGrouped];
         _tableview.estimatedRowHeight = 10;
         _tableview.rowHeight = UITableViewAutomaticDimension;
-        _tableview.tableHeaderView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 0.1)];
-        _tableview.delegate=self;
-        _tableview.dataSource=self;
+        _tableview.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 0.1)];
+        _tableview.delegate = self;
+        _tableview.dataSource = self;
         [_tableview registerClass:[HistoryCell class] forCellReuseIdentifier:@"HistoryCellId"];
-        _tableview.sectionFooterHeight=0.01;
-        _tableview.sectionHeaderHeight=8;
+        _tableview.sectionFooterHeight = 0.01;
+        _tableview.sectionHeaderHeight = 8;
     }
     return _tableview;
 }
